@@ -959,7 +959,7 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                 {
                     my3dwin = new V3dR_MainWindow(mypara_3Dview);
                     my3dwin->setParent(0);
-                    //my3dwin->setDataTitle(fileName);
+                    my3dwin->setDataTitle(fileName);
                     my3dwin->show();
                     mypara_3Dview->window3D = my3dwin;
                     if (child_rawimg)
@@ -1028,7 +1028,7 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
             {
                 my3dwin = new V3dR_MainWindow(mypara_3Dview);
                 my3dwin->setParent(0);
-                //my3dwin->setDataTitle(fileName);
+                my3dwin->setDataTitle(fileName);
                 my3dwin->show();
                 mypara_3Dview->window3D = my3dwin;
             }
@@ -1567,8 +1567,7 @@ void MainWindow::import_Leica()
         XFormWidget *existing = findMdiChild(fileName);
         if (existing) {
 
-
-            //workspace->setActiveSubWindow(existing);
+//            workspace->setActiveSubWindow();
 
             return;
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c)2006-2010  Hanchuan Peng (Janelia Farm, Howard Hughes Medical Institute).
+ * Copyright (c)2006-2010  Hanchuan Peng (Janelia Farm, Howard Hughes Medical Institute).  
  * All rights reserved.
  */
 
@@ -7,7 +7,7 @@
 /************
                                             ********* LICENSE NOTICE ************
 
-This folder contains all source codes for the V3D project, which is subject to the following conditions if you want to use it.
+This folder contains all source codes for the V3D project, which is subject to the following conditions if you want to use it. 
 
 You will ***have to agree*** the following terms, *before* downloading/using/running/editing/changing any portion of codes in this package.
 
@@ -28,61 +28,63 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) “Automatic reconstructi
 
 
 
-/*
- * ItemEditor.cpp
- *
- *  Created on: Nov 23, 2008
- *      Author: ruanzongcai
- */
+//bfs.h
+//by Hanchuan Peng
+//revised from previous bfs code in the elementfunc/graph path,
+// last update: 080310
 
-#include "v3dr_common.h" // for v3dr_getColorDialog
-#include "ItemEditor.h"
+#ifndef __BFS_PHC__
+#define __BFS_PHC__
 
+#include "graph.h"
+#include "graphsupport.h"
 
-void setItemEditor()
+class BFSClass //BreadthFirstSearchClass
 {
-	static bool registered =false;
-	if (registered) return;
-	else registered = true;
+public:
+  V3DLONG nnode;
+
+  _ELEMENT_GRAPH_UBYTE * adjMatrix1d,  ** adjMatrix2d;
+
+  _ELEMENT_GRAPH_BYTE * nodeColor; //decide if a node has been visited or not
+  V3DLONG * nodeLabel; //this will decide in which subgraph a node is in
+  V3DLONG * nodeParent; //for the DFS tree
+  V3DLONG * nodeDetectTime;
+  V3DLONG * nodeFinishTime;
+
+  void dosearch();
+  int allocatememory(V3DLONG nodenum);
+  void delocatememory();
+
+  V3DLONG rootnode;
+  V3DLONG setrootnode(V3DLONG i) {
+    rootnode=(i<0)?0:i; 
+    rootnode=(rootnode>=nnode)?nnode:rootnode;
+    return rootnode;
+  }
+
+  int b_disp;
+
+  BFSClass() {
+    nnode = 0;
+    adjMatrix1d = 0;
+    adjMatrix2d = 0;
+    nodeColor = 0;
+    nodeLabel = 0;
+    nodeParent = 0;
+    nodeDetectTime = 0;
+    nodeFinishTime = 0;
+    b_disp = 0;
+    rootnode = 0;
+  }
+  ~BFSClass() {
+    delocatememory();
+    nnode = 0;
+    rootnode = 0;
+  }
+};
 
 
-	QItemEditorFactory *factory = new QItemEditorFactory(*QItemEditorFactory::defaultFactory());
 
-	//QItemEditorCreatorBase *spinCreator = new QStandardItemEditorCreator<QSpinBox>();
-	//QItemEditorCreatorBase *comboCreator = new QStandardItemEditorCreator<QComboBox>();
-	QItemEditorCreatorBase *colorCreator = new QStandardItemEditorCreator<ColorEditor>();
+#endif
 
-	factory->registerEditor(QVariant::String, 0);
-	factory->registerEditor(QVariant::Color, colorCreator);
-
-	QItemEditorFactory::setDefaultFactory(factory);
-}
-
-
-ColorEditor::ColorEditor(QWidget* w)
-	: QWidget(w)
-{
-	this->w = w;
-}
-
-QColor ColorEditor::color()
-{
-	//QColor c = QColorDialog::getColor(qcolor, this);
-	//QColor c = QColor::fromRgba( QColorDialog::getRgba(qcolor.rgba(), 0, this) );
-	//if (c.isValid())  qcolor = c;
-	v3dr_getColorDialog( &qcolor, this); //090424 RZC
-
-	return (qcolor);
-}
-
-void ColorEditor::setColor(QColor c)
-{
-	qcolor = c;
-}
-
-void ColorEditor::mousePressEvent(QMouseEvent* event)
-{
-    qDebug("ColorEditor::mousePressEvent");
-    if (event->button()==Qt::LeftButton)
-        color();
-}

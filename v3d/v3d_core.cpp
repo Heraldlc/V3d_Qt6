@@ -4956,7 +4956,7 @@ void XFormWidget::doImage3DView(bool tmp_b_use_512x512x256, int b_local, V3DLONG
 {
 	if (!b_local && mypara_3Dview.b_still_open)
 	{
-        //mypara_3Dview.window3D->raise_and_activate(); // activateWindow();
+        mypara_3Dview.window3D->raise_and_activate(); // activateWindow();
 		return;
 	}
 	if (b_local && mypara_3Dlocalview.b_still_open)

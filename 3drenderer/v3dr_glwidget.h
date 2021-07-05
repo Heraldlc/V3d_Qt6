@@ -41,23 +41,29 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) Automatic reconstruction 
 #include "v3dr_common.h"
 #include "renderer.h"
 #include "../basic_c_fun/basic_view3d.h"
-//new include
-#include <QOpenGLWindow>
-#include <QOpenGLWidget>
-#include <QOpenGLFunctions>
+
+
+
+
+#include "glsl_r.h"
+#include "GLee2glew.h"
 
 
 //replaced by PHC 20200131 to be the following
-//#include <QtOpenGLWidgets/QOpenGLWidget>
-//using QOpenGLWidget_proxy = QOpenGLWidget;
+//#include <QGLWidget>
 
+#include<QOpenGLWidget>
+//using QOpenGLWidget_proxy = QGLWidget;
+using QOpenGLWidget_proxy = QOpenGLWidget;
+#include <QOpenGLFunctions>
+#include <QOpenGLWindow>
 
-
+#include <QMetaObject>
 
 
 #ifdef __ALLOW_VR_FUNCS__
-#include "../vrrenderer/VR_MainWindow.h"
-#include "../vrrenderer/V3dR_Communicator.h"
+//#include "../vrrenderer/VR_MainWindow.h"
+//#include "../vrrenderer/V3dR_Communicator.h"
 #endif
 
 #include "ui_setVoxSize.h"
@@ -74,20 +80,17 @@ class V3dr_surfaceDialog;
 //class SurfaceObjGeometryDialog;
 
 //typedef void(*PluginMouseFunc)(QOpenGLWidget_proxy*); // May 29, 2012 by Hang
-
-class V3dR_GLWidget :public QOpenGLWidget, public QOpenGLFunctions, public View3DControl
+//多加了继承类,继承顺序不能颠倒 全改成了公有继承
+class V3dR_GLWidget: public QOpenGLWidget, public QOpenGLFunctions, public View3DControl
 
 {
     Q_OBJECT;
-    friend class V3dR_MainWindow; //090710 RZC: to delete renderer before ~V3dR_GLWidget()
-    friend class v3dr_surfaceDialog;
-    friend class v3dr_colormapDialog;
 
 public:
-     V3dR_GLWidget(iDrawExternalParameter* idep, QWidget* mainWindow=0, QString title="");
+    V3dR_GLWidget(iDrawExternalParameter* idep, QWidget* mainWindow=0, QString title="");
     ~V3dR_GLWidget();
-   // void makeCurrent() {if (!_in_destructor) QOpenGLWidget::makeCurrent();} //090605 RZC: to override invalid access in qgl_x11.cpp
-    //void makeCurrent() {if (!_in_destructor) makeCurrent();}
+    //void makeCurrent() {if (!_in_destructor) {makeCurrent(); qDebug("V3dR_GLWidget::V3dR_GLWidget ----- end in v3dr_glwidget.cpp");}} //090605 RZC: to override invalid access in qgl_x11.cpp
+    //void makeCurrent() {if (!_in_destructor) QOpenGLWidget::makeCurrent();}
     virtual void deleteRenderer();  //090710 RZC: to delete renderer before ~V3dR_GLWidget()
     virtual void createRenderer();  //090710 RZC: to create renderer at any time
 
@@ -132,7 +135,7 @@ public:
 
     static bool resumeCollaborationVR;
 #endif
-//protected:
+protected:
     virtual void choiceRenderer();
     virtual void settingRenderer(); // for setting the default renderer state when initialize
      virtual void initializeGL();
@@ -148,7 +151,7 @@ public:
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);
     virtual void mouseMoveEvent(QMouseEvent *event);
-    virtual void wheelEvent(QGraphicsSceneWheelEvent *event);
+    virtual void wheelEvent(QWheelEvent *event);
     virtual void mouseDoubleClickEvent ( QMouseEvent * event ) {};
 
         virtual void keyPressEvent(QKeyEvent * e) {handleKeyPressEvent(e);}
@@ -174,12 +177,14 @@ public:
     // Be sure to set to 'true' by default when you subclass (or, simplier, just call the base-constructor).
     bool show_progress_bar;
 
-    QProgressBar* progressBarPtr;
+
 
     int currentPluginState;                              // May 29, 2012 by Hang
-    map<int, void(*)(void*)> pluginLeftMouseFuncs;     // May 29, 2012 by Hang
-
-//public slots:
+    map<int, void(*)(void*)> pluginLeftMouseFuncs;
+   // May 29, 2012 by Hang
+public:
+    QProgressBar* progressBarPtr;
+public slots:
     virtual void stillPaint(); //for deferred full-resolution volume painting, connected to still_timer
 
 #define __view3dcontrol_interface__
@@ -253,7 +258,7 @@ public:
     bool         getShowProgressBar(){return show_progress_bar;}
     void         setShowProgressBar(bool val){show_progress_bar = val;}
 
-//public slots:
+public slots:
 // most of format: set***(type) related to a change***(type)
 
     virtual int setVolumeTimePoint(int t);
@@ -292,7 +297,7 @@ public:
     virtual void doimage3DVRView(bool bCanCoMode = false);
     void process3Dwindow(bool show);
 
-//    virtual void doimageVRView(bool bCanCoMode = false);
+    virtual void doimageVRView(bool bCanCoMode = false);
     virtual void doclientView(bool check_flag=false);
     virtual void OnVRSocketDisConnected();
 #endif
@@ -565,6 +570,7 @@ public:
 
     void init_members()
     {
+        qDebug()<<"jazz debug init_members in v3dr_glwidgets.h";
         _still = _stillpaint_need = _stillpaint_pending = false;
        // connect(&still_timer, SIGNAL(timeout()), this, SLOT(stillPaint())); //only connect once
         still_timer.start(still_timer_interval);

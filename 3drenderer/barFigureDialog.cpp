@@ -38,9 +38,9 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) “Automatic reconstructi
 #include "barFigureDialog.h"
 
 #include "../basic_c_fun/volimg_proc.h"
-#include <QGridLayout>
-#include <QLabel>
 
+#include <QLayout>
+#include <QLabel>
 barFigureDialog::barFigureDialog(QVector< QVector<int> >& vvec, QStringList labelsOfLeftTop, QString labelOfRightBottom,
 		QWidget *parent, QSize figSize, QColor barColor)
 : QDialog(parent)

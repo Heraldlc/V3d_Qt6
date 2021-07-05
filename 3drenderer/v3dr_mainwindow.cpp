@@ -46,17 +46,14 @@ last update: 060903
 
 #include "v3dr_mainwindow.h"
 #include "v3dr_glwidget.h"
-
-#include <QObject>
-#include <QOpenGLWindow>
-//#include "v3dr_control_signal.cpp" // create control widgets and connect signals
+#include <QElapsedTimer>
+#include "v3dr_control_signal.cpp" // create control widgets and connect signals
 
 ///QTimer V3dR_MainWindow::animate_timer;// for static
 
 void V3dR_MainWindow::closeEvent(QCloseEvent* e)
 {
-
-    qDebug("V3dR_MainWindow::closeEvent, glWidget = %0p", glWidget);
+	qDebug("V3dR_MainWindow::closeEvent, glWidget = %0p", glWidget);
 
 	if (sAnimate==1) // preview or save movie
 	{
@@ -96,8 +93,7 @@ void V3dR_MainWindow::closeEvent(QCloseEvent* e)
 		glWidget->deleteRenderer(); //090711 RZC: fixed the problem of Over delete OpenGL resource cross different glWidget
 
 		if (glWidgetArea) glWidgetArea->takeWidget();
-        //glWidget->deleteLater();
-        deleteLater();
+		glWidget->deleteLater();
 	}
 
 	////////////////////////////////////////////////////////////
@@ -164,13 +160,8 @@ V3dR_MainWindow::~V3dR_MainWindow()
 V3dR_MainWindow::V3dR_MainWindow(iDrawExternalParameter* idep)
 {
 	qDebug("V3dR_MainWindow::V3dR_MainWindow =====================================");
-	//setAttribute ( Qt::WA_DeleteOnClose, true ); // maybe cause Non-aligned pointer being freed error, when do'not use deleteLater, by RZC 080814, 090427
-	//setAttribute ( Qt::WA_AlwaysShowToolTips, true ); //090427 RZC: force show tooltip, may show some rubbish.
-	//090427 Always tooltip disappears after press any Modifier Key (Shift, Control, Option, Command). Because posting KeyPressEvent to glWidget make CPU 100% load.
 
-	///////////////////////////////////////////////////////////////
     init_members();    // this is important to clear zero before new object, by RZC 080818
-	////////////////////////////////////////////////////////////////
 
 	title_prefix = "3D View";
 	data_title = "";
@@ -215,22 +206,24 @@ V3dR_MainWindow::V3dR_MainWindow(iDrawExternalParameter* idep)
 
     //////////////////////////////////////////////////////////////////
     glWidget = 0;
+    qDebug("glWidget = new V3dR_GLWidget jazz debug in v3dr_mainwindow.cpp");
     glWidget = new V3dR_GLWidget(_idep, this, data_title); // 'this' pointer for glWidget calling back
-//#if defined(USE_Qt5)
+#if defined(USE_Qt5)
     if ( !glWidget ) //Under Qt5, the GL Widget is not valid until after it's shown
-//#else
-//    if (!glWidget || !(glWidget->isValid()))
-//#endif
+#else
+   // if (!glWidget || !(glWidget->isValid()))
+     if ( !glWidget )
+#endif
     {
-    MESSAGE("ERROR: Failed to create OpenGL Widget or Context!!! \n");
+    	MESSAGE("ERROR: Failed to create OpenGL Widget or Context!!! \n");
     }
     //////////////////////////////////////////////////////////////////
 
-    if (glWidget)	POST_EVENT(glWidget, QEvent::Type(QEvent_OpenFiles)); // move to V3dR_GLWidget::initializeGL for dynamic renderer, 081122 by RZC
+    //if (glWidget)	POST_EVENT(glWidget, QEvent::Type(QEvent_OpenFiles)); // move to V3dR_GLWidget::initializeGL for dynamic renderer, 081122 by RZC
 
-
-	//qDebug("V3dR_MainWindow::createControlWidgets");
-    //显示右边窗口createControlWidgets(); // RZC 080930, 090420: included connectSignal() & initControlValue()
+    //创建控制信号
+    qDebug("V3dR_MainWindow::createControlWidgets");
+    createControlWidgets(); // RZC 080930, 090420: included connectSignal() & initControlValue()
 
 
     setAcceptDrops(true); //081031
@@ -295,7 +288,7 @@ V3DLONG V3dR_MainWindow::animate(QString& loop_script, int rotation_time_ms,
 
 void V3dR_MainWindow::animateStep()
 {
-    glWidget->makeCurrent(); //090918: need for OpenGL drawing
+	glWidget->makeCurrent(); //090918: need for OpenGL drawing
 	if (sAnimate==2 && !isActiveWindow()) return; // optional: only animate the active view
 
 	if (bAnimating) return; // prevent to re-enter
@@ -445,10 +438,7 @@ QString V3dR_MainWindow::previewMovie(QString& loop_script, int rotation_frames,
 	movieSaveButton->setEnabled(false);
 
 	V3DLONG frames = animate(loop_script, 0, rotation_frames, rotation_timepoints, false); // rotation_time_ms>0 for processing blocked events
-    //QTime qtime;
-    //qtime.start();
-    QElapsedTimer qtime;
-    qtime.start();
+    QElapsedTimer qtime;  qtime.start();
 
 	if (glWidget)  glWidget->setStill(false); //use sampled resolution
 	while (sAnimate==1)
@@ -460,8 +450,8 @@ QString V3dR_MainWindow::previewMovie(QString& loop_script, int rotation_frames,
 
 	movieSaveButton->setEnabled(true);
 
-    QString info_benchmark = QString("Average rendering speed .............. %1 msec/frame, or FPS = %2 hz").
-                                        arg(qtime.elapsed()/double(frames)).arg(double(frames)*1000/qtime.elapsed());
+	QString info_benchmark = QString("Average rendering speed .............. %1 msec/frame, or FPS = %2 hz").
+										arg(qtime.elapsed()/double(frames)).arg(double(frames)*1000/qtime.elapsed());
 	qDebug()<< "***  " << info_benchmark;
 	return info_benchmark;
 }
@@ -491,24 +481,24 @@ void V3dR_MainWindow::doSaveMovie(QString& loop_script, int rotation_frames, int
 bool V3dR_GLWidget::screenShot(QString filename)
 {
 #if defined(USE_Qt5)
-	QImage image1 = this->grabFramebuffer();
-#else
     QImage image1 = this->grabFramebuffer();
-#endif        
+#else
+    QImage image1 = this->grabFrameBuffer();
+#endif
 
         const char* format = SAVE_IMG_FORMAT;
-	QString curfile = filename + "." + format;
-	bool r =false;
-	if (image1.save(curfile, format, 100)) //uncompressed
-	{
-		printf("Successful to save screen-shot: [%s]\n",  curfile.toUtf8().data());
-		r = true;
-	}
-	else
-	{
-		printf("Failed to save screen-shot: [%s]\n",  curfile.toUtf8().data());
-	}
-	return r;
+    QString curfile = filename + "." + format;
+    bool r =false;
+    if (image1.save(curfile, format, 100)) //uncompressed
+    {
+        printf("Successful to save screen-shot: [%s]\n",  curfile.toUtf8().data());
+        r = true;
+    }
+    else
+    {
+        printf("Failed to save screen-shot: [%s]\n",  curfile.toUtf8().data());
+    }
+    return r;
 }
 
 void V3dR_MainWindow::saveFrameFunc(int i)
@@ -519,22 +509,22 @@ void V3dR_MainWindow::saveFrameFunc(int i)
 		return;
 	}
 
-#if defined(USE_Qt5)
-	QImage image1 = glWidget->grabFramebuffer();
-#else
-    QImage image1 = glWidget->grabFramebuffer();
-#endif        
+//#if defined(USE_Qt5)
+//	QImage image1 = glWidget->grabFramebuffer();
+//#else
+//	QImage image1 = glWidget->grabFrameBuffer();
+//#endif
 
         const char* format = SAVE_IMG_FORMAT;
 	QString curfile = QString("%1/a%2.%3").arg(outputDir).arg(i).arg(format);
-	if (image1.save(curfile, format, 100)) //uncompressed
-	{
-		printf("Successful to save frame %d: [%s]\n", i, curfile.toUtf8().data());
-	}
-	else
-	{
-		printf("Failed to save frame %d: [%s]\n", i, curfile.toUtf8().data());
-	}
+//	if (image1.save(curfile, format, 100)) //uncompressed
+//	{
+//		printf("Successful to save frame %d: [%s]\n", i, curfile.toUtf8().data());
+//	}
+//	else
+//	{
+//		printf("Failed to save frame %d: [%s]\n", i, curfile.toUtf8().data());
+//	}
 }
 
 void V3dR_MainWindow::saveMovie()
@@ -640,7 +630,7 @@ void V3dR_MainWindow::saveMovie()
 
 void V3dR_MainWindow::dragEnterEvent(QDragEnterEvent *event)
 {
-    //qDebug("V3dR_MainWindow::dragEnterEvent");
+    qDebug("V3dR_MainWindow::dragEnterEvent");
 	//if (event->mimeData()->hasUrls()) // filename use urls
     event->acceptProposedAction();
 }
@@ -717,12 +707,12 @@ void V3dR_MainWindow::focusOutEvent(QFocusEvent*)
 }
 void V3dR_MainWindow::enterEvent(QEvent*)
 {
-	//qDebug("V3dR_MainWindow::enterEvent");
-	//setFocus();
+    qDebug("V3dR_MainWindow::enterEvent");
+    setFocus();
 }
 void V3dR_MainWindow::leaveEvent(QEvent*)
 {
-	//qDebug("V3dR_MainWindow::leaveEvent");
+    qDebug("V3dR_MainWindow::leaveEvent");
 }
 
 
@@ -826,167 +816,167 @@ void V3dR_MainWindow::keyReleaseEvent(QKeyEvent * e)
 
 
 
+/*
+void V3dR_MainWindow::setXRotStep(int t)
+{
+    xstep = t;
+}
 
-//void V3dR_MainWindow::setXRotStep(int t)
-//{
-//    xstep = t;
-//}
+void V3dR_MainWindow::setYRotStep(int t)
+{
+    ystep = t;
+}
 
-//void V3dR_MainWindow::setYRotStep(int t)
-//{
-//    ystep = t;
-//}
+void V3dR_MainWindow::setZRotStep(int t)
+{
+    zstep = t;
+}
 
-//void V3dR_MainWindow::setZRotStep(int t)
-//{
-//    zstep = t;
-//}
+void V3dR_MainWindow::setNSteps(int t)
+{
+    nsteps_rot_movie = t;
+}
 
-//void V3dR_MainWindow::setNSteps(int t)
-//{
-//    nsteps_rot_movie = t;
-//}
+void iDrawMainWindow::openAnoFile()
+{
+    //get the file and verify it is useable. If not exist or useable, the  make no change of the current setting (3D view, etc)
+	QString	tmpfile = QFileDialog::getOpenFileName(
+                    this,
+                    "Choose an atlas/annotation file to open",
+                    "./",
+                    "File (*.txt *.ano)");
 
-//void iDrawMainWindow::openAnoFile()
-//{
-//    //get the file and verify it is useable. If not exist or useable, the  make no change of the current setting (3D view, etc)
-//	QString	tmpfile = QFileDialog::getOpenFileName(
-//                    this,
-//                    "Choose an atlas/annotation file to open",
-//                    "./",
-//                    "File (*.txt *.ano)");
-
-//    if (tmpfile.isEmpty()) // do nothing if nothing is chosen
-//	{
-//	    return;
-//	}
-
-
-//	//the same file, then do nothing. But I still disable this because sometimes the file with the same name could have updated contents
-//	//if (curAnoFile==tmpfile)
-//	//    return;
-
-//    //try to use the data
-
-//    GLWidget * glWidget1 = new GLWidget(tmpfile, "/Users/pengh/work/fly.brain.Julie/localdata/a67@20X.raw_small.raw");
-//    if (glWidget1->getErrorFlag() == true) //must have some error in file reading or use the data
-//	{
-//	   delete glWidget1;
-//	   return;
-//	}
-
-//    //in this case it has been verified to safely disconect previous signal and render a new atlas/annotation file
-
-//	if (glWidget)
-//	{
-//	   //disconnectSignal();
-//	   if (glWidgetArea)
-//	   	   glWidgetArea->takeWidget();
-//	   delete glWidget;
-//	   glWidget=0; //just for my usual pointer freeing style, :-)
-//	}
-//	glWidget = glWidget1;
-//    //if (glWidgetArea) glWidgetArea->setWidget(glWidget);
-
-//    connectSignal();
-//	curAnoFile = tmpfile; //update the data file name
-//	update();
-//	//glWidgetArea->update();
-//	glWidget->updateGL();
-
-//	return;
-//}
+    if (tmpfile.isEmpty()) // do nothing if nothing is chosen
+	{
+	    return;
+	}
 
 
-//void V3dR_MainWindow::about()
-//{
-//	QMessageBox::information(this, "Vaa3D.3drenderer", "Vaa3D: a 3D image visualization and analysis software.\n"
-//			"\n\n"
-//			 "Help information for the 3D viewer:\n"
-//			"Mouse operations:\n"
-//			"----------------------------------------------------\n"
-//			"[Hold L-button + move vert.]:\t rotate around X-axis.\n"
-//			"[Hold L-button + move hori.]:\t rotate around Y-axis.\n"
-//			"[Hold R-button + move hori.]:\t rotate around Z-axis.\n"
-//			"[Hold R-button + move vert.]:\t zoom in/out.\n"
-//			"[Scroll Mouse-wheel]:\t\t zoom in/out.\n"
-//			);
-//}
+	//the same file, then do nothing. But I still disable this because sometimes the file with the same name could have updated contents
+	//if (curAnoFile==tmpfile)
+	//    return;
+
+    //try to use the data
+
+    GLWidget * glWidget1 = new GLWidget(tmpfile, "/Users/pengh/work/fly.brain.Julie/localdata/a67@20X.raw_small.raw");
+    if (glWidget1->getErrorFlag() == true) //must have some error in file reading or use the data
+	{
+	   delete glWidget1;
+	   return;
+	}
+
+    //in this case it has been verified to safely disconect previous signal and render a new atlas/annotation file
+
+	if (glWidget)
+	{
+	   //disconnectSignal();
+	   if (glWidgetArea)
+	   	   glWidgetArea->takeWidget();
+	   delete glWidget;
+	   glWidget=0; //just for my usual pointer freeing style, :-)
+	}
+	glWidget = glWidget1;
+    //if (glWidgetArea) glWidgetArea->setWidget(glWidget);
+
+    connectSignal();
+	curAnoFile = tmpfile; //update the data file name
+	update();
+	//glWidgetArea->update();
+	glWidget->updateGL();
+
+	return;
+}
 
 
-//void V3dR_MainWindow::createActions()
-//{
-//    renderIntoPixmapAct = new QAction(tr("&Render into Pixmap..."), this);
-//    renderIntoPixmapAct->setShortcut(tr("Ctrl+R"));
-//    connect(renderIntoPixmapAct, SIGNAL(triggered()),
-//            this, SLOT(renderIntoPixmap()));
+void V3dR_MainWindow::about()
+{
+	QMessageBox::information(this, "Vaa3D.3drenderer", "Vaa3D: a 3D image visualization and analysis software.\n"
+			"\n\n"
+			 "Help information for the 3D viewer:\n"
+			"Mouse operations:\n"
+			"----------------------------------------------------\n"
+			"[Hold L-button + move vert.]:\t rotate around X-axis.\n"
+			"[Hold L-button + move hori.]:\t rotate around Y-axis.\n"
+			"[Hold R-button + move hori.]:\t rotate around Z-axis.\n"
+			"[Hold R-button + move vert.]:\t zoom in/out.\n"
+			"[Scroll Mouse-wheel]:\t\t zoom in/out.\n"
+			);
+}
 
-//    grabFrameBufferAct = new QAction(tr("&Grab Frame Buffer"), this);
-//    grabFrameBufferAct->setShortcut(tr("Ctrl+G"));
-//    connect(grabFrameBufferAct, SIGNAL(triggered()),
-//            this, SLOT(grabFrameBuffer()));
 
-//    clearPixmapAct = new QAction(tr("&Clear Pixmap"), this);
-//    clearPixmapAct->setShortcut(tr("Ctrl+L"));
-//    connect(clearPixmapAct, SIGNAL(triggered()), this, SLOT(clearPixmap()));
+void V3dR_MainWindow::createActions()
+{
+    renderIntoPixmapAct = new QAction(tr("&Render into Pixmap..."), this);
+    renderIntoPixmapAct->setShortcut(tr("Ctrl+R"));
+    connect(renderIntoPixmapAct, SIGNAL(triggered()),
+            this, SLOT(renderIntoPixmap()));
 
-//    exitAct = new QAction(tr("E&xit"), this);
-//    exitAct->setShortcut(tr("Ctrl+Q"));
-//    connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
+    grabFrameBufferAct = new QAction(tr("&Grab Frame Buffer"), this);
+    grabFrameBufferAct->setShortcut(tr("Ctrl+G"));
+    connect(grabFrameBufferAct, SIGNAL(triggered()),
+            this, SLOT(grabFrameBuffer()));
 
-//    aboutAct = new QAction(tr("&About"), this);
-//    connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
+    clearPixmapAct = new QAction(tr("&Clear Pixmap"), this);
+    clearPixmapAct->setShortcut(tr("Ctrl+L"));
+    connect(clearPixmapAct, SIGNAL(triggered()), this, SLOT(clearPixmap()));
 
-//    aboutQtAct = new QAction(tr("About &Qt"), this);
-//    connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
-//}
+    exitAct = new QAction(tr("E&xit"), this);
+    exitAct->setShortcut(tr("Ctrl+Q"));
+    connect(exitAct, SIGNAL(triggered()), this, SLOT(close()));
 
-//void V3dR_MainWindow::createMenus()
-//{
-//    fileMenu = menuBar()->addMenu(tr("&File"));
-//    fileMenu->addAction(renderIntoPixmapAct);
-//    fileMenu->addAction(grabFrameBufferAct);
-//    fileMenu->addAction(clearPixmapAct);
-//    fileMenu->addSeparator();
-//    fileMenu->addAction(exitAct);
+    aboutAct = new QAction(tr("&About"), this);
+    connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
 
-//    helpMenu = menuBar()->addMenu(tr("&Help"));
-//    helpMenu->addAction(aboutAct);
-//    helpMenu->addAction(aboutQtAct);
+    aboutQtAct = new QAction(tr("About &Qt"), this);
+    connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+}
 
-//}
+void V3dR_MainWindow::createMenus()
+{
+    fileMenu = menuBar()->addMenu(tr("&File"));
+    fileMenu->addAction(renderIntoPixmapAct);
+    fileMenu->addAction(grabFrameBufferAct);
+    fileMenu->addAction(clearPixmapAct);
+    fileMenu->addSeparator();
+    fileMenu->addAction(exitAct);
 
-//void iDrawMainWindow::setPixmap(const QPixmap &pixmap)
-//{
-//    pixmapLabel->setPixmap(pixmap);
-//    QSize size = pixmap.size();
-//    if (size - QSize(1, 0) == pixmapLabelArea->maximumViewportSize())
-//        size -= QSize(1, 0);
-//    pixmapLabel->resize(size);
+    helpMenu = menuBar()->addMenu(tr("&Help"));
+    helpMenu->addAction(aboutAct);
+    helpMenu->addAction(aboutQtAct);
 
-//}
+}
 
-//QSize V3dR_MainWindow::getSize()
-//{
-//    bool ok;
-//    QString text = QInputDialog::getText(this, tr("3D View"),
-//                                         tr("Enter pixmap size:"),
-//                                         QLineEdit::Normal,
-//                                         tr("%1 x %2").arg(glWidget->width())
-//                                                      .arg(glWidget->height()),
-//                                         &ok);
-//    if (!ok)
-//        return QSize();
+void iDrawMainWindow::setPixmap(const QPixmap &pixmap)
+{
+    pixmapLabel->setPixmap(pixmap);
+    QSize size = pixmap.size();
+    if (size - QSize(1, 0) == pixmapLabelArea->maximumViewportSize())
+        size -= QSize(1, 0);
+    pixmapLabel->resize(size);
 
-//    QRegExp regExp(tr("([0-9]+) *x *([0-9]+)"));
-//    if (regExp.exactMatch(text)) {
-//        int width = regExp.cap(1).toInt();
-//        int height = regExp.cap(2).toInt();
-//        if (width > 0 && width < 2048 && height > 0 && height < 2048)
-//            return QSize(width, height);
-//    }
+}
 
-//    return glWidget->size();
-//}
+QSize V3dR_MainWindow::getSize()
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("3D View"),
+                                         tr("Enter pixmap size:"),
+                                         QLineEdit::Normal,
+                                         tr("%1 x %2").arg(glWidget->width())
+                                                      .arg(glWidget->height()),
+                                         &ok);
+    if (!ok)
+        return QSize();
 
+    QRegExp regExp(tr("([0-9]+) *x *([0-9]+)"));
+    if (regExp.exactMatch(text)) {
+        int width = regExp.cap(1).toInt();
+        int height = regExp.cap(2).toInt();
+        if (width > 0 && width < 2048 && height > 0 && height < 2048)
+            return QSize(width, height);
+    }
+
+    return glWidget->size();
+}
+*/
 

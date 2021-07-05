@@ -73,12 +73,8 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) “Automatic reconstructi
 
 #ifndef GRADIENTS_H
 #define GRADIENTS_H
-
-#include <version_control.h>
-//add in 20210622 for Qt6
-#include <QRadioButton>
 #include <QWidget>
-
+#include <version_control.h>
 #if defined(USE_Qt5)
 #include <QtWidgets>
 #else
@@ -86,8 +82,7 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) “Automatic reconstructi
 #endif
 //#include <hoverpoints.h> //by PHC 2020/1/31
 #include "v3d_hoverpoints.h"
-
-
+#include <QRadioButton>
 class ShadeWidget : public QWidget
 {
     Q_OBJECT;
@@ -117,7 +112,7 @@ signals:
     void colorsChanged(int type, const QPolygonF &); // this --> parent(GradientEditor)
 
 protected:
-    virtual void paintEvent(QPaintEvent *e); //cancel comment
+    virtual void paintEvent(QPaintEvent *e);
 
 private:
     void generateShade();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c)2006-2010  Hanchuan Peng (Janelia Farm, Howard Hughes Medical Institute).
+ * Copyright (c)2006-2010  Hanchuan Peng (Janelia Farm, Howard Hughes Medical Institute).  
  * All rights reserved.
  */
 
@@ -7,7 +7,7 @@
 /************
                                             ********* LICENSE NOTICE ************
 
-This folder contains all source codes for the V3D project, which is subject to the following conditions if you want to use it.
+This folder contains all source codes for the V3D project, which is subject to the following conditions if you want to use it. 
 
 You will ***have to agree*** the following terms, *before* downloading/using/running/editing/changing any portion of codes in this package.
 
@@ -28,61 +28,28 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) “Automatic reconstructi
 
 
 
-/*
- * ItemEditor.cpp
- *
- *  Created on: Nov 23, 2008
- *      Author: ruanzongcai
- */
+//copyrighted by Hanchuan Peng
+//
 
-#include "v3dr_common.h" // for v3dr_getColorDialog
-#include "ItemEditor.h"
+#ifndef __ELEMENTARY_GRAPH_ALGORITHM_H_080305_
+#define __ELEMENTARY_GRAPH_ALGORITHM_H_080305_
 
+#include <stdio.h>
+#include <math.h>
 
-void setItemEditor()
-{
-	static bool registered =false;
-	if (registered) return;
-	else registered = true;
+//#define BYTE signed char
+//#define UBYTE unsigned char
 
+typedef signed char _ELEMENT_GRAPH_BYTE;
+typedef unsigned char _ELEMENT_GRAPH_UBYTE;
 
-	QItemEditorFactory *factory = new QItemEditorFactory(*QItemEditorFactory::defaultFactory());
+typedef unsigned char UINT8_TYPE;
+typedef unsigned short int UINT16_TYPE;
+typedef float MYFLOAT;
+//typedef double MYFLOAT; //re-comment on 070502
 
-	//QItemEditorCreatorBase *spinCreator = new QStandardItemEditorCreator<QSpinBox>();
-	//QItemEditorCreatorBase *comboCreator = new QStandardItemEditorCreator<QComboBox>();
-	QItemEditorCreatorBase *colorCreator = new QStandardItemEditorCreator<ColorEditor>();
+//#include "../elementmexheader.h" //080305: do not need this for general C programs
 
-	factory->registerEditor(QVariant::String, 0);
-	factory->registerEditor(QVariant::Color, colorCreator);
+#include "../basic_c_fun/v3d_basicdatatype.h"
 
-	QItemEditorFactory::setDefaultFactory(factory);
-}
-
-
-ColorEditor::ColorEditor(QWidget* w)
-	: QWidget(w)
-{
-	this->w = w;
-}
-
-QColor ColorEditor::color()
-{
-	//QColor c = QColorDialog::getColor(qcolor, this);
-	//QColor c = QColor::fromRgba( QColorDialog::getRgba(qcolor.rgba(), 0, this) );
-	//if (c.isValid())  qcolor = c;
-	v3dr_getColorDialog( &qcolor, this); //090424 RZC
-
-	return (qcolor);
-}
-
-void ColorEditor::setColor(QColor c)
-{
-	qcolor = c;
-}
-
-void ColorEditor::mousePressEvent(QMouseEvent* event)
-{
-    qDebug("ColorEditor::mousePressEvent");
-    if (event->button()==Qt::LeftButton)
-        color();
-}
+#endif

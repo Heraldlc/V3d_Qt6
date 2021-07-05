@@ -72,7 +72,7 @@ public:
 //
 class V3dr_surfaceDialog: public SharedToolDialog
 {
-    //Q_OBJECT;
+    Q_OBJECT;
 
 public:
     V3dr_surfaceDialog(V3dR_GLWidget* w, QWidget* parent=0);
@@ -122,11 +122,12 @@ public slots:
     void setSWCDisplayUsingGlobalSettings() {setSWCDisplayMode(-1);}
     void setSWCDisplayUsingLine() {setSWCDisplayMode(1);}
     void setSWCDisplayUsingTube() {setSWCDisplayMode(0);}
-    /*void setMeshDensity(int newMeshDensity);
-    void setMeshDensity27() {setMeshDensity(27);}
-    void setMeshDensity18() {setMeshDensity(18);}
-    void setMeshDensity9() {setMeshDensity(9);}
-    void setMeshDensityDefault() {setMeshDensity(36);}*/
+    //这里可能其他的cpp用到了 先注释
+//    void setMeshDensity(int newMeshDensity);
+//    void setMeshDensity27() {setMeshDensity(27);}
+//    void setMeshDensity18() {setMeshDensity(18);}
+//    void setMeshDensity9() {setMeshDensity(9);}
+//    void setMeshDensityDefault() {setMeshDensity(36);}
 
     void pressedClickHandler(int row, int col);
     void doubleClickHandler(int row, int col);
