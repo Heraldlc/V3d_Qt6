@@ -314,37 +314,37 @@ void MainWindow::updateTriviewWindow()
 void MainWindow::updateTriview()
 {
     qDebug()<<"triggered in MainWindow ... ...";
-        TriviewControl *tvControl = (TriviewControl *)(this->curHiddenSelectedWindow());
-        if(tvControl)
-        {
-            // updateMinMax then changeFocus
-            V3DLONG currslice = tvControl->getValidZslice();
-            V3DLONG preslice = tvControl->getPreValidZslice();
-
-            qDebug()<<"the triview window exist ... ..."<<currslice<<preslice;
-
-            if(currslice>preslice)
-            {
-                qDebug()<<"update triview window ... ...";
-
-                tvControl->updateMinMax(currslice-1);
-
-                V3DLONG x, y, z;
-                tvControl->getFocusLocation( x, y, z);
-                tvControl->setFocusLocation( x, y, currslice);
-
-                tvControl->setPreValidZslice(currslice);
-            }
-
-            QCoreApplication::processEvents();
-            return;
-        }
-        else
-        {
-            printf("The pointer to triview window is NULL!\n");
-            QCoreApplication::processEvents();
-            return;
-        }
+    //	TriviewControl *tvControl = (TriviewControl *)(this->curHiddenSelectedWindow());
+    //	if(tvControl)
+    //	{
+    //		// updateMinMax then changeFocus
+    //		V3DLONG currslice = tvControl->getValidZslice();
+    //		V3DLONG preslice = tvControl->getPreValidZslice();
+    //
+    //		qDebug()<<"the triview window exist ... ..."<<currslice<<preslice;
+    //
+    //		if(currslice>preslice)
+    //		{
+    //			qDebug()<<"update triview window ... ...";
+    //
+    //			tvControl->updateMinMax(currslice-1);
+    //
+    //			V3DLONG x, y, z;
+    //			tvControl->getFocusLocation( x, y, z);
+    //			tvControl->setFocusLocation( x, y, currslice);
+    //
+    //			tvControl->setPreValidZslice(currslice);
+    //		}
+    //
+    //		QCoreApplication::processEvents();
+    //		return;
+    //	}
+    //	else
+    //	{
+    //		printf("The pointer to triview window is NULL!\n");
+    //		QCoreApplication::processEvents();
+    //		return;
+    //	}
     sub_thread.setPriority(QThread::HighPriority);
     if(this->curHiddenSelectedWindow())
     {
@@ -772,45 +772,45 @@ void MainWindow::generateVersionInfo()
 
 V3dR_MainWindow * MainWindow::find3DViewer(QString fileName)
 {
-    int numfind = 0; //20110427 YuY
-    V3dR_MainWindow * v3dRMWFind;
-    // support image with relative path
-    QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath(); //20110427 YuY
-    if (canonicalFilePath.size()==0) canonicalFilePath = fileName; //20110427 YuY
-    for (int i=0; i<list_3Dview_win.size(); i++)
-    {
-        if (list_3Dview_win.at(i)->getDataTitle()==canonicalFilePath || QFileInfo(list_3Dview_win.at(i)->getDataTitle()).fileName() == canonicalFilePath) //20110427 YuY
-        {
-            v3dRMWFind = list_3Dview_win.at(i);
-            numfind++;
-        }
-    }
-    if(!numfind) //20110427 YuY
-    {
-        // try find image name contains the input string from the end
-        for (int i=0; i<list_3Dview_win.size(); i++)
-        {
-            if ( list_3Dview_win.at(i)->getDataTitle().endsWith(canonicalFilePath) ||
-                QFileInfo(list_3Dview_win.at(i)->getDataTitle()).fileName().endsWith(canonicalFilePath) ) //20110427 YuY
-            {
-                v3dRMWFind = list_3Dview_win.at(i);
-                numfind++;
-            }
-        }
-    }
-    if(numfind > 1)	//20110427 YuY
-    {
-        v3d_msg(QString("Too many windows sharing the same [partial] name. Please specify your image with whole name including absolute path and try again."), 1);
-        return 0;
-    }
-    else if(numfind == 1)
-    {
-        return v3dRMWFind;
-    }
-    else
-    {
-        return 0;
-    }
+//    int numfind = 0; //20110427 YuY
+//    V3dR_MainWindow * v3dRMWFind;
+//    // support image with relative path
+//    QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath(); //20110427 YuY
+//    if (canonicalFilePath.size()==0) canonicalFilePath = fileName; //20110427 YuY
+//    for (int i=0; i<list_3Dview_win.size(); i++)
+//    {
+//        if (list_3Dview_win.at(i)->getDataTitle()==canonicalFilePath || QFileInfo(list_3Dview_win.at(i)->getDataTitle()).fileName() == canonicalFilePath) //20110427 YuY
+//        {
+//            v3dRMWFind = list_3Dview_win.at(i);
+//            numfind++;
+//        }
+//    }
+//    if(!numfind) //20110427 YuY
+//    {
+//        // try find image name contains the input string from the end
+//        for (int i=0; i<list_3Dview_win.size(); i++)
+//        {
+//            if ( list_3Dview_win.at(i)->getDataTitle().endsWith(canonicalFilePath) ||
+//                QFileInfo(list_3Dview_win.at(i)->getDataTitle()).fileName().endsWith(canonicalFilePath) ) //20110427 YuY
+//            {
+//                v3dRMWFind = list_3Dview_win.at(i);
+//                numfind++;
+//            }
+//        }
+//    }
+//    if(numfind > 1)	//20110427 YuY
+//    {
+//        v3d_msg(QString("Too many windows sharing the same [partial] name. Please specify your image with whole name including absolute path and try again."), 1);
+//        return 0;
+//    }
+//    else if(numfind == 1)
+//    {
+//        return v3dRMWFind;
+//    }
+//    else
+//    {
+//        return 0;
+//    }
     return 0;
 }
 void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool b_forceopen3dviewer)
@@ -1024,19 +1024,19 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
 
             //
             V3dR_MainWindow *my3dwin = 0;
-            try
-            {
-                my3dwin = new V3dR_MainWindow(mypara_3Dview);
-                my3dwin->setParent(0);
-                //my3dwin->setDataTitle(fileName);
-                my3dwin->show();
-                mypara_3Dview->window3D = my3dwin;
-            }
-            catch (...)
-            {
-                v3d_msg("You fail to open a 3D view window. You may have opened too many stacks (if so please close some first) or try to render a too-big 3D view (if so please contact Hanchuan Peng for a 64-bit version of Vaa3D).");
-                return;
-            }
+//            try
+//            {
+//                my3dwin = new V3dR_MainWindow(mypara_3Dview);
+//                my3dwin->setParent(0);
+//                //my3dwin->setDataTitle(fileName);
+//                my3dwin->show();
+//                mypara_3Dview->window3D = my3dwin;
+//            }
+//            catch (...)
+//            {
+//                v3d_msg("You fail to open a 3D view window. You may have opened too many stacks (if so please close some first) or try to render a too-big 3D view (if so please contact Hanchuan Peng for a 64-bit version of Vaa3D).");
+//                return;
+//            }
             //list_3Dview_win.append(my3dwin); //081003: no longer need to do this here. I changed the V3dR_MainWindow so that when it create, it will add it into the list; and close the window, then it will delete itself from the list
         }
         else if (cur_suffix=="ATLAS")

@@ -3343,7 +3343,7 @@ void XFormWidget::hideEvent(QHideEvent* e)
 #if defined(USE_Qt5)
 	void XFormWidget::onActivated(QMdiSubWindow* aw)
 #else
-	void XFormWidget::onActivated(QWidget* aw)
+    void XFormWidget::onActivated(QWidget* aw)
 #endif
 {
 	//qDebug() <<"XFormWidget::onActivated" <<aw <<"this="<<this <<windowTitle();
@@ -4954,17 +4954,20 @@ void XFormWidget::doImage3DView(bool tmp_b_use_512x512x256, int b_local, V3DLONG
 	//b_local==2, use roi;
 	//b_local==3, use lower and upper bounding box in bbx0, bby0, ....
 {
+    qDebug()<<"debug 3D use by jazz brain";
 	if (!b_local && mypara_3Dview.b_still_open)
-	{
-        //mypara_3Dview.window3D->raise_and_activate(); // activateWindow();
+    {
+        qDebug()<<"debug 3D use by jazz brain--------------------1";
+        mypara_3Dview.window3D->raise_and_activate(); // activateWindow();
 		return;
 	}
 	if (b_local && mypara_3Dlocalview.b_still_open)
 	{
-		//mypara_3Dlocalview.window->raise_and_activate();
+        qDebug()<<"debug 3D use by jazz brain--------------------2";
+        mypara_3Dlocalview.window3D->raise_and_activate();
 
 		//090723: continue create a new view, wait 1 second for the last local 3D view closed
-        //mypara_3Dlocalview.window3D->postClose();
+        mypara_3Dlocalview.window3D->postClose();
 		if (b_local==1)
 			QTimer::singleShot(1000, this, SLOT(doImage3DLocalMarkerView()));
 		else if (b_local==2)
@@ -4979,6 +4982,7 @@ void XFormWidget::doImage3DView(bool tmp_b_use_512x512x256, int b_local, V3DLONG
 
 	if (imgData)
 	{
+        qDebug()<<"debug 3D use by jazz brain--------------------3";
 		V3DLONG nbytes = estimateRoughAmountUsedMemory();
 //        if (nbytes>(V3DLONG)((double(1024)*1024*1024*TH_USE_MEMORY)))
 //		{
@@ -4988,7 +4992,8 @@ void XFormWidget::doImage3DView(bool tmp_b_use_512x512x256, int b_local, V3DLONG
 
 		if (! b_local) //0 for entire image
 		{
-			//iDrawExternalParameter mypara;
+            qDebug()<<"debug 3D use by jazz brain--------------------4";
+            iDrawExternalParameter mypara;
 			mypara_3Dview.image4d = imgData;
 			mypara_3Dview.b_use_512x512x256 = tmp_b_use_512x512x256;
 			mypara_3Dview.xwidget = this; //imgData->listLandmarks;
@@ -4999,6 +5004,7 @@ void XFormWidget::doImage3DView(bool tmp_b_use_512x512x256, int b_local, V3DLONG
 		}
 		if (b_local==1 || b_local==2 || b_local==3)
 		{
+            qDebug()<<"debug 3D use by jazz brain--------------------5";
 			V3DLONG x0, y0, z0, x1, y1, z1;
 
 			switch (b_local)
@@ -5075,36 +5081,42 @@ void XFormWidget::doImage3DView(bool tmp_b_use_512x512x256, int b_local, V3DLONG
 			mypara_3Dlocalview.local_size = LocationSimple(x1-x0+1, y1-y0+1, z1-z0+1);
 			mypara_3Dlocalview.local_start = LocationSimple(x0, y0, z0);
 
-			//			if (mypara_3Dlocalview.localimage4d)
-			//				delete mypara_3Dlocalview.localimage4d;
-			//			mypara_3Dlocalview.localimage4d = 0;
-			//			mypara_3Dlocalview.localimage4d = new My4DImage();
-			//			if (mypara_3Dlocalview.localimage4d)
-			//				mypara_3Dlocalview.localimage4d->setNewImageData(imgData->getRawData(),
-			//						mypara_3Dlocalview.local_size.x,
-			//						mypara_3Dlocalview.local_size.y,
-			//						mypara_3Dlocalview.local_size.z,
-			//						imgData->getCDim(), imgData->getDatatype());
+//                        if (mypara_3Dlocalview.localimage4d)
+//                            delete mypara_3Dlocalview.localimage4d;
+//                        mypara_3Dlocalview.localimage4d = 0;
+//                        mypara_3Dlocalview.localimage4d = new My4DImage();
+//                        if (mypara_3Dlocalview.localimage4d)
+//                            mypara_3Dlocalview.localimage4d->setNewImageData(imgData->getRawData(),
+//                                    mypara_3Dlocalview.local_size.x,
+//                                    mypara_3Dlocalview.local_size.y,
+//                                    mypara_3Dlocalview.local_size.z,
+//                                    imgData->getCDim(), imgData->getDatatype());
 		}
 
 		V3dR_MainWindow *my3dwin = 0;
         try
         {
+            qDebug()<<"debug 3D use by jazz brain--------------------6";
             if (b_local)
             {
+                qDebug()<<"debug 3D use by jazz brain--------------------7";
                 my3dwin = new V3dR_MainWindow(&mypara_3Dlocalview); //090628 RZC
                 mypara_3Dlocalview.window3D = my3dwin;
             }
             else
             {
+                qDebug()<<"debug 3D use by jazz brain--------------------8";
                 my3dwin = new V3dR_MainWindow(&mypara_3Dview); //iDrawMainWindow-->V3dR_MainWindow, by RZC 20080921
+                qDebug()<<"debug 3D use by jazz brain--------------------88";
                 mypara_3Dview.window3D = my3dwin;
             }
             my3dwin->setParent(0);
 
             // @ADDED by Alessandro on 2015-09-29. Postpone show() if required.
-            if(show)
+            if(show){
+                qDebug()<<"debug 3D use by jazz brain--------------------9";
                 my3dwin->show();
+            }
         }
         catch (...)
         {
