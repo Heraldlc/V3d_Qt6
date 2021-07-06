@@ -49,11 +49,11 @@ private:
     static void activateMainWindowHelper(QMainWindow* qMainWindow) {
         if (qMainWindow!=0) {
 #ifdef CGS_AUTOLAUNCH
-			qMainWindow->resize(QSize(0, 0));
-			qMainWindow->hide();
+            qMainWindow->resize(QSize(0, 0));
+            qMainWindow->hide();
 #endif
-			theApp->installEventFilter(qMainWindow);
-			QSettings settings("HHMI", "Vaa3D");
+            theApp->installEventFilter(qMainWindow);
+            QSettings settings("HHMI", "Vaa3D");
             QPoint windowPosition = settings.value("pos", QPoint(10, 10)).toPoint();
             QSize windowSize = settings.value("size", QSize(1000, 700)).toSize();
             qMainWindow->move(windowPosition);
@@ -73,12 +73,12 @@ public:
     }
 
     static void handleCloseEvent(QCloseEvent* event) {
-        //mainWindow->handleCoordinatedCloseEvent(event);
+        mainWindow->handleCoordinatedCloseEvent(event);
 
 #ifdef _ALLOW_WORKMODE_MENU_
-//        if (naMainWindow!=0) {
-//            naMainWindow->handleCoordinatedCloseEvent(event);
-//        }
+        if (naMainWindow!=0) {
+            //naMainWindow->handleCoordinatedCloseEvent(event);
+        }
 #endif
 
         QCoreApplication::postEvent(theApp, new QEvent(QEvent::Quit)); // this more OK
@@ -101,10 +101,10 @@ public:
         }
 
 #ifdef _ALLOW_WORKMODE_MENU_
-//        if (naMainWindow!=0) {
-//            naMainWindow->setV3DDefaultModeCheck(true);
-//        }
-//        mainWindow->setV3DDefaultModeCheck(true);
+        if (naMainWindow!=0) {
+            //naMainWindow->setV3DDefaultModeCheck(true);
+        }
+        mainWindow->setV3DDefaultModeCheck(true);
 #endif
     }
 
@@ -114,10 +114,10 @@ public:
             mainWindowIsActive=false;
         }
 #ifdef _ALLOW_WORKMODE_MENU_
-//        mainWindow->setV3DDefaultModeCheck(false);
-//        if (naMainWindow!=0) {
-//            naMainWindow->setV3DDefaultModeCheck(false);
-//        }
+        mainWindow->setV3DDefaultModeCheck(false);
+        if (naMainWindow!=0) {
+            //naMainWindow->setV3DDefaultModeCheck(false);
+        }
 #endif
     }
 
@@ -135,7 +135,7 @@ public:
             activateMainWindowHelper(naMainWindow);
             naMainWindowIsActive=true;
         }
-        naMainWindow->setNeuronAnnotatorModeCheck(true);
+        //naMainWindow->setNeuronAnnotatorModeCheck(true);
         mainWindow->setNeuronAnnotatorModeCheck(true);
     }
 
@@ -145,7 +145,7 @@ public:
             naMainWindowIsActive=false;
         }
         if (naMainWindow!=0) {
-            naMainWindow->setNeuronAnnotatorModeCheck(false);
+            //naMainWindow->setNeuronAnnotatorModeCheck(false);
         }
         mainWindow->setNeuronAnnotatorModeCheck(false);
     }

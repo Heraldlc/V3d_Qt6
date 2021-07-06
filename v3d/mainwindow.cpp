@@ -278,21 +278,12 @@ MainWindow::~MainWindow()
 }
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    /*
-    switch (QMessageBox::information(this,tr("warning"),tr("Do you want to exit?"),tr("yes"),tr("no"),0,1)) {
-    case 0:
-        break;
-    case 1:
-        event->ignore();
-        return;
-        break;
-    } //by XZ, 20190725
-    */
+//    disconnect(workspace, SIGNAL(windowActivated(QWidget *)),  this, SLOT(updateMenus())); //instead of above line
+//    V3dApplication::handleCloseEvent(event);
 
     //if (workspace)  workspace->deleteLater(); //110802 RZC //will call ~XFormView to raise BAD_ACCESS
    //修改 disconnect(workspace, SIGNAL(windowActivated(QWidget *)),  this, SLOT(updateMenus())); //instead of above line
     disconnect(workspace, SIGNAL(subWindowActivated(QMdiSubWindow *)),  this, SLOT(updateMenus()));
-
     V3dApplication::handleCloseEvent(event);
 }
 void MainWindow::transactionStart()
@@ -466,20 +457,7 @@ void MainWindow::updateRunPlugin() //20110426 YuY
             }
             qint64 etime_plugin = timer_plugin.elapsed();
             qDebug() << " **** the plugin preprocessing takes [" << etime_plugin <<" milliseconds]";
-            //uncommented version is only used for bench testing by Zhi Z, 20151103
-//            if(v3dclp.fileList.size()>0)
-//            {
-//                QString timer_log = QString(v3dclp.fileList.at(0)) + "_" + QFileInfo(pluginname).baseName() + "_" + pluginfunc +"_time.log";
-//                QFile file(timer_log);
-//                if (!file.open(QFile::WriteOnly|QFile::Truncate))
-//                {
-//                    cout <<"Error opening the log file "<<timer_log.toStdString().c_str() << endl;
-//                }
 
-//                QTextStream stream (&file);
-//                stream << "the plugin preprocessing takes\t"<< etime_plugin <<" milliseconds"<<"\n";
-//                file.close();
-//            }
         }
         else
         {
@@ -962,7 +940,7 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                 {
                     my3dwin = new V3dR_MainWindow(mypara_3Dview);
                     my3dwin->setParent(0);
-                    //my3dwin->setDataTitle(fileName);
+                    my3dwin->setDataTitle(fileName);
                     my3dwin->show();
                     mypara_3Dview->window3D = my3dwin;
                     if (child_rawimg)
@@ -1027,20 +1005,20 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
 
             //
             V3dR_MainWindow *my3dwin = 0;
-//            try
-//            {
-//                my3dwin = new V3dR_MainWindow(mypara_3Dview);
-//                my3dwin->setParent(0);
-//                //my3dwin->setDataTitle(fileName);
-//                my3dwin->show();
-//                mypara_3Dview->window3D = my3dwin;
-//            }
-//            catch (...)
-//            {
-//                v3d_msg("You fail to open a 3D view window. You may have opened too many stacks (if so please close some first) or try to render a too-big 3D view (if so please contact Hanchuan Peng for a 64-bit version of Vaa3D).");
-//                return;
-//            }
-            //list_3Dview_win.append(my3dwin); //081003: no longer need to do this here. I changed the V3dR_MainWindow so that when it create, it will add it into the list; and close the window, then it will delete itself from the list
+            try
+            {
+                my3dwin = new V3dR_MainWindow(mypara_3Dview);
+                my3dwin->setParent(0);
+                my3dwin->setDataTitle(fileName);
+                my3dwin->show();
+                mypara_3Dview->window3D = my3dwin;
+            }
+            catch (...)
+            {
+                v3d_msg("You fail to open a 3D view window. You may have opened too many stacks (if so please close some first) or try to render a too-big 3D view (if so please contact Hanchuan Peng for a 64-bit version of Vaa3D).");
+                return;
+            }
+            list_3Dview_win.append(my3dwin); //081003: no longer need to do this here. I changed the V3dR_MainWindow so that when it create, it will add it into the list; and close the window, then it will delete itself from the list
         }
         else if (cur_suffix=="ATLAS")
         {
@@ -1403,105 +1381,7 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                                 "The file may have certain problem - check the file format, or is simply too big but you don't have enough memory.").arg(fileName));
             }
         }
-//		else if (cur_suffix=="HRAW") // For openning hierarchical data from large data set. ZJL 20120302
-//        {
-//			QString basename = curfile_info.baseName();
-//
-//			QString hraw_prefix = "test";//""curfile_info.absolutePath()  + basename.left(basename.indexOf(".")); // before the first "."
-//
-//			string prefix = hraw_prefix.toStdString();
-//			//string prefix ="/Volumes/PengMapView/mapview_testdata/ananya/test";
-//
-//             try
-//             {
-//                  size_t start_t = clock();
-//
-//                  // contents of .hraw file
-//                  // L, M, N, l, m, n
-//                  // level : level nums
-//                  // outsz[3]
-//
-//                  int L = 14; //log(8)/log(2.0);
-//                  int M = 38; //log(8)/log(2.0);
-//                  int N = 3;  //log(8)/log(2.0);
-//                  int l = 512;//log(256)/log(2.0);
-//                  int m = 256;//log(128)/log(2.0);
-//                  int n = 64; //log(64)/log(2.0);
-//                  int level = 0;
-//
-//                  ImageMapView mapview;
-//                  mapview.setPara(prefix, L, M, N, l, m, n);
-//
-//                  unsigned char * outimg1d = 0;
-//                  V3DLONG origin[3] = {0, 0, 0};
-//                  V3DLONG outsz[4] = {512, 256, 64, 1};
-//
-//                  mapview.getImage(level, outimg1d, origin[0], origin[1], origin[2], outsz[0], outsz[1], outsz[2]);
-//
-//                  XFormWidget *child = createMdiChild();
-//                  child->setImageData(outimg1d, outsz[0], outsz[1], outsz[2], outsz[3], V3D_UINT8);
-//                  child->mypara_3Dview.image4d = child->getImageData();
-//
-//                  // mapview control
-//                  Mapview_Paras mv_paras;
-//                  mv_paras.L=L; mv_paras.M=M; mv_paras.N=N;
-//                  mv_paras.l=l; mv_paras.m=m; mv_paras.n=n;
-//                  mv_paras.origin[0] = origin[0]; mv_paras.origin[1] = origin[1]; mv_paras.origin[2] = origin[2];
-//                  mv_paras.outsz[0] = outsz[0]; mv_paras.outsz[1] = outsz[1]; mv_paras.outsz[2] = outsz[2]; mv_paras.outsz[3] = outsz[3]; mv_paras.outsz[3] = outsz[3];
-//                  mv_paras.hraw_prefix=hraw_prefix;
-//                  mv_paras.level = level;
-//
-//                  child->mapview_paras = mv_paras;
-//                  child->mapview = mapview;
-//
-//                  child->setWindowTitle_Prefix(hraw_prefix.toAscii());
-//                  child->setWindowTitle_Suffix("");
-//
-//                  child->reset();
-//
-//                  if (global_setting.b_autoConvert2_8bit)
-//                  {
-//                       if (global_setting.default_rightshift_bits<0) //when set as -1 or other <0 values, then invoke the dialog.
-//                       {
-//                            if (child->getImageData()->getDatatype()==V3D_UINT16)
-//                                 child->popupImageProcessingDialog(tr(" -- convert 16bit image to 8 bit"));
-//                            else if (child->getImageData()->getDatatype()==V3D_FLOAT32)
-//                                 child->popupImageProcessingDialog(tr(" -- convert 32bit (single-precision float) image to 8 bit"));
-//                       }
-//                       else //otherwise do the conversion directly
-//                       {
-//                            if (child->getImageData()->getDatatype()==V3D_UINT16)
-//                                 child->getImageData()->proj_general_convert16bit_to_8bit(global_setting.default_rightshift_bits);
-//                            else if (child->getImageData()->getDatatype()==V3D_FLOAT32)
-//                                 child->getImageData()->proj_general_convert32bit_to_8bit(global_setting.default_rightshift_bits);
-//                       }
-//                  }
-//
-//                  if (global_setting.b_yaxis_up)
-//                  {
-//                       child->getImageData()->flip(axis_y);
-//                  }
-//
-//                  child->show();
-//
-//                  // create mapview control window
-//                  child->createMapviewControlWin();
-//
-//                  if (b_forceopen3dviewer || (global_setting.b_autoOpenImg3DViewer))
-//                  {
-//                       child->doImage3DView();
-//                  }
-//
-//                  size_t end_t = clock();
-//                  qDebug()<<"time consume ..."<<end_t-start_t;
-//
-//             }
-//             catch(...)
-//             {
-//                  QMessageBox::warning(0, "warning: fail to create window", "You fail to open a new window for the specified image. The file may have certain problem, or is simply too big but you don't have enough memory.");
-//                  v3d_msg(QString("Fail to create window for the file [%1]\n").arg(fileName));
-//             }
-//        } // end hraw
+
         else // changed by YuY Nov. 19, 2010. Msg corrected by PHC, 2011-06-04
         {
             v3d_msg(QString("The file [%1] has an unsupported file name extension and cannot be opened properly! "
@@ -1726,23 +1606,6 @@ QString MainWindow::strippedName(const QString &fullFileName)
 }
 void MainWindow::atlasView()
 {
-    /*
-    QString fileName = QFileDialog::getOpenFileName(this);
-    if (!fileName.isEmpty()) {
-        XFormWidget *existing = findMdiChild(fileName);
-        if (existing) {
-            workspace->setActiveWindow(existing);
-            return;
-        }
-        XFormWidget *child = createMdiChild();
-        if (child->loadFile(fileName)) {
-            statusBar()->showMessage(tr("File loaded"), 2000);
-            child->show();
-        } else {
-            child->close();
-        }
-    }
- */
 }
 void MainWindow::save()
 {
@@ -1764,7 +1627,7 @@ void MainWindow::saveAs()
 }
 void MainWindow::cut()
 {
-    //    activeMdiChild()->cut();
+       //activeMdiChild()->cut();
 }
 void MainWindow::copy()
 {
@@ -2349,8 +2212,8 @@ void MainWindow::createActions()
     closeAllAct->setStatusTip(tr("Close all the windows"));
 
 
-//    connect(closeAllAct, SIGNAL(triggered()), workspace, SLOT(closeAllWindows()));
-    //connect(closeAllAct, SIGNAL(triggered()), this, SLOT(handleCoordinatedCloseEvent_real()));
+    connect(closeAllAct, SIGNAL(triggered()), workspace, SLOT(closeAllWindows()));
+    connect(closeAllAct, SIGNAL(triggered()), this, SLOT(handleCoordinatedCloseEvent_real()));
 
 
     tileAct = new QAction(tr("&Tile"), this);
@@ -2749,10 +2612,7 @@ XFormWidget *MainWindow::createMdiChild()
 }
 XFormWidget *MainWindow::activeMdiChild()
 {
-
-
     return qobject_cast<XFormWidget *>(workspace->activeSubWindow());
-
 }
 XFormWidget *MainWindow::findMdiChild(const QString &fileName)
 {
@@ -2760,8 +2620,6 @@ XFormWidget *MainWindow::findMdiChild(const QString &fileName)
     QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
     if (canonicalFilePath.size()==0) canonicalFilePath = fileName; //090818 RZC 20110427 YuY
     XFormWidget *mdiChildFind;
-
-
     foreach (QMdiSubWindow *window, workspace->subWindowList()) {
 
         XFormWidget *mdiChild = qobject_cast<XFormWidget *>(window);
@@ -2960,6 +2818,7 @@ void MainWindow::func_procCellSeg_manualCorrect(){if (activeMdiChild()) activeMd
 // Mode
 void MainWindow::func_procModeDefault()
 {
+    //注释 namainwindows干啥的
 //    V3dApplication::deactivateNaMainWindow();
 //    V3dApplication::activateMainWindow();
 }
@@ -2969,10 +2828,10 @@ void MainWindow::func_procModeNeuronAnnotator()
 //    V3dApplication::activateNaMainWindow();
 }
 void MainWindow::setV3DDefaultModeCheck(bool checkState) {
-//    //procModeDefault->setChecked(checkState);
+    //procModeDefault->setChecked(checkState);
 }
 void MainWindow::setNeuronAnnotatorModeCheck(bool checkState) {
-//    //procModeNeuronAnnotator->setChecked(checkState);
+    //procModeNeuronAnnotator->setChecked(checkState);
 }
 #endif
 
@@ -2998,44 +2857,8 @@ void MainWindow::func_open_neuron_game()
 }
 #endif
 
-//class V3D_PlugIn_Interface
-//{
-//public:
-//	void doit() {v3d_msg("do it");}
-//};
-//void MainWindow::func_procPC_Atlas_edit_atlaslinkerfile()
-//{
-//	apoAtlasLinkerInfoAll apo_atlas_info;
-//	QString fileName = QFileDialog::getOpenFileName(this, tr("Open an Point Cloud Atlas File"),
-//													"",
-//													tr("point cloud atlas linker file (*.pc_atlas)"));
-//    if (fileName.isEmpty())
-//	{
-//		v3d_msg("No file is selected. Do nothing.");
-//		return;
-//	}
-//
-//	if (!loadPointCloudAtlasInfoListFromFile(qPrintable(fileName.trimmed()), apo_atlas_info))
-//	{
-//		v3d_msg("Fail to load the specified point cloud atlas file.");
-//		return;
-//	}
-//
-//	func_procIO_import_atlas_apofolder(apo_atlas_info);//continue to edit
-//}
-//
-//void MainWindow::func_procPC_Atlas_create_atlaslinkerfile()
-//{
-//	apoAtlasLinkerInfoAll apo_atlas_info;
-//	func_procIO_import_atlas_apofolder(apo_atlas_info);
-//}
-//
-//void MainWindow::func_procPC_Atlas_view_atlas(){}
 void MainWindow::func_procPC_Atlas_view_atlas_computeVanoObjStat()
-{
-    //	QString inName = QFileDialog::getOpenFileName(this, tr("Open a Point Cloud Atlas File"),
-    //													"",
-    //													tr("point cloud annotation linker file (*.ano *)"));
+{										
     QString inName = QFileDialog::getExistingDirectory(this, tr("Select a directory contain .ano files"),"");
     QStringList listRecompute;
     QFileInfo fi_inName(inName);

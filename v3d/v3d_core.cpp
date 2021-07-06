@@ -3721,88 +3721,88 @@ void XFormWidget::keyPressEvent(QKeyEvent * e)
 			break;
 #endif
 
-//#ifdef _ALLOW_IMGREG_MENU_
-//		case Qt::Key_W:
-//			popupImageProcessingDialog(tr(" -- Match one single landmark in another image"));
-// 			break;
-//
-//		case Qt::Key_E:
-//		    if (QApplication::keyboardModifiers()==Qt::ControlModifier)
-//		    {
-//				bool ok;
-//				if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod==(int)MATCH_INTENSITY)
-//					item = tr("MATCH_INTENSITY");
-//				else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod==(int)MATCH_CORRCOEF)
-//					item = tr("MATCH_CORRCOEF");
-//				else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod==(int)MATCH_MI)
-//					item = tr("MATCH_MI");
-//				else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod==(int)MATCH_IMOMENT)
-//					item = tr("MATCH_IMOMENT");
-//				else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod==(int)MATCH_MEANOFCIRCLES)
-//					item = tr("MATCH_MEANOFCIRCLES");
-//				else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod==(int)MATCH_MULTIPLE_MI_INT_CORR)
-//					item = tr("MATCH_MULTIPLE_MI_INT_CORR");
-//				else
-//					item = tr("Undefined");
-//
-//				if(QMessageBox::Yes == QMessageBox::question (0, "", tr("Your current landmark matching method is [ ") + item + tr("]<br> Do you change?"), QMessageBox::Yes, QMessageBox::No))
-//				{
-//					items << tr("MATCH_MI") << tr("MATCH_MULTIPLE_MI_INT_CORR") << tr("MATCH_INTENSITY") << tr("MATCH_CORRCOEF") << tr("MATCH_IMOMENT") << tr("MATCH_MEANOFCIRCLES");
-//					item = QInputDialog::getItem(this, tr(""), tr("Please select a landmark matching method"), items, 0, false, &ok);
-//					if (ok && !item.isEmpty())
-//					{
-//						if (item==tr("MATCH_INTENSITY"))
-//							imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod = (int)MATCH_INTENSITY;
-//						else if (item==tr("MATCH_CORRCOEF"))
-//							imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod = (int)MATCH_CORRCOEF;
-//						else if (item==tr("MATCH_MI"))
-//							imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod = (int)MATCH_MI;
-//						else if (item==tr("MATCH_IMOMENT"))
-//							imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod = (int)MATCH_IMOMENT;
-//						else if (item==tr("MATCH_MEANOFCIRCLES"))
-//							imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod = (int)MATCH_MEANOFCIRCLES;
-//						else if (item==tr("MATCH_MULTIPLE_MI_INT_CORR"))
-//							imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod = (int)MATCH_MULTIPLE_MI_INT_CORR;
-//						else
-//							imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod = (int)MATCH_MI;
-//					}
-//				}
-//			}
-//			else if (QApplication::keyboardModifiers()==Qt::ShiftModifier)
-//			{
-//				bool ok;
-//				if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method==(int)DF_GEN_TPS)
-//					item = tr("TPS");
-//				else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method==(int)DF_GEN_HIER_B_SPLINE)
-//					item = tr("Hier-B-Spline");
-//				else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method==(int)DF_GEN_TPS_B_SPLINE)
-//					item = tr("TPS-B-Spline-interpolation");
-//				else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method==(int)DF_GEN_TPS_LINEAR_INTERP)
-//					item = tr("TPS-linear-interpolation");
-//				else
-//					item = tr("Undefined");
-//
-//				if(QMessageBox::Yes == QMessageBox::question (0, "", tr("Your current displacement field computing method is [ ") + item + tr("]<br> Do you change?"), QMessageBox::Yes, QMessageBox::No))
-//				{
-//					items << tr("TPS-linear-interpolation") <<  tr("TPS-B-Spline-interpolation") << tr("TPS") << tr("Hier-B-Spline");
-//					item = QInputDialog::getItem(this, tr(""), tr("Please select a displacement filed (DF) computing method"), items, 0, false, &ok);
-//					if (ok && !item.isEmpty())
-//					{
-//						if (item==tr("TPS-linear-interpolation"))
-//							imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method = (int)DF_GEN_TPS_LINEAR_INTERP;
-//						else if (item==tr("TPS-B-Spline-interpolation"))
-//							imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method = (int)DF_GEN_TPS_B_SPLINE;
-//						else if (item==tr("TPS"))
-//							imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method = (int)DF_GEN_TPS;
-//						else if (item==tr("Hier-B-Spline"))
-//							imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method = (int)DF_GEN_HIER_B_SPLINE;
-//						else
-//							imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method = (int)DF_GEN_TPS;
-//					}
-//				}
-//			}
-//			break;
-//#endif
+#ifdef _ALLOW_IMGREG_MENU_
+        case Qt::Key_W:
+            popupImageProcessingDialog(tr(" -- Match one single landmark in another image"));
+            break;
+
+        case Qt::Key_E:
+            if (QApplication::keyboardModifiers()==Qt::ControlModifier)
+            {
+                bool ok;
+                if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod==(int)MATCH_INTENSITY)
+                    item = tr("MATCH_INTENSITY");
+                else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod==(int)MATCH_CORRCOEF)
+                    item = tr("MATCH_CORRCOEF");
+                else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod==(int)MATCH_MI)
+                    item = tr("MATCH_MI");
+                else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod==(int)MATCH_IMOMENT)
+                    item = tr("MATCH_IMOMENT");
+                else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod==(int)MATCH_MEANOFCIRCLES)
+                    item = tr("MATCH_MEANOFCIRCLES");
+                else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod==(int)MATCH_MULTIPLE_MI_INT_CORR)
+                    item = tr("MATCH_MULTIPLE_MI_INT_CORR");
+                else
+                    item = tr("Undefined");
+
+                if(QMessageBox::Yes == QMessageBox::question (0, "", tr("Your current landmark matching method is [ ") + item + tr("]<br> Do you change?"), QMessageBox::Yes, QMessageBox::No))
+                {
+                    items << tr("MATCH_MI") << tr("MATCH_MULTIPLE_MI_INT_CORR") << tr("MATCH_INTENSITY") << tr("MATCH_CORRCOEF") << tr("MATCH_IMOMENT") << tr("MATCH_MEANOFCIRCLES");
+                    item = QInputDialog::getItem(this, tr(""), tr("Please select a landmark matching method"), items, 0, false, &ok);
+                    if (ok && !item.isEmpty())
+                    {
+                        if (item==tr("MATCH_INTENSITY"))
+                            imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod = (int)MATCH_INTENSITY;
+                        else if (item==tr("MATCH_CORRCOEF"))
+                            imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod = (int)MATCH_CORRCOEF;
+                        else if (item==tr("MATCH_MI"))
+                            imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod = (int)MATCH_MI;
+                        else if (item==tr("MATCH_IMOMENT"))
+                            imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod = (int)MATCH_IMOMENT;
+                        else if (item==tr("MATCH_MEANOFCIRCLES"))
+                            imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod = (int)MATCH_MEANOFCIRCLES;
+                        else if (item==tr("MATCH_MULTIPLE_MI_INT_CORR"))
+                            imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod = (int)MATCH_MULTIPLE_MI_INT_CORR;
+                        else
+                            imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_landmarkMatchingMethod = (int)MATCH_MI;
+                    }
+                }
+            }
+            else if (QApplication::keyboardModifiers()==Qt::ShiftModifier)
+            {
+                bool ok;
+                if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method==(int)DF_GEN_TPS)
+                    item = tr("TPS");
+                else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method==(int)DF_GEN_HIER_B_SPLINE)
+                    item = tr("Hier-B-Spline");
+                else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method==(int)DF_GEN_TPS_B_SPLINE)
+                    item = tr("TPS-B-Spline-interpolation");
+                else if (imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method==(int)DF_GEN_TPS_LINEAR_INTERP)
+                    item = tr("TPS-linear-interpolation");
+                else
+                    item = tr("Undefined");
+
+                if(QMessageBox::Yes == QMessageBox::question (0, "", tr("Your current displacement field computing method is [ ") + item + tr("]<br> Do you change?"), QMessageBox::Yes, QMessageBox::No))
+                {
+                    items << tr("TPS-linear-interpolation") <<  tr("TPS-B-Spline-interpolation") << tr("TPS") << tr("Hier-B-Spline");
+                    item = QInputDialog::getItem(this, tr(""), tr("Please select a displacement filed (DF) computing method"), items, 0, false, &ok);
+                    if (ok && !item.isEmpty())
+                    {
+                        if (item==tr("TPS-linear-interpolation"))
+                            imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method = (int)DF_GEN_TPS_LINEAR_INTERP;
+                        else if (item==tr("TPS-B-Spline-interpolation"))
+                            imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method = (int)DF_GEN_TPS_B_SPLINE;
+                        else if (item==tr("TPS"))
+                            imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method = (int)DF_GEN_TPS;
+                        else if (item==tr("Hier-B-Spline"))
+                            imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method = (int)DF_GEN_HIER_B_SPLINE;
+                        else
+                            imgData->getXWidget()->getMainControlWindow()->global_setting.GPara_df_compute_method = (int)DF_GEN_TPS;
+                    }
+                }
+            }
+            break;
+#endif
 
 #endif
 
@@ -4493,22 +4493,7 @@ void XFormWidget::updateDataRelatedGUI()
 
 		//imgProcessButton->setCheckable(true); //080402
 		imgV3DButton->setEnabled(true); //100816. always enable, but will display a warning when the user click it.
-//		if (imgData->getDatatype()==V3D_UINT8)
-//		{
-//			imgV3DButton->setEnabled(true);
-//			//imgV3DROIButton->setEnabled(true);
-//		}
-//		else
-//		{
-//			imgV3DButton->setEnabled(false);
-//			//imgV3DROIButton->setEnabled(false);
-//		}
-		//setLayout(viewLayout);
 
-		//resize(minimumSize());
-
-		// main window title
-		//setWindowTitle(openFileNameLabel.prepend("v3d: "));
 		setWindowTitle(openFileNameLabel); //061011
 
 		//added 081124
@@ -5081,16 +5066,7 @@ void XFormWidget::doImage3DView(bool tmp_b_use_512x512x256, int b_local, V3DLONG
 			mypara_3Dlocalview.local_size = LocationSimple(x1-x0+1, y1-y0+1, z1-z0+1);
 			mypara_3Dlocalview.local_start = LocationSimple(x0, y0, z0);
 
-//                        if (mypara_3Dlocalview.localimage4d)
-//                            delete mypara_3Dlocalview.localimage4d;
-//                        mypara_3Dlocalview.localimage4d = 0;
-//                        mypara_3Dlocalview.localimage4d = new My4DImage();
-//                        if (mypara_3Dlocalview.localimage4d)
-//                            mypara_3Dlocalview.localimage4d->setNewImageData(imgData->getRawData(),
-//                                    mypara_3Dlocalview.local_size.x,
-//                                    mypara_3Dlocalview.local_size.y,
-//                                    mypara_3Dlocalview.local_size.z,
-//                                    imgData->getCDim(), imgData->getDatatype());
+
 		}
 
 		V3dR_MainWindow *my3dwin = 0;
@@ -6170,11 +6146,11 @@ void XFormWidget::doMenuOf3DViewer()
 		return;
 	}
 
-//	if (imgData->getDatatype() != V3D_UINT8)
-//	{
-//		v3d_msg("Your data type is not UINT8 yet, - you will need to convert to UINT8 to see the data in 3D. Go to main menu \"Image/Data\" -> \"Image type\" to convert.");
-//		return;
-//	}
+    if (imgData->getDatatype() != V3D_UINT8)
+    {
+        v3d_msg("Your data type is not UINT8 yet, - you will need to convert to UINT8 to see the data in 3D. Go to main menu \"Image/Data\" -> \"Image type\" to convert.");
+        return;
+    }
 
 	try
 	{

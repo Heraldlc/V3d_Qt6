@@ -506,62 +506,6 @@ bool Renderer_gl2::supported_TexStream()
     return true;
 }
 
-/////////////////////////////////////////////////////////////////////
-//Streaming textures using pixel buffer objects:
-//
-//    const int texWidth = 256;
-//    const int texHeight = 256;
-//    const int texsize = texWidth * texHeight * 4;
-//    void *pboMemory, *texData;
-//
-//    // Define texture level zero (without an image); notice the
-//    // explicit bind to the zero pixel unpack buffer object so that
-//    // pass NULL for the image data leaves the texture image
-//    // unspecified.
-//    glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
-//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, texWidth, texHeight, 0,
-//                 GL_BGRA, GL_UNSIGNED_BYTE, NULL);
-//
-//    // Create and bind texture image buffer object
-//    glGenBuffers(1, &texBuffer);
-//    glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, texBuffer);
-//
-//    // Setup texture environment
-//    ...
-//
-//    texData = getNextImage();
-//
-//    while (texData) {
-//
-//        // Reset the contents of the texSize-sized buffer object
-//        glBufferData(GL_PIXEL_UNPACK_BUFFER_ARB, texSize, NULL,
-//                     GL_STREAM_DRAW);
-//
-//        // Map the texture image buffer (the contents of which
-//        // are undefined due to the previous glBufferData)
-//        pboMemory = glMapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB,
-//                                GL_WRITE_ONLY);
-//
-//        // Modify (sub-)buffer data
-//        memcpy(pboMemory, texData, texsize);
-//
-//        // Unmap the texture image buffer
-//        glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER_ARB);
-//
-//        // Update (sub-)teximage from texture image buffer
-//        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, texWidth, texHeight,
-//                        GL_BGRA, GL_UNSIGNED_BYTE, BUFFER_OFFSET(0));
-//
-//        // Draw textured geometry
-//        glBegin(GL_QUADS);
-//        ...
-//        glEnd();
-//
-//        texData = getNextImage();
-//    }
-//
-//    glBindBuffer(GL_PIXEL_UNPACK_BUFFER_ARB, 0);
-
 #define BIND_UNPACK_PBO(pbo)  glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_ARB, pbo)
 
 

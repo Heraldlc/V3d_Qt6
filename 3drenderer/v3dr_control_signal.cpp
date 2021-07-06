@@ -830,7 +830,6 @@ void V3dR_MainWindow::connectSignal()
 			connect(yShiftBox, SIGNAL(valueChanged(int)), yShiftSlider, SLOT(setValue(int)));
 		}
 	}
-
 	if (rotReset)
 	{
 		connect(rotReset, SIGNAL(clicked()), glWidget, SLOT(resetRotation()));
@@ -1102,11 +1101,6 @@ void V3dR_MainWindow::initControlValue()
 	//////////////////////////////////////////////////////////////////////////
 	// updateGL here immediately to prevent a delay flash due to following Renderer::init when using POST_updateGL, by RZC 080927
 	if (glWidget) glWidget->update();  // 081122, CAUTION: call updateGL from initializeGL will cause infinite loop call
-
-
-
-
-
 }
 
 void V3dR_MainWindow::setXCutLockIcon(bool b)
