@@ -13,7 +13,7 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -DUSE_Qt5 -D__ALLOW_VR_FUNCS__ -DNOMINMAX -D_WINSOCKAPI_ -DTEEM_STATIC -D__NAWEBSERVICE__ -D_ALLOW_WORKMODE_MENU_ -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_SVG_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_CORE_LIB
+DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -D__ALLOW_VR_FUNCS__ -DNOMINMAX -D_WINSOCKAPI_ -DTEEM_STATIC -D__NAWEBSERVICE__ -D_ALLOW_WORKMODE_MENU_ -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_SVG_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_CORE_LIB
 CFLAGS        = -fno-keep-inline-dllexport -O2 -w $(DEFINES)
 CXXFLAGS      = -fno-keep-inline-dllexport -DTEEM_STATIC -DWITH_NONAMESPACES -DWITH_PURE_VIRTUAL -O2 -std=gnu++1z -w -fexceptions -mthreads $(DEFINES)
 INCPATH       = -I. -I. -I../common_lib/include -I../common_lib/include/SDL -I../common_lib/include/glew -I../common_lib/include/openvr -I../common_lib/include -IF:/QT6/6.1.0/mingw81_64/include -IF:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets -IF:/QT6/6.1.0/mingw81_64/include/QtOpenGL -IF:/QT6/6.1.0/mingw81_64/include/QtSvg -IF:/QT6/6.1.0/mingw81_64/include/QtWidgets -IF:/QT6/6.1.0/mingw81_64/include/QtGui -IF:/QT6/6.1.0/mingw81_64/include/QtNetwork -IF:/QT6/6.1.0/mingw81_64/include/QtXml -IF:/QT6/6.1.0/mingw81_64/include/QtCore -Irelease -I. -IC:/VulkanSDK/1.0.51.0/Include -IF:/QT6/6.1.0/mingw81_64/mkspecs/win32-g++ 
@@ -1266,6 +1266,7 @@ release/moc_pluginDialog.cpp: ../plugin_loader/pluginDialog.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -1938,6 +1939,7 @@ release/moc_v3d_plugin_loader.cpp: ../plugin_loader/v3d_plugin_loader.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -2527,6 +2529,7 @@ release/moc_v3dr_mainwindow.cpp: ../3drenderer/v3dr_mainwindow.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -3236,6 +3239,7 @@ release/moc_v3dr_glwidget.cpp: ../3drenderer/v3dr_glwidget.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -3955,6 +3959,7 @@ release/moc_v3dr_surfaceDialog.cpp: ../3drenderer/v3dr_surfaceDialog.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -5163,6 +5168,7 @@ release/moc_v3dr_colormapDialog.cpp: ../3drenderer/v3dr_colormapDialog.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -7266,6 +7272,7 @@ release/moc_v3d_application.cpp: v3d_application.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -7780,7 +7787,6 @@ release/moc_v3d_application.cpp: v3d_application.h \
 		../neuron_annotator/data_model/Fast3DTexture.h \
 		../neuron_annotator/data_model/Dimension.h \
 		../neuron_annotator/data_model/SampledVolumeMetadata.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QFutureWatcher \
 		../neuron_annotator/data_model/VolumeTexture.h \
 		../neuron_annotator/ExportFile.h \
@@ -8287,6 +8293,7 @@ release/moc_ChannelTable.cpp: ChannelTable.h \
 		v3d_compile_lite.h \
 		../basic_c_fun/v3d_message.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QString \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../basic_c_fun/v3d_basicdatatype.h \
@@ -9254,6 +9261,8 @@ release/moc_dialog_keypoint_features.cpp: dialog_keypoint_features.h \
 		v3d_compile_lite.h \
 		../basic_c_fun/v3d_message.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QString \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qelapsedtimer.h \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -10002,6 +10011,7 @@ release/moc_surfaceobj_geometry_dialog.cpp: surfaceobj_geometry_dialog.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -11868,6 +11878,7 @@ release/moc_atlas_viewer.cpp: atlas_viewer.h \
 		v3d_compile_lite.h \
 		../basic_c_fun/v3d_message.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QString \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../basic_c_fun/v3d_basicdatatype.h \
@@ -12116,6 +12127,8 @@ release/moc_v3d_core.cpp: v3d_core.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qutf8stringview.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringtokenizer.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringbuilder.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qelapsedtimer.h \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../basic_c_fun/v3d_basicdatatype.h \
@@ -12369,6 +12382,8 @@ release/moc_xformwidget.cpp: xformwidget.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qutf8stringview.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringtokenizer.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringbuilder.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qelapsedtimer.h \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../basic_c_fun/v3d_basicdatatype.h \
@@ -12793,6 +12808,8 @@ release/moc_mainwindow.cpp: mainwindow.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QWidget \
 		../basic_c_fun/v3d_global_preference.h \
 		v3d_core.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qelapsedtimer.h \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -12842,7 +12859,6 @@ release/moc_mainwindow.cpp: mainwindow.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QThread \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qthread.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qdeadlinetimer.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qelapsedtimer.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QWaitCondition \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qwaitcondition.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QDeadlineTimer \
@@ -14045,6 +14061,7 @@ release/moc_v3d_custom_toolbar.cpp: ../custom_toolbar/v3d_custom_toolbar.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -14998,6 +15015,8 @@ release/moc_NeuronContextMenu.cpp: ../neuron_annotator/gui/NeuronContextMenu.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
 		../basic_c_fun/v3d_message.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qelapsedtimer.h \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../basic_c_fun/v3d_basicdatatype.h \
@@ -15133,7 +15152,6 @@ release/moc_NeuronContextMenu.cpp: ../neuron_annotator/gui/NeuronContextMenu.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qconcatenatetablesproxymodel.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcryptographichash.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qdeadlinetimer.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qelapsedtimer.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qdiriterator.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qeasingcurve.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qendian.h \
@@ -16546,6 +16564,7 @@ release/v3d_plugin_loader.o: ../plugin_loader/v3d_plugin_loader.cpp ../3drendere
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -17183,6 +17202,7 @@ release/pluginDialog.o: ../plugin_loader/pluginDialog.cpp ../plugin_loader/plugi
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -20381,6 +20401,7 @@ release/v3dr_mainwindow.o: ../3drenderer/v3dr_mainwindow.cpp ../3drenderer/v3dr_
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -20603,7 +20624,6 @@ release/v3dr_mainwindow.o: ../3drenderer/v3dr_mainwindow.cpp ../3drenderer/v3dr_
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QSpacerItem \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../3drenderer/v3dr_control_signal.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\v3dr_mainwindow.o ..\3drenderer\v3dr_mainwindow.cpp
 
@@ -21107,6 +21127,7 @@ release/v3dr_glwidget.o: ../3drenderer/v3dr_glwidget.cpp ../3drenderer/GLee2glew
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -21929,6 +21950,7 @@ release/renderer.o: ../3drenderer/renderer.cpp ../3drenderer/GLee2glew.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -22647,6 +22669,7 @@ release/renderer_tex.o: ../3drenderer/renderer_tex.cpp ../3drenderer/GLee2glew.h
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -23366,6 +23389,7 @@ release/renderer_obj.o: ../3drenderer/renderer_obj.cpp ../3drenderer/GLee2glew.h
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -24087,6 +24111,7 @@ release/renderer_labelfield.o: ../3drenderer/renderer_labelfield.cpp ../3drender
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -24794,6 +24819,7 @@ release/renderer_gl2.o: ../3drenderer/renderer_gl2.cpp ../3drenderer/renderer_gl
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -25510,6 +25536,7 @@ release/renderer_hit.o: ../3drenderer/renderer_hit.cpp ../3drenderer/GLee2glew.h
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -25728,7 +25755,6 @@ release/renderer_hit.o: ../3drenderer/renderer_hit.cpp ../3drenderer/GLee2glew.h
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QSpacerItem \
 		../3drenderer/barFigureDialog.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		landmark_property_dialog.h \
 		ui_landmark_property.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QLineEdit \
@@ -26557,6 +26583,7 @@ release/nstroke.o: ../3drenderer/nstroke.cpp ../3drenderer/renderer_gl1.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -27071,7 +27098,6 @@ release/nstroke.o: ../3drenderer/nstroke.cpp ../3drenderer/renderer_gl1.h \
 		../neuron_annotator/data_model/Fast3DTexture.h \
 		../neuron_annotator/data_model/Dimension.h \
 		../neuron_annotator/data_model/SampledVolumeMetadata.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QFutureWatcher \
 		../neuron_annotator/data_model/VolumeTexture.h \
 		../neuron_annotator/ExportFile.h \
@@ -27604,6 +27630,7 @@ release/nstroke_tracing.o: ../3drenderer/nstroke_tracing.cpp ../3drenderer/rende
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -28118,7 +28145,6 @@ release/nstroke_tracing.o: ../3drenderer/nstroke_tracing.cpp ../3drenderer/rende
 		../neuron_annotator/data_model/Fast3DTexture.h \
 		../neuron_annotator/data_model/Dimension.h \
 		../neuron_annotator/data_model/SampledVolumeMetadata.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QFutureWatcher \
 		../neuron_annotator/data_model/VolumeTexture.h \
 		../neuron_annotator/ExportFile.h \
@@ -29033,6 +29059,7 @@ release/v3dr_surfaceDialog.o: ../3drenderer/v3dr_surfaceDialog.cpp ../3drenderer
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -29762,6 +29789,7 @@ release/ItemEditor.o: ../3drenderer/ItemEditor.cpp ../3drenderer/v3dr_common.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -30465,6 +30493,7 @@ release/v3dr_colormapDialog.o: ../3drenderer/v3dr_colormapDialog.cpp ../3drender
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -32551,6 +32580,7 @@ release/v3d_imaging.o: ../imaging/v3d_imaging.cpp ../imaging/v3d_imaging.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -33072,6 +33102,7 @@ release/vaa3d_neurontoolbox.o: ../neuron_toolbox/vaa3d_neurontoolbox.cpp ../neur
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -33593,6 +33624,7 @@ release/v3d_multithreadimageIO.o: ../multithreadimageIO/v3d_multithreadimageIO.c
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -34180,6 +34212,7 @@ release/v3d_version_info.o: v3d_version_info.cpp v3d_version_info.h \
 		../common_lib/include/boost/intrusive/detail/minimal_less_equal_header.hpp \
 		../basic_c_fun/IPMain4NeuronAssembler.h \
 		v3d_core.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -34927,6 +34960,7 @@ release/v3d_application.o: v3d_application.cpp v3d_application.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -35441,7 +35475,6 @@ release/v3d_application.o: v3d_application.cpp v3d_application.h \
 		../neuron_annotator/data_model/Fast3DTexture.h \
 		../neuron_annotator/data_model/Dimension.h \
 		../neuron_annotator/data_model/SampledVolumeMetadata.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QFutureWatcher \
 		../neuron_annotator/data_model/VolumeTexture.h \
 		../neuron_annotator/ExportFile.h \
@@ -35958,6 +35991,7 @@ release/main.o: main.cpp ../3drenderer/v3dr_common.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -36473,7 +36507,6 @@ release/main.o: main.cpp ../3drenderer/v3dr_common.h \
 		../neuron_annotator/data_model/Fast3DTexture.h \
 		../neuron_annotator/data_model/Dimension.h \
 		../neuron_annotator/data_model/SampledVolumeMetadata.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QFutureWatcher \
 		../neuron_annotator/data_model/VolumeTexture.h \
 		../neuron_annotator/ExportFile.h \
@@ -37002,6 +37035,7 @@ release/mainwindow.o: mainwindow.cpp ../3drenderer/v3dr_common.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -37517,7 +37551,6 @@ release/mainwindow.o: mainwindow.cpp ../3drenderer/v3dr_common.h \
 		../neuron_annotator/data_model/Fast3DTexture.h \
 		../neuron_annotator/data_model/Dimension.h \
 		../neuron_annotator/data_model/SampledVolumeMetadata.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QFutureWatcher \
 		../neuron_annotator/data_model/VolumeTexture.h \
 		../neuron_annotator/ExportFile.h \
@@ -38078,6 +38111,7 @@ release/mainwindow_interface.o: mainwindow_interface.cpp ../3drenderer/v3dr_comm
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -38838,6 +38872,7 @@ release/v3d_core.o: v3d_core.cpp ../3drenderer/v3dr_common.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -39390,7 +39425,6 @@ release/v3d_core.o: v3d_core.cpp ../3drenderer/v3dr_common.h \
 		../neuron_annotator/data_model/Fast3DTexture.h \
 		../neuron_annotator/data_model/Dimension.h \
 		../neuron_annotator/data_model/SampledVolumeMetadata.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QFutureWatcher \
 		../neuron_annotator/data_model/VolumeTexture.h \
 		../neuron_annotator/ExportFile.h \
@@ -39754,6 +39788,7 @@ release/v3dimgproc_entry.o: v3dimgproc_entry.cpp F:/QT6/6.1.0/mingw81_64/include
 		v3d_compile_lite.h \
 		../basic_c_fun/v3d_message.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QString \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../basic_c_fun/v3d_basicdatatype.h \
@@ -40648,6 +40683,7 @@ release/my4dimage.o: my4dimage.cpp ../3drenderer/v3dr_common.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -41177,7 +41213,6 @@ release/my4dimage.o: my4dimage.cpp ../3drenderer/v3dr_common.h \
 		../neuron_annotator/data_model/Fast3DTexture.h \
 		../neuron_annotator/data_model/Dimension.h \
 		../neuron_annotator/data_model/SampledVolumeMetadata.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QFutureWatcher \
 		../neuron_annotator/data_model/VolumeTexture.h \
 		../neuron_annotator/ExportFile.h \
@@ -41694,6 +41729,7 @@ release/v3dimg_proc_neuron.o: v3dimg_proc_neuron.cpp ../3drenderer/v3dr_common.h
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -42212,7 +42248,6 @@ release/v3dimg_proc_neuron.o: v3dimg_proc_neuron.cpp ../3drenderer/v3dr_common.h
 		../neuron_annotator/data_model/Fast3DTexture.h \
 		../neuron_annotator/data_model/Dimension.h \
 		../neuron_annotator/data_model/SampledVolumeMetadata.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QFutureWatcher \
 		../neuron_annotator/data_model/VolumeTexture.h \
 		../neuron_annotator/ExportFile.h \
@@ -42758,6 +42793,7 @@ release/ChannelTable.o: ChannelTable.cpp ../3drenderer/v3dr_common.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -43649,6 +43685,8 @@ release/landmark_property_dialog.o: landmark_property_dialog.cpp landmark_proper
 		v3d_compile_lite.h \
 		../basic_c_fun/v3d_message.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QString \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qelapsedtimer.h \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../basic_c_fun/v3d_basicdatatype.h \
@@ -43917,6 +43955,8 @@ release/dialog_keypoint_features.o: dialog_keypoint_features.cpp F:/QT6/6.1.0/mi
 		v3d_compile_lite.h \
 		../basic_c_fun/v3d_message.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QString \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qelapsedtimer.h \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -43994,7 +44034,6 @@ release/dialog_keypoint_features.o: dialog_keypoint_features.cpp F:/QT6/6.1.0/mi
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QThread \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qthread.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qdeadlinetimer.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qelapsedtimer.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QWaitCondition \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qwaitcondition.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QDeadlineTimer \
@@ -44769,6 +44808,7 @@ release/surfaceobj_geometry_dialog.o: surfaceobj_geometry_dialog.cpp surfaceobj_
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -45333,6 +45373,7 @@ release/import_filelistname.o: import_filelistname.cpp F:/QT6/6.1.0/mingw81_64/i
 		v3d_compile_lite.h \
 		../basic_c_fun/v3d_message.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QString \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../basic_c_fun/v3d_basicdatatype.h \
@@ -45773,6 +45814,7 @@ release/import_tiffseries.o: import_tiffseries.cpp F:/QT6/6.1.0/mingw81_64/inclu
 		v3d_compile_lite.h \
 		../basic_c_fun/v3d_message.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QString \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../basic_c_fun/v3d_basicdatatype.h \
@@ -46915,6 +46957,7 @@ release/atlas_viewer.o: atlas_viewer.cpp ../3drenderer/v3dr_common.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -48005,6 +48048,8 @@ release/pluginfunchandler.o: pluginfunchandler.cpp mainwindow.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QWidget \
 		../basic_c_fun/v3d_global_preference.h \
 		v3d_core.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qelapsedtimer.h \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -48054,7 +48099,6 @@ release/pluginfunchandler.o: pluginfunchandler.cpp mainwindow.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QThread \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qthread.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qdeadlinetimer.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qelapsedtimer.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QWaitCondition \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qwaitcondition.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QDeadlineTimer \
@@ -48705,6 +48749,7 @@ release/vr_vaa3d_call.o: vr_vaa3d_call.cpp vr_vaa3d_call.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -49623,6 +49668,7 @@ release/v3d_custom_toolbar.o: ../custom_toolbar/v3d_custom_toolbar.cpp ../custom
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -50570,6 +50616,7 @@ release/asc_to_swc.o: ../io/asc_to_swc.cpp ../io/asc_to_swc.h \
 		v3d_compile_full.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../common_lib/include/tiffio.h \
@@ -52401,6 +52448,7 @@ release/CellCounter3D.o: ../cell_counter/CellCounter3D.cpp ../terafly/src/presen
 		v3d_compile_lite.h \
 		../basic_c_fun/v3d_message.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QString \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../basic_c_fun/v3d_basicdatatype.h \
@@ -52677,6 +52725,7 @@ release/CommandManager.o: CommandManager.cpp CommandManager.h \
 		v3d_compile_pro.h \
 		v3d_compile_lite.h \
 		../basic_c_fun/v3d_message.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QElapsedTimer \
 		../basic_c_fun/stackutil.h \
 		../basic_c_fun/vcdiff.h \
 		../basic_c_fun/v3d_basicdatatype.h \

@@ -2071,7 +2071,6 @@ void XFormView::do_keyPressEvent(QKeyEvent * e)  //by PHC, rename to do_keyPress
 
     double stepx = 1, stepy = 1; //default size is 1 pixel by pixel
 	//qDebug()<<"init: "<<stepx<<" "<<stepy;
-
 	//printf("[%d]\n",e->modifiers()); //don't know why this cause a crash!!
 
     //if (e->modifiers()==Qt::ShiftModifier) //note that e->modifiers() does not work!!!
@@ -2221,7 +2220,7 @@ void XFormView::do_keyPressEvent(QKeyEvent * e)  //by PHC, rename to do_keyPress
 			//the following is another way to activate the pop-up menu or point-definition dialog at the pixel location. by PHC, 060312
 
 #if COMPILE_TARGET_LEVEL != 0
-/*		case Qt::Key_M:
+        case Qt::Key_M:
 		{
 			//first search if a landmark has been defined at the same location. If yes, modify that one. Otherwise add a new one.
 
@@ -2308,7 +2307,7 @@ void XFormView::do_keyPressEvent(QKeyEvent * e)  //by PHC, rename to do_keyPress
 				imgData->getXWidget()->switchMaskColormap();
 			}
 			break;
-*/
+
 		case Qt::Key_R:
 		    if (QApplication::keyboardModifiers()==Qt::ControlModifier)
 		    {
@@ -2529,7 +2528,6 @@ void XFormView::drawPixmapType(QPainter *painter)
 	//now zoom. 081114
     painter->scale(disp_scale, disp_scale);
 
-	//
     painter->drawPixmap(QPointF(0, 0), pixmap);
 
     painter->setPen(QPen(QColor(255, 255, 255, alpha), 1, Qt::DotLine, Qt::FlatCap, Qt::BevelJoin));
@@ -2742,7 +2740,6 @@ void XFormView::drawSelectedLocations(QPainter *painter, QList <LocationSimple> 
 			case imgPlaneZ:
 				if (tmpz<=cz+rr && tmpz>=cz-rr) {twidpos = tmpx; theipos = tmpy; b_draw=1;}
 				break;
-
 			case imgPlaneX:
 				if (tmpx<=cx+rr && tmpx>=cx-rr) {twidpos = tmpz; theipos = tmpy; b_draw=1;}
 				break;
@@ -3364,27 +3361,27 @@ void XFormWidget::onActivated(QMdiSubWindow* aw)
 void XFormWidget::keyPressEvent(QKeyEvent * e)
 {
 	if (!imgData || !imgData->valid()) return;
-
+    double stepx,stepy;
 	switch (e->key())
 	{
 		case Qt::Key_Y: //add a timer for some events. This is an on/off switch. When pressing is OFF, then output the time to the last ON pressing
             {
                 if (imgData->b_triviewTimerON)
                 {
-//                    QString etime = QString("Elipsed time for triview timer is %1 seconds").arg(double(imgData->triviewTimer.elapsed())/1000);
-//                    imgData->b_triviewTimerON = false;
-//                    v3d_msg(etime);
-//                    if (imgData->p_mainWidget && imgData->p_mainWidget->getMainControlWindow())
-//                        imgData->p_mainWidget->getMainControlWindow()->statusBar()->showMessage(etime);
+                    QString etime = QString("Elipsed time for triview timer is %1 seconds").arg(double(imgData->triviewTimer.elapsed())/1000);
+                    imgData->b_triviewTimerON = false;
+                    v3d_msg(etime);
+                    if (imgData->p_mainWidget && imgData->p_mainWidget->getMainControlWindow())
+                       imgData->p_mainWidget->getMainControlWindow()->statusBar()->showMessage(etime);
                 }
                 else
                 {
-//                    imgData->triviewTimer.start(); //should I use restart() sometimes as well
-//                    imgData->b_triviewTimerON = true;
-//                    QString mymsg = "Timer for the current image starts...";
-//                    v3d_msg(mymsg + "\n", 0);
-//                    if (imgData->p_mainWidget && imgData->p_mainWidget->getMainControlWindow())
-//                        imgData->p_mainWidget->getMainControlWindow()->statusBar()->showMessage(mymsg, 5000);
+                    imgData->triviewTimer.start(); //should I use restart() sometimes as well
+                    imgData->b_triviewTimerON = true;
+                    QString mymsg = "Timer for the current image starts...";
+                    v3d_msg(mymsg + "\n", 0);
+                    if (imgData->p_mainWidget && imgData->p_mainWidget->getMainControlWindow())
+                        imgData->p_mainWidget->getMainControlWindow()->statusBar()->showMessage(mymsg, 5000);
                 }
             }
 			break;
@@ -3407,11 +3404,11 @@ void XFormWidget::keyPressEvent(QKeyEvent * e)
 //				curDisplayCenter -= QPointF(stepx, 0);
 //				if (curDisplayCenter.x() < (2-m_scale)*pixmap.width()/2.0-1)
 //					curDisplayCenter.setX((2-m_scale)*pixmap.width()/2.0-1);
-//
+
 //				update();
 //		    }
 //	  		break;
-//
+
 //		case Qt::Key_Right:
 //			if (QApplication::keyboardModifiers()==Qt::ControlModifier) //then scroll page by page
 //			{
@@ -3423,11 +3420,11 @@ void XFormWidget::keyPressEvent(QKeyEvent * e)
 //				curDisplayCenter += QPointF(stepx, 0);
 //				if (curDisplayCenter.x() > m_scale*pixmap.width()/2.0)
 //					curDisplayCenter.setX(m_scale*pixmap.width()/2.0);
-//
+
 //				update();
 //		    }
 //			break;
-//
+
 //		case Qt::Key_Up:
 //			if (QApplication::keyboardModifiers()==Qt::ControlModifier) //then scroll page by page
 //			{
@@ -3439,11 +3436,11 @@ void XFormWidget::keyPressEvent(QKeyEvent * e)
 //				curDisplayCenter -= QPointF(0, stepy);
 //				if (curDisplayCenter.y() < (2-m_scale)*pixmap.height()/2.0-1)
 //					curDisplayCenter.setY((2-m_scale)*pixmap.height()/2.0-1);
-//
+
 //				update();
 //		    }
 //			break;
-//
+
 //		case Qt::Key_Down:
 //			//case Qt::Key_8: //a test to show normal key modifier works!
 //			if (QApplication::keyboardModifiers()==Qt::ControlModifier) //then scroll page by page
@@ -3457,11 +3454,11 @@ void XFormWidget::keyPressEvent(QKeyEvent * e)
 //				curDisplayCenter += QPointF(0, stepy);
 //				if (curDisplayCenter.y() > m_scale*pixmap.height()/2.0)
 //					curDisplayCenter.setY(m_scale*pixmap.height()/2.0);
-//
+
 //				update();
 //		    }
 //			break;
-//
+
 //		case Qt::Key_N:
 //		case Qt::Key_Period: //080403
 //			switch (Ptype)
@@ -3479,7 +3476,7 @@ void XFormWidget::keyPressEvent(QKeyEvent * e)
 //				break;
 //		}
 //			break;
-//
+
 //		case Qt::Key_B: //add 'b' on 080109
 //		case Qt::Key_Comma: //080403
 //			switch (Ptype)
@@ -3497,7 +3494,7 @@ void XFormWidget::keyPressEvent(QKeyEvent * e)
 //				break;
 //		}
 //			break;
-//
+
 		case Qt::Key_I:
 			triview_zoomin();
 			break;
@@ -4000,7 +3997,6 @@ QWidget* XFormWidget::createColorGUI()
         imgValScaleDisplayCheckBox = new QCheckBox("I(Voxel) rescale: m->0, M->255");
         imgValScaleDisplayCheckBox->setCheckState(Qt::Unchecked);
 
-
         typeGroupLayout = new QGridLayout(typeGroup);
         typeGroupLayout->addWidget(colorAllType, 0, 0);
         typeGroupLayout->addWidget(colorRedType, 1, 0);
@@ -4048,24 +4044,24 @@ void XFormWidget::createGUI()
      //viewGroup->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 
      xy_view = new XFormView(viewGroup);
-	xy_view->setImgData(imgPlaneZ, 0, colorRGB); //because the second parameter is 0 (NULL pointer), then just load the default maps for this view
+     xy_view->setImgData(imgPlaneZ, 0, colorRGB); //because the second parameter is 0 (NULL pointer), then just load the default maps for this view
      xy_view->setFixedWidth(xy_view->get_disp_width()*1.5);
      xy_view->setFixedHeight(xy_view->get_disp_height()*1.5);
      xy_view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
      xy_view->setFocusPolicy(Qt::ClickFocus);
 
      yz_view = new XFormView(viewGroup);
-	yz_view->setImgData(imgPlaneX, 0, colorRGB); //because the second parameter is 0 (NULL pointer), then just load the default maps for this view
+     yz_view->setImgData(imgPlaneX, 0, colorRGB); //because the second parameter is 0 (NULL pointer), then just load the default maps for this view
      yz_view->setFixedWidth(yz_view->get_disp_width()*1.5);
      yz_view->setFixedHeight(yz_view->get_disp_height()*1.5);
-    yz_view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+     yz_view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
      yz_view->setFocusPolicy(Qt::ClickFocus);
 
      zx_view = new XFormView(viewGroup);
-	zx_view->setImgData(imgPlaneY, 0, colorRGB); //because the second parameter is 0 (NULL pointer), then just load the default maps for this view
+     zx_view->setImgData(imgPlaneY, 0, colorRGB); //because the second parameter is 0 (NULL pointer), then just load the default maps for this view
      zx_view->setFixedWidth(zx_view->get_disp_width()*1.5);
      zx_view->setFixedHeight(zx_view->get_disp_height()*1.5);
-    zx_view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+     zx_view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
      zx_view->setFocusPolicy(Qt::ClickFocus);
 
     //    viewGroup->setFixedWidth(xy_view->frameGeometry().width()+yz_view->frameGeometry().width());

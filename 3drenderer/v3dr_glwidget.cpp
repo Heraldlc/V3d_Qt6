@@ -59,10 +59,9 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) Automatic reconstruction 
 #include <QtGui>
 #include <QCloseEvent>
 #include <QDialog>
-#if defined(USE_Qt5)
-#include <QGLFormat>
-#else
-#endif
+
+//#include <QGLFormat>
+
 #include<QWidget>
 #include <QMessageBox>
 bool V3dR_GLWidget::disableUndoRedo = false;
@@ -2321,6 +2320,7 @@ void V3dR_GLWidget::setXRotation(int angle)
     }
 }
 
+//实现鼠标移动的函数
 void V3dR_GLWidget::setXRotation(float angle)
 {
     NORMALIZE_angle( angle );

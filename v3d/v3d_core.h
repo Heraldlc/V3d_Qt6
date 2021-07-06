@@ -70,7 +70,7 @@ Jan 28-30, 2010: PHC. further adjusting codes for v2.440 and above
 #include "v3d_compile_constraints.h"
 
 #include "../basic_c_fun/v3d_message.h"
-
+#include <QElapsedTimer>
 #include "../basic_c_fun/stackutil.h"
 #include "../basic_c_fun/color_xyz.h"
 #include "../basic_c_fun/basic_4dimage.h"
@@ -347,7 +347,7 @@ public:
 	QString curSearchText;
 
     //timer //20120702
-    QTime triviewTimer;  //added on 20120702.
+    QElapsedTimer triviewTimer;  //added on 20120702.
     bool b_triviewTimerON;
 
 	bool compute_rgn_stat(LocationSimple & pt, int channo);
