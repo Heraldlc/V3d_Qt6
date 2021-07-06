@@ -251,8 +251,8 @@ public slots:
     void updateTriviewWindow(); // trigger a signal triviewUpdateTriggered
     void updateRunPlugin();
 
-//    void handleCoordinatedCloseEvent_real(); //move down here, PHC 20151117
-//    void handleCoordinatedCloseEvent(QCloseEvent *event); //move down here, PHC 20151117
+    void handleCoordinatedCloseEvent_real(); //move down here, PHC 20151117
+    void handleCoordinatedCloseEvent(QCloseEvent *event); //move down here, PHC 20151117
 
 
 // April-26-2011 YuY
@@ -296,7 +296,8 @@ private:
 #if defined(USE_Qt5)
     QMdiArea *workspace;
 #else
-    QWorkspace *workspace;
+    //QWorkspace *workspace;
+        QMdiArea *workspace;
 #endif
 #endif
     QSignalMapper *windowMapper;

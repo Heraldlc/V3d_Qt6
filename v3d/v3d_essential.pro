@@ -96,7 +96,7 @@ INCLUDEPATH += .
 
 QT += openglwidgets
 
-#DEFINES += USE_Qt5  #this might be invoked from commandline like "~/Qt5.4.1/5.4/clang_64/bin/qmake DEFINES+=USE_Qt5 vaa3d64.pro", however it seems there is some bug
+DEFINES += USE_Qt5  #this might be invoked from commandline like "~/Qt5.4.1/5.4/clang_64/bin/qmake DEFINES+=USE_Qt5 vaa3d64.pro", however it seems there is some bug
 
 
 # commented the -app_bundle as on Mac the not-automatically closed terminal is quite annoying!

@@ -23,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    const uint offsetsAndSize[272];
-    char stringdata0[3490];
+    const uint offsetsAndSize[280];
+    char stringdata0[3570];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_MainWindow_t, stringdata0) + ofs), len 
@@ -165,7 +165,11 @@ QT_MOC_LITERAL(3403, 16), // "transactionStart"
 QT_MOC_LITERAL(3420, 19), // "allTransactionsDone"
 QT_MOC_LITERAL(3440, 13), // "updateTriview"
 QT_MOC_LITERAL(3454, 19), // "updateTriviewWindow"
-QT_MOC_LITERAL(3474, 15) // "updateRunPlugin"
+QT_MOC_LITERAL(3474, 15), // "updateRunPlugin"
+QT_MOC_LITERAL(3490, 32), // "handleCoordinatedCloseEvent_real"
+QT_MOC_LITERAL(3523, 27), // "handleCoordinatedCloseEvent"
+QT_MOC_LITERAL(3551, 12), // "QCloseEvent*"
+QT_MOC_LITERAL(3564, 5) // "event"
 
     },
     "MainWindow\0triviewUpdateTriggered\0\0"
@@ -270,7 +274,9 @@ QT_MOC_LITERAL(3474, 15) // "updateRunPlugin"
     "func_procModeNeuronAnnotator\0"
     "transactionStart\0allTransactionsDone\0"
     "updateTriview\0updateTriviewWindow\0"
-    "updateRunPlugin"
+    "updateRunPlugin\0handleCoordinatedCloseEvent_real\0"
+    "handleCoordinatedCloseEvent\0QCloseEvent*\0"
+    "event"
 };
 #undef QT_MOC_LITERAL
 
@@ -280,7 +286,7 @@ static const uint qt_meta_data_MainWindow[] = {
        9,       // revision
        0,       // classname
        0,    0, // classinfo
-     130,   14, // methods
+     132,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -288,138 +294,140 @@ static const uint qt_meta_data_MainWindow[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,  794,    2, 0x06,    0 /* Public */,
-       3,    0,  795,    2, 0x06,    1 /* Public */,
+       1,    0,  806,    2, 0x06,    0 /* Public */,
+       3,    0,  807,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       4,    0,  796,    2, 0x0a,    2 /* Public */,
-       5,    0,  797,    2, 0x0a,    3 /* Public */,
-       6,    0,  798,    2, 0x0a,    4 /* Public */,
-       7,    0,  799,    2, 0x0a,    5 /* Public */,
-       8,    0,  800,    2, 0x0a,    6 /* Public */,
-       9,    0,  801,    2, 0x0a,    7 /* Public */,
-      10,    0,  802,    2, 0x0a,    8 /* Public */,
-      11,    4,  803,    2, 0x0a,    9 /* Public */,
-      16,    1,  812,    2, 0x0a,   14 /* Public */,
-      16,    0,  815,    2, 0x2a,   16 /* Public | MethodCloned */,
-      18,    0,  816,    2, 0x0a,   17 /* Public */,
-      19,    0,  817,    2, 0x0a,   18 /* Public */,
-      20,    0,  818,    2, 0x0a,   19 /* Public */,
-      21,    0,  819,    2, 0x0a,   20 /* Public */,
-      22,    0,  820,    2, 0x0a,   21 /* Public */,
-      23,    0,  821,    2, 0x0a,   22 /* Public */,
-      24,    0,  822,    2, 0x0a,   23 /* Public */,
-      25,    0,  823,    2, 0x0a,   24 /* Public */,
-      26,    0,  824,    2, 0x0a,   25 /* Public */,
-      27,    0,  825,    2, 0x0a,   26 /* Public */,
-      28,    0,  826,    2, 0x0a,   27 /* Public */,
-      29,    0,  827,    2, 0x0a,   28 /* Public */,
-      30,    0,  828,    2, 0x0a,   29 /* Public */,
-      31,    0,  829,    2, 0x0a,   30 /* Public */,
-      32,    0,  830,    2, 0x0a,   31 /* Public */,
-      34,    0,  831,    2, 0x0a,   32 /* Public */,
-      35,    1,  832,    2, 0x0a,   33 /* Public */,
-      36,    3,  835,    2, 0x0a,   35 /* Public */,
-      36,    2,  842,    2, 0x2a,   39 /* Public | MethodCloned */,
-      36,    1,  847,    2, 0x2a,   42 /* Public | MethodCloned */,
-      39,    3,  850,    2, 0x0a,   44 /* Public */,
-      39,    2,  857,    2, 0x2a,   48 /* Public | MethodCloned */,
-      39,    1,  862,    2, 0x2a,   51 /* Public | MethodCloned */,
-      41,    0,  865,    2, 0x0a,   53 /* Public */,
-      42,    0,  866,    2, 0x0a,   54 /* Public */,
-      43,    0,  867,    2, 0x0a,   55 /* Public */,
-      44,    0,  868,    2, 0x0a,   56 /* Public */,
-      45,    0,  869,    2, 0x0a,   57 /* Public */,
-      46,    0,  870,    2, 0x0a,   58 /* Public */,
-      47,    0,  871,    2, 0x0a,   59 /* Public */,
-      48,    0,  872,    2, 0x0a,   60 /* Public */,
-      49,    0,  873,    2, 0x0a,   61 /* Public */,
-      50,    0,  874,    2, 0x0a,   62 /* Public */,
-      51,    0,  875,    2, 0x0a,   63 /* Public */,
-      52,    0,  876,    2, 0x0a,   64 /* Public */,
-      53,    0,  877,    2, 0x0a,   65 /* Public */,
-      54,    0,  878,    2, 0x0a,   66 /* Public */,
-      55,    0,  879,    2, 0x0a,   67 /* Public */,
-      56,    0,  880,    2, 0x0a,   68 /* Public */,
-      57,    0,  881,    2, 0x0a,   69 /* Public */,
-      58,    0,  882,    2, 0x0a,   70 /* Public */,
-      59,    0,  883,    2, 0x0a,   71 /* Public */,
-      60,    0,  884,    2, 0x0a,   72 /* Public */,
-      61,    0,  885,    2, 0x0a,   73 /* Public */,
-      62,    0,  886,    2, 0x0a,   74 /* Public */,
-      63,    0,  887,    2, 0x0a,   75 /* Public */,
-      64,    0,  888,    2, 0x0a,   76 /* Public */,
-      65,    0,  889,    2, 0x0a,   77 /* Public */,
-      66,    0,  890,    2, 0x0a,   78 /* Public */,
-      67,    0,  891,    2, 0x0a,   79 /* Public */,
-      68,    0,  892,    2, 0x0a,   80 /* Public */,
-      69,    0,  893,    2, 0x0a,   81 /* Public */,
-      70,    0,  894,    2, 0x0a,   82 /* Public */,
-      71,    0,  895,    2, 0x0a,   83 /* Public */,
-      72,    0,  896,    2, 0x0a,   84 /* Public */,
-      73,    0,  897,    2, 0x0a,   85 /* Public */,
-      74,    0,  898,    2, 0x0a,   86 /* Public */,
-      75,    0,  899,    2, 0x0a,   87 /* Public */,
-      76,    0,  900,    2, 0x0a,   88 /* Public */,
-      77,    0,  901,    2, 0x0a,   89 /* Public */,
-      78,    0,  902,    2, 0x0a,   90 /* Public */,
-      79,    0,  903,    2, 0x0a,   91 /* Public */,
-      80,    0,  904,    2, 0x0a,   92 /* Public */,
-      81,    0,  905,    2, 0x0a,   93 /* Public */,
-      82,    0,  906,    2, 0x0a,   94 /* Public */,
-      83,    0,  907,    2, 0x0a,   95 /* Public */,
-      84,    0,  908,    2, 0x0a,   96 /* Public */,
-      85,    0,  909,    2, 0x0a,   97 /* Public */,
-      86,    0,  910,    2, 0x0a,   98 /* Public */,
-      87,    0,  911,    2, 0x0a,   99 /* Public */,
-      88,    0,  912,    2, 0x0a,  100 /* Public */,
-      89,    0,  913,    2, 0x0a,  101 /* Public */,
-      90,    0,  914,    2, 0x0a,  102 /* Public */,
-      91,    0,  915,    2, 0x0a,  103 /* Public */,
-      92,    0,  916,    2, 0x0a,  104 /* Public */,
-      93,    0,  917,    2, 0x0a,  105 /* Public */,
-      94,    0,  918,    2, 0x0a,  106 /* Public */,
-      95,    0,  919,    2, 0x0a,  107 /* Public */,
-      96,    0,  920,    2, 0x0a,  108 /* Public */,
-      97,    0,  921,    2, 0x0a,  109 /* Public */,
-      98,    0,  922,    2, 0x0a,  110 /* Public */,
-      99,    0,  923,    2, 0x0a,  111 /* Public */,
-     100,    0,  924,    2, 0x0a,  112 /* Public */,
-     101,    0,  925,    2, 0x0a,  113 /* Public */,
-     102,    0,  926,    2, 0x0a,  114 /* Public */,
-     103,    0,  927,    2, 0x0a,  115 /* Public */,
-     104,    0,  928,    2, 0x0a,  116 /* Public */,
-     105,    0,  929,    2, 0x0a,  117 /* Public */,
-     106,    0,  930,    2, 0x0a,  118 /* Public */,
-     107,    0,  931,    2, 0x0a,  119 /* Public */,
-     108,    0,  932,    2, 0x0a,  120 /* Public */,
-     109,    0,  933,    2, 0x0a,  121 /* Public */,
-     110,    0,  934,    2, 0x0a,  122 /* Public */,
-     111,    0,  935,    2, 0x0a,  123 /* Public */,
-     112,    0,  936,    2, 0x0a,  124 /* Public */,
-     113,    0,  937,    2, 0x0a,  125 /* Public */,
-     114,    0,  938,    2, 0x0a,  126 /* Public */,
-     115,    0,  939,    2, 0x0a,  127 /* Public */,
-     116,    0,  940,    2, 0x0a,  128 /* Public */,
-     117,    0,  941,    2, 0x0a,  129 /* Public */,
-     118,    0,  942,    2, 0x0a,  130 /* Public */,
-     119,    0,  943,    2, 0x0a,  131 /* Public */,
-     120,    0,  944,    2, 0x0a,  132 /* Public */,
-     121,    0,  945,    2, 0x0a,  133 /* Public */,
-     122,    0,  946,    2, 0x0a,  134 /* Public */,
-     123,    0,  947,    2, 0x0a,  135 /* Public */,
-     124,    0,  948,    2, 0x0a,  136 /* Public */,
-     125,    0,  949,    2, 0x0a,  137 /* Public */,
-     126,    0,  950,    2, 0x0a,  138 /* Public */,
-     127,    0,  951,    2, 0x0a,  139 /* Public */,
-     128,    0,  952,    2, 0x0a,  140 /* Public */,
-     129,    0,  953,    2, 0x0a,  141 /* Public */,
-     130,    0,  954,    2, 0x0a,  142 /* Public */,
-     131,    0,  955,    2, 0x0a,  143 /* Public */,
-     132,    0,  956,    2, 0x0a,  144 /* Public */,
-     133,    0,  957,    2, 0x0a,  145 /* Public */,
-     134,    0,  958,    2, 0x0a,  146 /* Public */,
-     135,    0,  959,    2, 0x0a,  147 /* Public */,
+       4,    0,  808,    2, 0x0a,    2 /* Public */,
+       5,    0,  809,    2, 0x0a,    3 /* Public */,
+       6,    0,  810,    2, 0x0a,    4 /* Public */,
+       7,    0,  811,    2, 0x0a,    5 /* Public */,
+       8,    0,  812,    2, 0x0a,    6 /* Public */,
+       9,    0,  813,    2, 0x0a,    7 /* Public */,
+      10,    0,  814,    2, 0x0a,    8 /* Public */,
+      11,    4,  815,    2, 0x0a,    9 /* Public */,
+      16,    1,  824,    2, 0x0a,   14 /* Public */,
+      16,    0,  827,    2, 0x2a,   16 /* Public | MethodCloned */,
+      18,    0,  828,    2, 0x0a,   17 /* Public */,
+      19,    0,  829,    2, 0x0a,   18 /* Public */,
+      20,    0,  830,    2, 0x0a,   19 /* Public */,
+      21,    0,  831,    2, 0x0a,   20 /* Public */,
+      22,    0,  832,    2, 0x0a,   21 /* Public */,
+      23,    0,  833,    2, 0x0a,   22 /* Public */,
+      24,    0,  834,    2, 0x0a,   23 /* Public */,
+      25,    0,  835,    2, 0x0a,   24 /* Public */,
+      26,    0,  836,    2, 0x0a,   25 /* Public */,
+      27,    0,  837,    2, 0x0a,   26 /* Public */,
+      28,    0,  838,    2, 0x0a,   27 /* Public */,
+      29,    0,  839,    2, 0x0a,   28 /* Public */,
+      30,    0,  840,    2, 0x0a,   29 /* Public */,
+      31,    0,  841,    2, 0x0a,   30 /* Public */,
+      32,    0,  842,    2, 0x0a,   31 /* Public */,
+      34,    0,  843,    2, 0x0a,   32 /* Public */,
+      35,    1,  844,    2, 0x0a,   33 /* Public */,
+      36,    3,  847,    2, 0x0a,   35 /* Public */,
+      36,    2,  854,    2, 0x2a,   39 /* Public | MethodCloned */,
+      36,    1,  859,    2, 0x2a,   42 /* Public | MethodCloned */,
+      39,    3,  862,    2, 0x0a,   44 /* Public */,
+      39,    2,  869,    2, 0x2a,   48 /* Public | MethodCloned */,
+      39,    1,  874,    2, 0x2a,   51 /* Public | MethodCloned */,
+      41,    0,  877,    2, 0x0a,   53 /* Public */,
+      42,    0,  878,    2, 0x0a,   54 /* Public */,
+      43,    0,  879,    2, 0x0a,   55 /* Public */,
+      44,    0,  880,    2, 0x0a,   56 /* Public */,
+      45,    0,  881,    2, 0x0a,   57 /* Public */,
+      46,    0,  882,    2, 0x0a,   58 /* Public */,
+      47,    0,  883,    2, 0x0a,   59 /* Public */,
+      48,    0,  884,    2, 0x0a,   60 /* Public */,
+      49,    0,  885,    2, 0x0a,   61 /* Public */,
+      50,    0,  886,    2, 0x0a,   62 /* Public */,
+      51,    0,  887,    2, 0x0a,   63 /* Public */,
+      52,    0,  888,    2, 0x0a,   64 /* Public */,
+      53,    0,  889,    2, 0x0a,   65 /* Public */,
+      54,    0,  890,    2, 0x0a,   66 /* Public */,
+      55,    0,  891,    2, 0x0a,   67 /* Public */,
+      56,    0,  892,    2, 0x0a,   68 /* Public */,
+      57,    0,  893,    2, 0x0a,   69 /* Public */,
+      58,    0,  894,    2, 0x0a,   70 /* Public */,
+      59,    0,  895,    2, 0x0a,   71 /* Public */,
+      60,    0,  896,    2, 0x0a,   72 /* Public */,
+      61,    0,  897,    2, 0x0a,   73 /* Public */,
+      62,    0,  898,    2, 0x0a,   74 /* Public */,
+      63,    0,  899,    2, 0x0a,   75 /* Public */,
+      64,    0,  900,    2, 0x0a,   76 /* Public */,
+      65,    0,  901,    2, 0x0a,   77 /* Public */,
+      66,    0,  902,    2, 0x0a,   78 /* Public */,
+      67,    0,  903,    2, 0x0a,   79 /* Public */,
+      68,    0,  904,    2, 0x0a,   80 /* Public */,
+      69,    0,  905,    2, 0x0a,   81 /* Public */,
+      70,    0,  906,    2, 0x0a,   82 /* Public */,
+      71,    0,  907,    2, 0x0a,   83 /* Public */,
+      72,    0,  908,    2, 0x0a,   84 /* Public */,
+      73,    0,  909,    2, 0x0a,   85 /* Public */,
+      74,    0,  910,    2, 0x0a,   86 /* Public */,
+      75,    0,  911,    2, 0x0a,   87 /* Public */,
+      76,    0,  912,    2, 0x0a,   88 /* Public */,
+      77,    0,  913,    2, 0x0a,   89 /* Public */,
+      78,    0,  914,    2, 0x0a,   90 /* Public */,
+      79,    0,  915,    2, 0x0a,   91 /* Public */,
+      80,    0,  916,    2, 0x0a,   92 /* Public */,
+      81,    0,  917,    2, 0x0a,   93 /* Public */,
+      82,    0,  918,    2, 0x0a,   94 /* Public */,
+      83,    0,  919,    2, 0x0a,   95 /* Public */,
+      84,    0,  920,    2, 0x0a,   96 /* Public */,
+      85,    0,  921,    2, 0x0a,   97 /* Public */,
+      86,    0,  922,    2, 0x0a,   98 /* Public */,
+      87,    0,  923,    2, 0x0a,   99 /* Public */,
+      88,    0,  924,    2, 0x0a,  100 /* Public */,
+      89,    0,  925,    2, 0x0a,  101 /* Public */,
+      90,    0,  926,    2, 0x0a,  102 /* Public */,
+      91,    0,  927,    2, 0x0a,  103 /* Public */,
+      92,    0,  928,    2, 0x0a,  104 /* Public */,
+      93,    0,  929,    2, 0x0a,  105 /* Public */,
+      94,    0,  930,    2, 0x0a,  106 /* Public */,
+      95,    0,  931,    2, 0x0a,  107 /* Public */,
+      96,    0,  932,    2, 0x0a,  108 /* Public */,
+      97,    0,  933,    2, 0x0a,  109 /* Public */,
+      98,    0,  934,    2, 0x0a,  110 /* Public */,
+      99,    0,  935,    2, 0x0a,  111 /* Public */,
+     100,    0,  936,    2, 0x0a,  112 /* Public */,
+     101,    0,  937,    2, 0x0a,  113 /* Public */,
+     102,    0,  938,    2, 0x0a,  114 /* Public */,
+     103,    0,  939,    2, 0x0a,  115 /* Public */,
+     104,    0,  940,    2, 0x0a,  116 /* Public */,
+     105,    0,  941,    2, 0x0a,  117 /* Public */,
+     106,    0,  942,    2, 0x0a,  118 /* Public */,
+     107,    0,  943,    2, 0x0a,  119 /* Public */,
+     108,    0,  944,    2, 0x0a,  120 /* Public */,
+     109,    0,  945,    2, 0x0a,  121 /* Public */,
+     110,    0,  946,    2, 0x0a,  122 /* Public */,
+     111,    0,  947,    2, 0x0a,  123 /* Public */,
+     112,    0,  948,    2, 0x0a,  124 /* Public */,
+     113,    0,  949,    2, 0x0a,  125 /* Public */,
+     114,    0,  950,    2, 0x0a,  126 /* Public */,
+     115,    0,  951,    2, 0x0a,  127 /* Public */,
+     116,    0,  952,    2, 0x0a,  128 /* Public */,
+     117,    0,  953,    2, 0x0a,  129 /* Public */,
+     118,    0,  954,    2, 0x0a,  130 /* Public */,
+     119,    0,  955,    2, 0x0a,  131 /* Public */,
+     120,    0,  956,    2, 0x0a,  132 /* Public */,
+     121,    0,  957,    2, 0x0a,  133 /* Public */,
+     122,    0,  958,    2, 0x0a,  134 /* Public */,
+     123,    0,  959,    2, 0x0a,  135 /* Public */,
+     124,    0,  960,    2, 0x0a,  136 /* Public */,
+     125,    0,  961,    2, 0x0a,  137 /* Public */,
+     126,    0,  962,    2, 0x0a,  138 /* Public */,
+     127,    0,  963,    2, 0x0a,  139 /* Public */,
+     128,    0,  964,    2, 0x0a,  140 /* Public */,
+     129,    0,  965,    2, 0x0a,  141 /* Public */,
+     130,    0,  966,    2, 0x0a,  142 /* Public */,
+     131,    0,  967,    2, 0x0a,  143 /* Public */,
+     132,    0,  968,    2, 0x0a,  144 /* Public */,
+     133,    0,  969,    2, 0x0a,  145 /* Public */,
+     134,    0,  970,    2, 0x0a,  146 /* Public */,
+     135,    0,  971,    2, 0x0a,  147 /* Public */,
+     136,    0,  972,    2, 0x0a,  148 /* Public */,
+     137,    1,  973,    2, 0x0a,  149 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -554,6 +562,8 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 138,  139,
 
        0        // eod
 };
@@ -697,6 +707,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 127: _t->updateTriview(); break;
         case 128: _t->updateTriviewWindow(); break;
         case 129: _t->updateRunPlugin(); break;
+        case 130: _t->handleCoordinatedCloseEvent_real(); break;
+        case 131: _t->handleCoordinatedCloseEvent((*reinterpret_cast< QCloseEvent*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -726,7 +738,7 @@ const QMetaObject MainWindow::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_MainWindow_t
 , QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QUrl, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<XFormWidget *, std::false_type>, QtPrivate::TypeAndForceComplete<XFormWidget *, std::false_type>, QtPrivate::TypeAndForceComplete<XFormWidget *, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QUrl, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QUrl, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QUrl, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QUrl, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<XFormWidget *, std::false_type>, QtPrivate::TypeAndForceComplete<XFormWidget *, std::false_type>, QtPrivate::TypeAndForceComplete<XFormWidget *, std::false_type>, QtPrivate::TypeAndForceComplete<const QString &, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QUrl, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QUrl, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QUrl, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QCloseEvent *, std::false_type>
 
 
 >,
@@ -753,13 +765,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 130)
+        if (_id < 132)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 130;
+        _id -= 132;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 130)
+        if (_id < 132)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 130;
+        _id -= 132;
     }
     return _id;
 }

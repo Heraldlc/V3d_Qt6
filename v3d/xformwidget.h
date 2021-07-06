@@ -125,11 +125,11 @@ struct iDrawExternalParameter
 };
 
 
-#if defined(USE_Qt5)
+
 class XFormWidget : public QMdiSubWindow, public TriviewControl //class XFormWidget : public QMainWindow
-#else
-class XFormWidget : public QWidget, public TriviewControl //class XFormWidget : public QMainWindow
-#endif
+
+//class XFormWidget : public QWidget, public TriviewControl //class XFormWidget : public QMainWindow
+
 {
     Q_OBJECT;
 
@@ -327,7 +327,8 @@ public slots:
 #if defined(USE_Qt5)
 	void onActivated(QMdiSubWindow* );
 #else
-	void onActivated(QWidget* );
+    //void onActivated(QWidget* );
+    void onActivated(QMdiSubWindow* );
 #endif
 //110803 RZC, for sync multiple ChannelTabWidget
 	void syncChannelTabWidgets(ChannelTabWidget* sender);

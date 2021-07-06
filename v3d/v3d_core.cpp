@@ -2688,7 +2688,6 @@ void XFormView::drawPixmapType(QPainter *painter)
      // {
 
      // }
-
 }
 
 
@@ -2967,7 +2966,8 @@ void XFormView::dispHistogram()
 #if defined(USE_Qt5)
 XFormWidget::XFormWidget(QWidget *parent) : QMdiSubWindow(parent)
 #else
-XFormWidget::XFormWidget(QWidget *parent) : QWidget(parent)
+//XFormWidget::XFormWidget(QWidget *parent) : QWidget(parent)
+XFormWidget::XFormWidget(QWidget *parent) : QMdiSubWindow(parent)
 #endif
 {
 	initialize();
@@ -2979,7 +2979,8 @@ XFormWidget::XFormWidget(QWidget *parent) : QWidget(parent)
 #if defined(USE_Qt5)
 XFormWidget::XFormWidget(QWidget *parent, Qt::WidgetAttribute f) : QMdiSubWindow(parent) //added on 080814: this function is for future use. Not really get called now
 #else
-XFormWidget::XFormWidget(QWidget *parent, Qt::WidgetAttribute f) : QWidget(parent) //added on 080814: this function is for future use. Not really get called now
+//XFormWidget::XFormWidget(QWidget *parent, Qt::WidgetAttribute f) : QWidget(parent) //added on 080814: this function is for future use. Not really get called now
+XFormWidget::XFormWidget(QWidget *parent, Qt::WidgetAttribute f) : QMdiSubWindow(parent)
 #endif
 {
 	setAttribute(f);
@@ -3326,7 +3327,7 @@ void XFormWidget::cleanData()
 
 void XFormWidget::changeEvent(QEvent* e)
 {
-	//qDebug() <<"XFormWidget::changeEvent" <<e->type() <<windowTitle();
+    qDebug() <<"XFormWidget::changeEvent" <<e->type() <<windowTitle();
 	if (e->type()==QEvent::ActivationChange && isActiveWindow())  //NO effect to MDI child widget !!!
 	{
 			qDebug() << QString("XFormWidget::changeEvent, ActivationChange-> %1").arg(windowTitle());
@@ -3343,7 +3344,8 @@ void XFormWidget::hideEvent(QHideEvent* e)
 #if defined(USE_Qt5)
 	void XFormWidget::onActivated(QMdiSubWindow* aw)
 #else
-    void XFormWidget::onActivated(QWidget* aw)
+   // void XFormWidget::onActivated(QWidget* aw)
+void XFormWidget::onActivated(QMdiSubWindow* aw)
 #endif
 {
 	//qDebug() <<"XFormWidget::onActivated" <<aw <<"this="<<this <<windowTitle();
@@ -4030,7 +4032,8 @@ void XFormWidget::createGUI()
 #if defined(USE_Qt5)
 	QWidget* self = new QWidget(); // The internal widget of the MdiSubWindow
 #else
-	QWidget* self = this;
+    //QWidget* self = this;
+    QWidget* self = new QWidget();
 #endif
 
 	bLinkFocusViews = true;
@@ -4343,7 +4346,7 @@ void XFormWidget::createGUI()
 #if defined(USE_Qt5)
 	setWidget( self );
 #endif
-
+setWidget( self );
 	//QTimer::singleShot(500, this, SLOT(Focus()));
 }
 
@@ -4643,6 +4646,7 @@ bool XFormWidget::loadFile(QString filename)
 
 bool XFormWidget::loadData()
 {
+    qDebug()<<"XFormWidget::loadData() debug by jazz brain";
 	//try to get a rough estimation of available amount of memory
 	V3DLONG nbytes = estimateRoughAmountUsedMemory();
     if (nbytes>(unsigned V3DLONG)((double(1024)*1024*1024*TH_USE_MEMORY)))
@@ -5232,7 +5236,7 @@ void XFormWidget::connectEventSignals()
     connect(landmarkManagerButton, SIGNAL(clicked()), this, SLOT(openLandmarkManager()));
 
     connect(resetButton, SIGNAL(clicked()), this, SLOT(reset()));
-	//connect(openFileNameButton, SIGNAL(clicked()), this, SLOT(setOpenFileName())); //	remove this button on 080402
+    //connect(openFileNameButton, SIGNAL(clicked()), this, SLOT(setOpenFileName())); //	remove this button on 080402
 
     //connect(landmarkLabelDispCheckBox, SIGNAL(clicked()), this, SLOT(toggleLandmarkLabelDisp()));
 

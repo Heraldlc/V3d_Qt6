@@ -24,7 +24,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_XFormWidget_t {
     const uint offsetsAndSize[176];
-    char stringdata0[1446];
+    char stringdata0[1452];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_XFormWidget_t, stringdata0) + ofs), len 
@@ -46,78 +46,78 @@ QT_MOC_LITERAL(171, 6), // "bGlass"
 QT_MOC_LITERAL(178, 21), // "mixChannelColorPlaneY"
 QT_MOC_LITERAL(200, 21), // "mixChannelColorPlaneZ"
 QT_MOC_LITERAL(222, 11), // "onActivated"
-QT_MOC_LITERAL(234, 8), // "QWidget*"
-QT_MOC_LITERAL(243, 21), // "syncChannelTabWidgets"
-QT_MOC_LITERAL(265, 17), // "ChannelTabWidget*"
-QT_MOC_LITERAL(283, 6), // "sender"
-QT_MOC_LITERAL(290, 15), // "setColorRedType"
-QT_MOC_LITERAL(306, 17), // "setColorGreenType"
-QT_MOC_LITERAL(324, 16), // "setColorBlueType"
-QT_MOC_LITERAL(341, 15), // "setColorAllType"
-QT_MOC_LITERAL(357, 20), // "setColorRed2GrayType"
-QT_MOC_LITERAL(378, 22), // "setColorGreen2GrayType"
-QT_MOC_LITERAL(401, 21), // "setColorBlue2GrayType"
-QT_MOC_LITERAL(423, 20), // "setColorAll2GrayType"
-QT_MOC_LITERAL(444, 19), // "setColorMapDispType"
-QT_MOC_LITERAL(464, 21), // "ImageDisplayColorType"
-QT_MOC_LITERAL(486, 5), // "Ctype"
-QT_MOC_LITERAL(492, 18), // "switchMaskColormap"
-QT_MOC_LITERAL(511, 23), // "toggleLinkFocusCheckBox"
-QT_MOC_LITERAL(535, 31), // "toggleDisplayFocusCrossCheckBox"
-QT_MOC_LITERAL(567, 24), // "toggleImgValScaleDisplay"
-QT_MOC_LITERAL(592, 26), // "toggleLookingGlassCheckBox"
-QT_MOC_LITERAL(619, 19), // "doMenuOfTriviewZoom"
-QT_MOC_LITERAL(639, 14), // "triview_zoomin"
-QT_MOC_LITERAL(654, 15), // "triview_zoomout"
-QT_MOC_LITERAL(670, 13), // "triview_zoom1"
-QT_MOC_LITERAL(684, 13), // "triview_zoom2"
-QT_MOC_LITERAL(698, 16), // "triview_zoomhalf"
-QT_MOC_LITERAL(715, 15), // "triview_setzoom"
-QT_MOC_LITERAL(731, 10), // "b_multiply"
-QT_MOC_LITERAL(742, 26), // "popupImageProcessingDialog"
-QT_MOC_LITERAL(769, 4), // "item"
-QT_MOC_LITERAL(774, 13), // "doImage3DView"
-QT_MOC_LITERAL(788, 24), // "doImage3DLocalMarkerView"
-QT_MOC_LITERAL(813, 21), // "doImage3DLocalRoiView"
-QT_MOC_LITERAL(835, 22), // "doImage3DLocalBBoxView"
-QT_MOC_LITERAL(858, 21), // "tmp_b_use_512x512x256"
-QT_MOC_LITERAL(880, 7), // "b_local"
-QT_MOC_LITERAL(888, 4), // "bbx0"
-QT_MOC_LITERAL(893, 4), // "bbx1"
-QT_MOC_LITERAL(898, 4), // "bby0"
-QT_MOC_LITERAL(903, 4), // "bby1"
-QT_MOC_LITERAL(908, 4), // "bbz0"
-QT_MOC_LITERAL(913, 4), // "bbz1"
-QT_MOC_LITERAL(918, 4), // "show"
-QT_MOC_LITERAL(923, 16), // "doMenuOf3DViewer"
-QT_MOC_LITERAL(940, 9), // "aboutInfo"
-QT_MOC_LITERAL(950, 15), // "setOpenFileName"
-QT_MOC_LITERAL(966, 5), // "reset"
-QT_MOC_LITERAL(972, 22), // "changeFocusXToExternal"
-QT_MOC_LITERAL(995, 22), // "changeFocusYToExternal"
-QT_MOC_LITERAL(1018, 22), // "changeFocusZToExternal"
-QT_MOC_LITERAL(1041, 36), // "toggleCheckBox_bSendSignalToE..."
-QT_MOC_LITERAL(1078, 40), // "toggleCheckBox_bAcceptSignalF..."
-QT_MOC_LITERAL(1119, 26), // "copyLandmarkToPublicBuffer"
-QT_MOC_LITERAL(1146, 29), // "pasteLandmarkFromPublicBuffer"
-QT_MOC_LITERAL(1176, 18), // "saveLandmarkToFile"
-QT_MOC_LITERAL(1195, 20), // "loadLandmarkFromFile"
-QT_MOC_LITERAL(1216, 19), // "openLandmarkManager"
-QT_MOC_LITERAL(1236, 23), // "toggleLandmarkLabelDisp"
-QT_MOC_LITERAL(1260, 17), // "launchAtlasViewer"
-QT_MOC_LITERAL(1278, 6), // "curTab"
-QT_MOC_LITERAL(1285, 14), // "cascadeWindows"
-QT_MOC_LITERAL(1300, 11), // "updateViews"
-QT_MOC_LITERAL(1312, 13), // "updateTriview"
-QT_MOC_LITERAL(1326, 18), // "changeXOffset_mapv"
-QT_MOC_LITERAL(1345, 1), // "x"
-QT_MOC_LITERAL(1347, 18), // "changeYOffset_mapv"
-QT_MOC_LITERAL(1366, 1), // "y"
-QT_MOC_LITERAL(1368, 18), // "changeZOffset_mapv"
-QT_MOC_LITERAL(1387, 16), // "changeLevel_mapv"
-QT_MOC_LITERAL(1404, 5), // "level"
-QT_MOC_LITERAL(1410, 19), // "hideDisplayControls"
-QT_MOC_LITERAL(1430, 15) // "hideDisplayInfo"
+QT_MOC_LITERAL(234, 14), // "QMdiSubWindow*"
+QT_MOC_LITERAL(249, 21), // "syncChannelTabWidgets"
+QT_MOC_LITERAL(271, 17), // "ChannelTabWidget*"
+QT_MOC_LITERAL(289, 6), // "sender"
+QT_MOC_LITERAL(296, 15), // "setColorRedType"
+QT_MOC_LITERAL(312, 17), // "setColorGreenType"
+QT_MOC_LITERAL(330, 16), // "setColorBlueType"
+QT_MOC_LITERAL(347, 15), // "setColorAllType"
+QT_MOC_LITERAL(363, 20), // "setColorRed2GrayType"
+QT_MOC_LITERAL(384, 22), // "setColorGreen2GrayType"
+QT_MOC_LITERAL(407, 21), // "setColorBlue2GrayType"
+QT_MOC_LITERAL(429, 20), // "setColorAll2GrayType"
+QT_MOC_LITERAL(450, 19), // "setColorMapDispType"
+QT_MOC_LITERAL(470, 21), // "ImageDisplayColorType"
+QT_MOC_LITERAL(492, 5), // "Ctype"
+QT_MOC_LITERAL(498, 18), // "switchMaskColormap"
+QT_MOC_LITERAL(517, 23), // "toggleLinkFocusCheckBox"
+QT_MOC_LITERAL(541, 31), // "toggleDisplayFocusCrossCheckBox"
+QT_MOC_LITERAL(573, 24), // "toggleImgValScaleDisplay"
+QT_MOC_LITERAL(598, 26), // "toggleLookingGlassCheckBox"
+QT_MOC_LITERAL(625, 19), // "doMenuOfTriviewZoom"
+QT_MOC_LITERAL(645, 14), // "triview_zoomin"
+QT_MOC_LITERAL(660, 15), // "triview_zoomout"
+QT_MOC_LITERAL(676, 13), // "triview_zoom1"
+QT_MOC_LITERAL(690, 13), // "triview_zoom2"
+QT_MOC_LITERAL(704, 16), // "triview_zoomhalf"
+QT_MOC_LITERAL(721, 15), // "triview_setzoom"
+QT_MOC_LITERAL(737, 10), // "b_multiply"
+QT_MOC_LITERAL(748, 26), // "popupImageProcessingDialog"
+QT_MOC_LITERAL(775, 4), // "item"
+QT_MOC_LITERAL(780, 13), // "doImage3DView"
+QT_MOC_LITERAL(794, 24), // "doImage3DLocalMarkerView"
+QT_MOC_LITERAL(819, 21), // "doImage3DLocalRoiView"
+QT_MOC_LITERAL(841, 22), // "doImage3DLocalBBoxView"
+QT_MOC_LITERAL(864, 21), // "tmp_b_use_512x512x256"
+QT_MOC_LITERAL(886, 7), // "b_local"
+QT_MOC_LITERAL(894, 4), // "bbx0"
+QT_MOC_LITERAL(899, 4), // "bbx1"
+QT_MOC_LITERAL(904, 4), // "bby0"
+QT_MOC_LITERAL(909, 4), // "bby1"
+QT_MOC_LITERAL(914, 4), // "bbz0"
+QT_MOC_LITERAL(919, 4), // "bbz1"
+QT_MOC_LITERAL(924, 4), // "show"
+QT_MOC_LITERAL(929, 16), // "doMenuOf3DViewer"
+QT_MOC_LITERAL(946, 9), // "aboutInfo"
+QT_MOC_LITERAL(956, 15), // "setOpenFileName"
+QT_MOC_LITERAL(972, 5), // "reset"
+QT_MOC_LITERAL(978, 22), // "changeFocusXToExternal"
+QT_MOC_LITERAL(1001, 22), // "changeFocusYToExternal"
+QT_MOC_LITERAL(1024, 22), // "changeFocusZToExternal"
+QT_MOC_LITERAL(1047, 36), // "toggleCheckBox_bSendSignalToE..."
+QT_MOC_LITERAL(1084, 40), // "toggleCheckBox_bAcceptSignalF..."
+QT_MOC_LITERAL(1125, 26), // "copyLandmarkToPublicBuffer"
+QT_MOC_LITERAL(1152, 29), // "pasteLandmarkFromPublicBuffer"
+QT_MOC_LITERAL(1182, 18), // "saveLandmarkToFile"
+QT_MOC_LITERAL(1201, 20), // "loadLandmarkFromFile"
+QT_MOC_LITERAL(1222, 19), // "openLandmarkManager"
+QT_MOC_LITERAL(1242, 23), // "toggleLandmarkLabelDisp"
+QT_MOC_LITERAL(1266, 17), // "launchAtlasViewer"
+QT_MOC_LITERAL(1284, 6), // "curTab"
+QT_MOC_LITERAL(1291, 14), // "cascadeWindows"
+QT_MOC_LITERAL(1306, 11), // "updateViews"
+QT_MOC_LITERAL(1318, 13), // "updateTriview"
+QT_MOC_LITERAL(1332, 18), // "changeXOffset_mapv"
+QT_MOC_LITERAL(1351, 1), // "x"
+QT_MOC_LITERAL(1353, 18), // "changeYOffset_mapv"
+QT_MOC_LITERAL(1372, 1), // "y"
+QT_MOC_LITERAL(1374, 18), // "changeZOffset_mapv"
+QT_MOC_LITERAL(1393, 16), // "changeLevel_mapv"
+QT_MOC_LITERAL(1410, 5), // "level"
+QT_MOC_LITERAL(1416, 19), // "hideDisplayControls"
+QT_MOC_LITERAL(1436, 15) // "hideDisplayInfo"
 
     },
     "XFormWidget\0colorChanged\0\0colorChangedGlass\0"
@@ -126,14 +126,15 @@ QT_MOC_LITERAL(1430, 15) // "hideDisplayInfo"
     "external_validZSliceChanged\0z\0"
     "mixChannelColorPlaneX\0pxm\0bGlass\0"
     "mixChannelColorPlaneY\0mixChannelColorPlaneZ\0"
-    "onActivated\0QWidget*\0syncChannelTabWidgets\0"
-    "ChannelTabWidget*\0sender\0setColorRedType\0"
-    "setColorGreenType\0setColorBlueType\0"
-    "setColorAllType\0setColorRed2GrayType\0"
-    "setColorGreen2GrayType\0setColorBlue2GrayType\0"
-    "setColorAll2GrayType\0setColorMapDispType\0"
-    "ImageDisplayColorType\0Ctype\0"
-    "switchMaskColormap\0toggleLinkFocusCheckBox\0"
+    "onActivated\0QMdiSubWindow*\0"
+    "syncChannelTabWidgets\0ChannelTabWidget*\0"
+    "sender\0setColorRedType\0setColorGreenType\0"
+    "setColorBlueType\0setColorAllType\0"
+    "setColorRed2GrayType\0setColorGreen2GrayType\0"
+    "setColorBlue2GrayType\0setColorAll2GrayType\0"
+    "setColorMapDispType\0ImageDisplayColorType\0"
+    "Ctype\0switchMaskColormap\0"
+    "toggleLinkFocusCheckBox\0"
     "toggleDisplayFocusCrossCheckBox\0"
     "toggleImgValScaleDisplay\0"
     "toggleLookingGlassCheckBox\0"
@@ -352,7 +353,7 @@ void XFormWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 6: _t->mixChannelColorPlaneX((*reinterpret_cast< const QPixmap(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 7: _t->mixChannelColorPlaneY((*reinterpret_cast< const QPixmap(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 8: _t->mixChannelColorPlaneZ((*reinterpret_cast< const QPixmap(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 9: _t->onActivated((*reinterpret_cast< QWidget*(*)>(_a[1]))); break;
+        case 9: _t->onActivated((*reinterpret_cast< QMdiSubWindow*(*)>(_a[1]))); break;
         case 10: _t->syncChannelTabWidgets((*reinterpret_cast< ChannelTabWidget*(*)>(_a[1]))); break;
         case 11: _t->setColorRedType(); break;
         case 12: _t->setColorGreenType(); break;
@@ -427,7 +428,7 @@ void XFormWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
-                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QWidget* >(); break;
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QMdiSubWindow* >(); break;
             }
             break;
         }
@@ -479,14 +480,14 @@ void XFormWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
 }
 
 const QMetaObject XFormWidget::staticMetaObject = { {
-    QMetaObject::SuperData::link<QWidget::staticMetaObject>(),
+    QMetaObject::SuperData::link<QMdiSubWindow::staticMetaObject>(),
     qt_meta_stringdata_XFormWidget.offsetsAndSize,
     qt_meta_data_XFormWidget,
     qt_static_metacall,
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_XFormWidget_t
 , QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QPixmap &, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QPixmap &, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QPixmap &, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QWidget *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<ChannelTabWidget *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<ImageDisplayColorType, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<ImageDisplayColorType, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QPixmap &, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QPixmap &, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<const QPixmap &, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QMdiSubWindow *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<ChannelTabWidget *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<ImageDisplayColorType, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<ImageDisplayColorType, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QString, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<long, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
 
 
 >,
@@ -506,12 +507,12 @@ void *XFormWidget::qt_metacast(const char *_clname)
         return static_cast<void*>(this);
     if (!strcmp(_clname, "TriviewControl"))
         return static_cast< TriviewControl*>(this);
-    return QWidget::qt_metacast(_clname);
+    return QMdiSubWindow::qt_metacast(_clname);
 }
 
 int XFormWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QWidget::qt_metacall(_c, _id, _a);
+    _id = QMdiSubWindow::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

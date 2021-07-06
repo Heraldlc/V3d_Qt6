@@ -290,7 +290,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
     */
 
     //if (workspace)  workspace->deleteLater(); //110802 RZC //will call ~XFormView to raise BAD_ACCESS
-    disconnect(workspace, SIGNAL(windowActivated(QWidget *)),  this, SLOT(updateMenus())); //instead of above line
+   //修改 disconnect(workspace, SIGNAL(windowActivated(QWidget *)),  this, SLOT(updateMenus())); //instead of above line
+    disconnect(workspace, SIGNAL(subWindowActivated(QMdiSubWindow *)),  this, SLOT(updateMenus()));
+
     V3dApplication::handleCloseEvent(event);
 }
 void MainWindow::transactionStart()
@@ -314,37 +316,37 @@ void MainWindow::updateTriviewWindow()
 void MainWindow::updateTriview()
 {
     qDebug()<<"triggered in MainWindow ... ...";
-    //	TriviewControl *tvControl = (TriviewControl *)(this->curHiddenSelectedWindow());
-    //	if(tvControl)
-    //	{
-    //		// updateMinMax then changeFocus
-    //		V3DLONG currslice = tvControl->getValidZslice();
-    //		V3DLONG preslice = tvControl->getPreValidZslice();
-    //
-    //		qDebug()<<"the triview window exist ... ..."<<currslice<<preslice;
-    //
-    //		if(currslice>preslice)
-    //		{
-    //			qDebug()<<"update triview window ... ...";
-    //
-    //			tvControl->updateMinMax(currslice-1);
-    //
-    //			V3DLONG x, y, z;
-    //			tvControl->getFocusLocation( x, y, z);
-    //			tvControl->setFocusLocation( x, y, currslice);
-    //
-    //			tvControl->setPreValidZslice(currslice);
-    //		}
-    //
-    //		QCoreApplication::processEvents();
-    //		return;
-    //	}
-    //	else
-    //	{
-    //		printf("The pointer to triview window is NULL!\n");
-    //		QCoreApplication::processEvents();
-    //		return;
-    //	}
+        TriviewControl *tvControl = (TriviewControl *)(this->curHiddenSelectedWindow());
+        if(tvControl)
+        {
+            // updateMinMax then changeFocus
+            V3DLONG currslice = tvControl->getValidZslice();
+            V3DLONG preslice = tvControl->getPreValidZslice();
+
+            qDebug()<<"the triview window exist ... ..."<<currslice<<preslice;
+
+            if(currslice>preslice)
+            {
+                qDebug()<<"update triview window ... ...";
+
+                tvControl->updateMinMax(currslice-1);
+
+                V3DLONG x, y, z;
+                tvControl->getFocusLocation( x, y, z);
+                tvControl->setFocusLocation( x, y, currslice);
+
+                tvControl->setPreValidZslice(currslice);
+            }
+
+            QCoreApplication::processEvents();
+            return;
+        }
+        else
+        {
+            printf("The pointer to triview window is NULL!\n");
+            QCoreApplication::processEvents();
+            return;
+        }
     sub_thread.setPriority(QThread::HighPriority);
     if(this->curHiddenSelectedWindow())
     {
@@ -518,39 +520,40 @@ void MainWindow::triggerRunPlugin()
 {
     emit imageLoaded2Plugin();
 }
-//void MainWindow::handleCoordinatedCloseEvent_real() {
-//    // qDebug("***vaa3d: MainWindow::closeEvent");
-//    writeSettings(); //added on 090501 to save setting (default preferences)
-//    foreach (V3dR_MainWindow* p3DView, list_3Dview_win)
-//    {
-//        if (p3DView)
-//        {
-//            p3DView->postClose(); //151117. PHC
-        //v3d_msg("haha");
-//        }
-//    }
-//    //exit(1); //this is one bruteforce way to disable the strange seg fault. 080430. A simple to enhance this is to set a b_changedContent flag indicates if there is any unsaved edit of an image,
+void MainWindow::handleCoordinatedCloseEvent_real() {
+    // qDebug("***vaa3d: MainWindow::closeEvent");
+    writeSettings(); //added on 090501 to save setting (default preferences)
+    foreach (V3dR_MainWindow* p3DView, list_3Dview_win)
+    {
+        if (p3DView)
+        {
+            p3DView->postClose(); //151117. PHC
+        v3d_msg("haha");
+        }
+    }
+    //exit(1); //this is one bruteforce way to disable the strange seg fault. 080430. A simple to enhance this is to set a b_changedContent flag indicates if there is any unsaved edit of an image,
 
-//#if defined(USE_Qt5)
-//    workspace->closeAllSubWindows();
-//#else
-//    workspace->closeAllWindows();
-//#endif
-//}
-//void MainWindow::handleCoordinatedCloseEvent(QCloseEvent *event)
-//{
-//    handleCoordinatedCloseEvent_real();
-//    if (activeMdiChild())
-//    {
-//        event->ignore();
-//        return; //090812 RZC
-//    }
-//    else
-//    {
-//        //writeSettings();
-//        event->accept();
-//    }
-//}
+#if defined(USE_Qt5)
+    workspace->closeAllSubWindows();
+#else
+   // workspace->closeAllWindows();
+     workspace->closeAllSubWindows();
+#endif
+}
+void MainWindow::handleCoordinatedCloseEvent(QCloseEvent *event)
+{
+    handleCoordinatedCloseEvent_real();
+    if (activeMdiChild())
+    {
+        event->ignore();
+        return; //090812 RZC
+    }
+    else
+    {
+        //writeSettings();
+        event->accept();
+    }
+}
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
 {
     //setText(tr("<drop content>"));
@@ -631,6 +634,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 #endif
 
             fileName = url;
+
             qDebug() <<tr("  the file to open: [")+ fileName +("]");
         }
         event->acceptProposedAction();
@@ -643,7 +647,8 @@ void MainWindow::dropEvent(QDropEvent *event)
     fileName.replace("%20"," ");//fixed the space path issue on Linux machine by Zhi Zhou May 14 2015
 #endif
 
-    //
+
+     fileName.remove(0,8);//自己改的
     if (!QFile::exists(fileName))
     {
         v3d_msg(QString("The file [%1] specified does not exist").arg(fileName));
@@ -772,45 +777,45 @@ void MainWindow::generateVersionInfo()
 
 V3dR_MainWindow * MainWindow::find3DViewer(QString fileName)
 {
-//    int numfind = 0; //20110427 YuY
-//    V3dR_MainWindow * v3dRMWFind;
-//    // support image with relative path
-//    QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath(); //20110427 YuY
-//    if (canonicalFilePath.size()==0) canonicalFilePath = fileName; //20110427 YuY
-//    for (int i=0; i<list_3Dview_win.size(); i++)
-//    {
-//        if (list_3Dview_win.at(i)->getDataTitle()==canonicalFilePath || QFileInfo(list_3Dview_win.at(i)->getDataTitle()).fileName() == canonicalFilePath) //20110427 YuY
-//        {
-//            v3dRMWFind = list_3Dview_win.at(i);
-//            numfind++;
-//        }
-//    }
-//    if(!numfind) //20110427 YuY
-//    {
-//        // try find image name contains the input string from the end
-//        for (int i=0; i<list_3Dview_win.size(); i++)
-//        {
-//            if ( list_3Dview_win.at(i)->getDataTitle().endsWith(canonicalFilePath) ||
-//                QFileInfo(list_3Dview_win.at(i)->getDataTitle()).fileName().endsWith(canonicalFilePath) ) //20110427 YuY
-//            {
-//                v3dRMWFind = list_3Dview_win.at(i);
-//                numfind++;
-//            }
-//        }
-//    }
-//    if(numfind > 1)	//20110427 YuY
-//    {
-//        v3d_msg(QString("Too many windows sharing the same [partial] name. Please specify your image with whole name including absolute path and try again."), 1);
-//        return 0;
-//    }
-//    else if(numfind == 1)
-//    {
-//        return v3dRMWFind;
-//    }
-//    else
-//    {
-//        return 0;
-//    }
+    int numfind = 0; //20110427 YuY
+    V3dR_MainWindow * v3dRMWFind;
+    // support image with relative path
+    QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath(); //20110427 YuY
+    if (canonicalFilePath.size()==0) canonicalFilePath = fileName; //20110427 YuY
+    for (int i=0; i<list_3Dview_win.size(); i++)
+    {
+        if (list_3Dview_win.at(i)->getDataTitle()==canonicalFilePath || QFileInfo(list_3Dview_win.at(i)->getDataTitle()).fileName() == canonicalFilePath) //20110427 YuY
+        {
+            v3dRMWFind = list_3Dview_win.at(i);
+            numfind++;
+        }
+    }
+    if(!numfind) //20110427 YuY
+    {
+        // try find image name contains the input string from the end
+        for (int i=0; i<list_3Dview_win.size(); i++)
+        {
+            if ( list_3Dview_win.at(i)->getDataTitle().endsWith(canonicalFilePath) ||
+                QFileInfo(list_3Dview_win.at(i)->getDataTitle()).fileName().endsWith(canonicalFilePath) ) //20110427 YuY
+            {
+                v3dRMWFind = list_3Dview_win.at(i);
+                numfind++;
+            }
+        }
+    }
+    if(numfind > 1)	//20110427 YuY
+    {
+        v3d_msg(QString("Too many windows sharing the same [partial] name. Please specify your image with whole name including absolute path and try again."), 1);
+        return 0;
+    }
+    else if(numfind == 1)
+    {
+        return v3dRMWFind;
+    }
+    else
+    {
+        return 0;
+    }
     return 0;
 }
 void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool b_forceopen3dviewer)
@@ -820,20 +825,18 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
         XFormWidget *existing_imgwin = findMdiChild(fileName);
         if (existing_imgwin)
         {
-
-
-           // workspace->setActiveSubWindow(existing_imgwin);
-
+            workspace->setActiveSubWindow(existing_imgwin);
             return;
         }
         V3dR_MainWindow *existing_3dviewer = find3DViewer(fileName);
         if (existing_3dviewer)
         {
             existing_3dviewer->activateWindow();
+
+
             return;
         }
 
-        //
 
         QFileInfo curfile_info(fileName);
 
@@ -1538,7 +1541,7 @@ void MainWindow::import_GeneralImageFile()
         if (existing) {
 
 
-           // workspace->setActiveSubWindow(existing);
+           workspace->setActiveSubWindow(existing);
 
             return;
         }
@@ -1568,7 +1571,7 @@ void MainWindow::import_Leica()
         if (existing) {
 
 
-            //workspace->setActiveSubWindow(existing);
+            workspace->setActiveSubWindow(existing);
 
             return;
         }
@@ -2008,10 +2011,7 @@ void MainWindow::updateWindowMenu()
     windowMenu->addAction(nextAct);
     windowMenu->addAction(previousAct);
     windowMenu->addAction(separator_ImgWindows_Act);
-
-
     QList<QMdiSubWindow *> windows = workspace->subWindowList();
-
     separator_ImgWindows_Act->setVisible(!windows.isEmpty());
     int i;
     for (i = 0; i < windows.size(); ++i) {
@@ -2030,8 +2030,9 @@ void MainWindow::updateWindowMenu()
 #if defined(USE_Qt5)
         connect(action, &QAction::triggered, [=]() { workspace->setActiveSubWindow( child ); });
 #else
-        connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
-        windowMapper->setMapping(action, child);
+//        connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
+//        windowMapper->setMapping(action, child);
+         connect(action, &QAction::triggered, [=]() { workspace->setActiveSubWindow(child); });
 #endif
     }
     //now add the 3D viewer list
@@ -2040,18 +2041,18 @@ void MainWindow::updateWindowMenu()
         windowMenu->addSeparator();
         for (i = 0; i < list_3Dview_win.size(); ++i)
         {
-//            V3dR_MainWindow *vchild = qobject_cast<V3dR_MainWindow *>(list_3Dview_win.at(i));
-//            QString text;
-//            if (i < 9) {
-//                text = tr("%1: &%2 %3").arg(vchild->getTitlePrefix()).arg(i + 1).arg(vchild->getDataTitle());
-//            } else {
-//                text = tr("%1: %2 %3").arg(vchild->getTitlePrefix()).arg(i + 1).arg(vchild->getDataTitle());
-//            }
-//            QAction *action  = windowMenu->addAction(text);
-//            action->setCheckable(true);
-//            //raise() is the right function to bring it to front (not activateWindow() which is not a slot, or show()). by PHC. 090626
-//            //however because raise does not mean the window is activated, thus I write a wrapper slot called raise_and_activate to call both raise() followed by activatedWindow()
-//            connect(action, SIGNAL(triggered()), vchild, SLOT(raise_and_activate()));
+            V3dR_MainWindow *vchild = qobject_cast<V3dR_MainWindow *>(list_3Dview_win.at(i));
+            QString text;
+            if (i < 9) {
+                text = tr("%1: &%2 %3").arg(vchild->getTitlePrefix()).arg(i + 1).arg(vchild->getDataTitle());
+            } else {
+                text = tr("%1: %2 %3").arg(vchild->getTitlePrefix()).arg(i + 1).arg(vchild->getDataTitle());
+            }
+            QAction *action  = windowMenu->addAction(text);
+            action->setCheckable(true);
+            //raise() is the right function to bring it to front (not activateWindow() which is not a slot, or show()). by PHC. 090626
+            //however because raise does not mean the window is activated, thus I write a wrapper slot called raise_and_activate to call both raise() followed by activatedWindow()
+            connect(action, SIGNAL(triggered()), vchild, SLOT(raise_and_activate()));
         }
     }
 }
@@ -2339,8 +2340,10 @@ void MainWindow::createActions()
     connect(closeAct, SIGNAL(triggered()),
             workspace, SLOT(closeActiveSubWindow()));
 #else
+//    connect(closeAct, SIGNAL(triggered()),
+//            workspace, SLOT(closeActiveWindow()));
     connect(closeAct, SIGNAL(triggered()),
-            workspace, SLOT(closeActiveWindow()));
+            workspace, SLOT(closeActiveSubWindow()));
 #endif
     closeAllAct = new QAction(tr("Close &All"), this);
     closeAllAct->setStatusTip(tr("Close all the windows"));
@@ -2355,20 +2358,22 @@ void MainWindow::createActions()
 #if defined(USE_Qt5)
     connect(tileAct, SIGNAL(triggered()), workspace, SLOT(tileSubWindows()));
 #else
-    connect(tileAct, SIGNAL(triggered()), workspace, SLOT(tile()));
+    //connect(tileAct, SIGNAL(triggered()), workspace, SLOT(tile()));
+        connect(tileAct, SIGNAL(triggered()), workspace, SLOT(tileSubWindows()));
 #endif
     cascadeAct = new QAction(tr("&Cascade"), this);
     cascadeAct->setStatusTip(tr("Cascade the windows"));
 #if defined(USE_Qt5)
     connect(cascadeAct, SIGNAL(triggered()), workspace, SLOT(cascadeSubWindows()));
 #else
-    connect(cascadeAct, SIGNAL(triggered()), workspace, SLOT(cascade()));
+    //connect(cascadeAct, SIGNAL(triggered()), workspace, SLOT(cascade()));
+        connect(cascadeAct, SIGNAL(triggered()), workspace, SLOT(cascadeSubWindows()));
 #endif
     arrangeAct = new QAction(tr("Arrange &icons"), this);
     arrangeAct->setStatusTip(tr("Arrange the icons"));
 #if defined(USE_Qt5)
 #else
-    connect(arrangeAct, SIGNAL(triggered()), workspace, SLOT(arrangeIcons()));
+    //connect(arrangeAct, SIGNAL(triggered()), workspace, SLOT(arrangeIcons()));
 #endif
     nextAct = new QAction(tr("Ne&xt"), this);
     nextAct->setShortcut(tr("Ctrl+F6"));
@@ -2377,8 +2382,10 @@ void MainWindow::createActions()
     connect(nextAct, SIGNAL(triggered()),
             workspace, SLOT(activateNextSubWindow()));
 #else
+//    connect(nextAct, SIGNAL(triggered()),
+//            workspace, SLOT(activateNextWindow()));
     connect(nextAct, SIGNAL(triggered()),
-            workspace, SLOT(activateNextWindow()));
+            workspace, SLOT(activateNextSubWindow()));
 #endif
     previousAct = new QAction(tr("Pre&vious"), this);
     previousAct->setShortcut(tr("Ctrl+Shift+F6"));
@@ -2388,8 +2395,11 @@ void MainWindow::createActions()
     connect(previousAct, SIGNAL(triggered()),
             workspace, SLOT(activatePreviousSubWindow()));
 #else
+//    connect(previousAct, SIGNAL(triggered()),
+//            workspace, SLOT(activatePreviousWindow()));
     connect(previousAct, SIGNAL(triggered()),
-            workspace, SLOT(activatePreviousWindow()));
+            workspace, SLOT(activatePreviousSubWindow()));
+
 #endif
     separator_ImgWindows_Act = new QAction(this);
     separator_ImgWindows_Act->setSeparator(true);

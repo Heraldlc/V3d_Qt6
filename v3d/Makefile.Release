@@ -13,7 +13,7 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -D__ALLOW_VR_FUNCS__ -DNOMINMAX -D_WINSOCKAPI_ -DTEEM_STATIC -D__NAWEBSERVICE__ -D_ALLOW_WORKMODE_MENU_ -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_SVG_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_CORE_LIB
+DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -DUSE_Qt5 -D__ALLOW_VR_FUNCS__ -DNOMINMAX -D_WINSOCKAPI_ -DTEEM_STATIC -D__NAWEBSERVICE__ -D_ALLOW_WORKMODE_MENU_ -DQT_NO_DEBUG -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_SVG_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_XML_LIB -DQT_CORE_LIB
 CFLAGS        = -fno-keep-inline-dllexport -O2 -w $(DEFINES)
 CXXFLAGS      = -fno-keep-inline-dllexport -DTEEM_STATIC -DWITH_NONAMESPACES -DWITH_PURE_VIRTUAL -O2 -std=gnu++1z -w -fexceptions -mthreads $(DEFINES)
 INCPATH       = -I. -I. -I../common_lib/include -I../common_lib/include/SDL -I../common_lib/include/glew -I../common_lib/include/openvr -I../common_lib/include -IF:/QT6/6.1.0/mingw81_64/include -IF:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets -IF:/QT6/6.1.0/mingw81_64/include/QtOpenGL -IF:/QT6/6.1.0/mingw81_64/include/QtSvg -IF:/QT6/6.1.0/mingw81_64/include/QtWidgets -IF:/QT6/6.1.0/mingw81_64/include/QtGui -IF:/QT6/6.1.0/mingw81_64/include/QtNetwork -IF:/QT6/6.1.0/mingw81_64/include/QtXml -IF:/QT6/6.1.0/mingw81_64/include/QtCore -Irelease -I. -IC:/VulkanSDK/1.0.51.0/Include -IF:/QT6/6.1.0/mingw81_64/mkspecs/win32-g++ 
