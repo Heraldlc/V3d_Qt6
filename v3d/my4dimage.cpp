@@ -50,7 +50,8 @@
 #define NOMINMAX //added by PHC, 2010-05-20 to overcome VC min max macro
 #include <windows.h>
 #endif
-
+#include <qDebug>
+#include <qdebug.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -3841,6 +3842,7 @@ void My4DImage::exportNeuronToSWCFile()
 
 void My4DImage::updateViews()
 {
+   // QDebug()<"jazz debug in my4dimage.cpp My4DImage::updateViews";
 	if (p_mainWidget)  p_mainWidget->show(); //090818 for V3D_PluginLoader
 
 	//setUpdatesEnabled(true)

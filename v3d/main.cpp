@@ -79,20 +79,20 @@ V3dApplication* V3dApplication::theApp = 0;
 
 void printHelp_v3d()
 {
-	cout<<endl<<"Vaa3D: a 3D image visualization and analysis platform developed by Hanchuan Peng and colleagues."<<endl;
-	cout<<endl<<"Usage: v3d -h -M moduleCode [all other options specific to different modules]"<<endl;
+    cout<<endl<<"Vaa3D: a 3D image visualization and analysis platform developed by Hanchuan Peng and colleagues."<<endl;
+    cout<<endl<<"Usage: v3d -h -M moduleCode [all other options specific to different modules]"<<endl;
 
-	cout<<"    -h/H         help information."<<endl;
+    cout<<"    -h/H         help information."<<endl;
 
-	cout<<"    -i <file>                    open single or multiple image (.tif/.tiff, .lsm, .mrc, .raw/.v3draw) / object (.ano, .apo, .swc, .marker) files"<<endl;
+    cout<<"    -i <file>                    open single or multiple image (.tif/.tiff, .lsm, .mrc, .raw/.v3draw) / object (.ano, .apo, .swc, .marker) files"<<endl;
     cout<<"    -o <file>                    indicates single or multiple outputs"<<endl;
-	cout<<"    -x <plugin_dll_full_path or unique partial path>    a string indicates the full path or a unique partial path of a dll (for a plugin) to be launched."<<endl;
-	cout<<"    -m <menu_name>               a string indicates which menu of a plugin will be called."<<endl;
+    cout<<"    -x <plugin_dll_full_path or unique partial path>    a string indicates the full path or a unique partial path of a dll (for a plugin) to be launched."<<endl;
+    cout<<"    -m <menu_name>               a string indicates which menu of a plugin will be called."<<endl;
     cout<<"    -f <function_name>           a string indicates which function of a plugin will be called."<<endl;
     cout<<"    -p <parameters>              a string indicates parameters that plugin function use"<<endl;
     cout<<"    -pf <configuration>          a string read from configuration file indicates parameters that plugin function use"<<endl;
 
-	cout<<"    -v                           force to open a 3d viewer when loading an image, otherwise use the default v3d global setting (from \"Adjust Preference\")"<<endl;
+    cout<<"    -v                           force to open a 3d viewer when loading an image, otherwise use the default v3d global setting (from \"Adjust Preference\")"<<endl;
     cout<<"    -na                          open NeuronAnnotator work-mode directly"<<endl;
     cout<<"    -cmd  [headless command-line arguments, intended for compute grid use. Try \'-cmd -h\' for more information on this option]"<<endl;
 
@@ -107,7 +107,7 @@ void printHelp_v3d()
     for (int i=0;i<existingPluginsList.size();i++)
         cout << "#" << i+1 << "          " << existingPluginsList.at(i).toLocal8Bit().constData() << endl;
 
-	return;
+    return;
 }
 
 int main(int argc, char **argv)
@@ -121,20 +121,20 @@ int main(int argc, char **argv)
 
 #ifdef COMPILE_TO_COMMANDLINE
 
-	CLP parser;
+    CLP parser;
 
-	parser.parse(argc, argv, printHelp_v3d); // parse command lines to v3d_cl_interface Nov. 23, 2010 by YuY
+    parser.parse(argc, argv, printHelp_v3d); // parse command lines to v3d_cl_interface Nov. 23, 2010 by YuY
 
-	if(parser.i_v3d.clp_finished)
-	{
-		return false;
-	}
-	else
-	{
-		if(parser.i_v3d.openV3D)
-		{
-			// ------ V3D GUI handling module ---------------------
-			Q_INIT_RESOURCE(v3d);
+    if(parser.i_v3d.clp_finished)
+    {
+        return false;
+    }
+    else
+    {
+        if(parser.i_v3d.openV3D)
+        {
+            // ------ V3D GUI handling module ---------------------
+            Q_INIT_RESOURCE(v3d);
 
             V3dApplication* app = V3dApplication::getInstance(argc, argv);
             if(!parser.i_v3d.hideV3D)
@@ -144,11 +144,11 @@ int main(int argc, char **argv)
 
             MainWindow* mainWin=app->getMainWindow();
 
-			if (!mainWin)
-			{
-				v3d_msg("Unable to open the Vaa3D main window. Quit.");
-				return false;
-			}
+            if (!mainWin)
+            {
+                v3d_msg("Unable to open the Vaa3D main window. Quit.");
+                return false;
+            }
 
             app->installEventFilter(mainWin);
 
@@ -168,68 +168,68 @@ int main(int argc, char **argv)
                 }
             }
 
-			// plugin module
-			if(parser.i_v3d.pluginname)
-			{
-				mainWin->setBooleanCLplugin(true);
-				mainWin->setPluginName(parser.i_v3d.pluginname);
-				mainWin->setPluginMethod(parser.i_v3d.pluginmethod);
-				mainWin->setPluginFunc(parser.i_v3d.pluginfunc);
-			}
+            // plugin module
+            if(parser.i_v3d.pluginname)
+            {
+                mainWin->setBooleanCLplugin(true);
+                mainWin->setPluginName(parser.i_v3d.pluginname);
+                mainWin->setPluginMethod(parser.i_v3d.pluginmethod);
+                mainWin->setPluginFunc(parser.i_v3d.pluginfunc);
+            }
 
-			// multiple image/object handling module
-			if(parser.i_v3d.fileList.size()==0 || parser.i_v3d.hideV3D)
-			{
-				if(parser.i_v3d.pluginname)
-				{
-					mainWin->triggerRunPlugin();
-				}
-			}
-			else
-			{
-				for(int i=0; i<parser.i_v3d.fileList.size(); i++)
-				{
-					char *filename = parser.i_v3d.fileList.at(i);
+            // multiple image/object handling module
+            if(parser.i_v3d.fileList.size()==0 || parser.i_v3d.hideV3D)
+            {
+                if(parser.i_v3d.pluginname)
+                {
+                    mainWin->triggerRunPlugin();
+                }
+            }
+            else
+            {
+                for(int i=0; i<parser.i_v3d.fileList.size(); i++)
+                {
+                    char *filename = parser.i_v3d.fileList.at(i);
 
-					v3d_msg("now try open files ...", 0);
+                    v3d_msg("now try open files ...", 0);
 
-					QString qFile(filename);
+                    QString qFile(filename);
 
-					if(!QFile(qFile).exists()) // supporting both local and web files. Nov. 18, 2010. YuY
-					{
-						// judge whether the file exists on the web
-						// "://" like "http://" "https://" "ftp://"
+                    if(!QFile(qFile).exists()) // supporting both local and web files. Nov. 18, 2010. YuY
+                    {
+                        // judge whether the file exists on the web
+                        // "://" like "http://" "https://" "ftp://"
 
-						if(qFile.contains("://"))
-						{
-							QUrl url(filename);
+                        if(qFile.contains("://"))
+                        {
+                            QUrl url(filename);
 
-							if(!url.isValid()) // valid or invalid url
-							{
-								v3d_msg(QString("The file path [%1] is not valid! Do nothing.").arg(filename), 0);
-								return false;
-							}
-							else if(url.scheme().toUpper() == "HTTP" || url.scheme().toUpper() == "HTTPS" || url.scheme().toUpper() == "FTP")
-							{
-								// load image/object
-								mainWin->loadV3DUrl(QUrl(filename), true, parser.i_v3d.open3Dviewer);
-							}
-							//how about smb:// etc?? //by PHC, 20101123 question
-						}
-						else // impossible be a url
-						{
-							v3d_msg(QString("The file path [%1] seems invalid (not a local file or a URL)! Do nothing.").arg(filename), 0);
-							return false;
-						}
-					}
-					else
-					{
-						QString curSuffix = QFileInfo(qFile).suffix();
-						// load image/object
-						mainWin->loadV3DFile(filename, true, parser.i_v3d.open3Dviewer);
-					}
-				}
-			}
+                            if(!url.isValid()) // valid or invalid url
+                            {
+                                v3d_msg(QString("The file path [%1] is not valid! Do nothing.").arg(filename), 0);
+                                return false;
+                            }
+                            else if(url.scheme().toUpper() == "HTTP" || url.scheme().toUpper() == "HTTPS" || url.scheme().toUpper() == "FTP")
+                            {
+                                // load image/object
+                                mainWin->loadV3DUrl(QUrl(filename), true, parser.i_v3d.open3Dviewer);
+                            }
+                            //how about smb:// etc?? //by PHC, 20101123 question
+                        }
+                        else // impossible be a url
+                        {
+                            v3d_msg(QString("The file path [%1] seems invalid (not a local file or a URL)! Do nothing.").arg(filename), 0);
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        QString curSuffix = QFileInfo(qFile).suffix();
+                        // load image/object
+                        mainWin->loadV3DFile(filename, true, parser.i_v3d.open3Dviewer);
+                    }
+                }
+            }
 
 
             // Check for software updates.
@@ -282,42 +282,42 @@ int main(int argc, char **argv)
             /// RZC 20170620: disable auto launch
             // mainWin->func_open_neuron_game();
 #endif
-			// launch v3d
-			try
-			{
+            // launch v3d
+            try
+            {
                 if(!parser.i_v3d.hideV3D)
                     return app->exec();
                 else
                     return false;
-			}
-			catch (...)
-			{
-				v3d_msg("Catch an exception at the main application level. Basically you should never see this. Please click Ok to quit and send the error log to the Vaa3D developers to figure out the problem.");
-				return false;
-			}
-			// -------------------------------------------------------
+            }
+            catch (...)
+            {
+                v3d_msg("Catch an exception at the main application level. Basically you should never see this. Please click Ok to quit and send the error log to the Vaa3D developers to figure out the problem.");
+                return false;
+            }
+            // -------------------------------------------------------
 
-		}
-		else
-		{
-			return false;
-		}
+        }
+        else
+        {
+            return false;
+        }
 
-	}
+    }
 
 #else  //why the following would have a pos() segment fault?? by PHC, 110825
 
-	Q_INIT_RESOURCE(v3d);
+    Q_INIT_RESOURCE(v3d);
 
-	QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
-	//090812 RZC: best solution for QMainWindow is using new, then deleteLater itself in its closeEvent.
-	MainWindow* mainWin = new MainWindow;
-	if (!mainWin)
-	{
-		v3d_msg("Unable to open the Vaa3D main window. Quit.");
-		return false;
-	}
+    //090812 RZC: best solution for QMainWindow is using new, then deleteLater itself in its closeEvent.
+    MainWindow* mainWin = new MainWindow;
+    if (!mainWin)
+    {
+        v3d_msg("Unable to open the Vaa3D main window. Quit.");
+        return false;
+    }
 
     // On Mac, allow mainWin to get QFileOpen events, such as when a tif
     // file is dragged onto the application icon.
@@ -325,44 +325,44 @@ int main(int argc, char **argv)
 
     app.installEventFilter(mainWin);
 
-	mainWin->show();
+    mainWin->show();
 
-	//*************************
-	// DO NOT USE THE FOLLOWING AS I CHANGED TO MDI APPLICATIONS
-	//*************************
+    //*************************
+    // DO NOT USE THE FOLLOWING AS I CHANGED TO MDI APPLICATIONS
+    //*************************
 
-	//XFormWidget xformWidget(0);
-	//XFormWidget xformWidget;
-	//XFormWidget xformWidget1(0); //useful to display multiple stacks
+    //XFormWidget xformWidget(0);
+    //XFormWidget xformWidget;
+    //XFormWidget xformWidget1(0); //useful to display multiple stacks
 
-	/*
-	//set style
+    /*
+    //set style
 
-	QStyle *arthurStyle = new ArthurStyle();
-	xformWidget.setStyle(arthurStyle);
+    QStyle *arthurStyle = new ArthurStyle();
+    xformWidget.setStyle(arthurStyle);
 
-	QList<QWidget *> widgets = qFindChildren<QWidget *>(&xformWidget);
-	foreach (QWidget *w, widgets)
-		w->setStyle(arthurStyle);
-	*/
+    QList<QWidget *> widgets = qFindChildren<QWidget *>(&xformWidget);
+    foreach (QWidget *w, widgets)
+        w->setStyle(arthurStyle);
+    */
 
-	//display
+    //display
 
-	//xformWidget.show();
-	//xformWidget1.show(); //useful to display multiple stacks
+    //xformWidget.show();
+    //xformWidget1.show(); //useful to display multiple stacks
 
-	//iDrawMainWindow my3ddraw;
-	//my3ddraw.show();
+    //iDrawMainWindow my3ddraw;
+    //my3ddraw.show();
 
-	try
-	{
-		return app.exec();
-	}
-	catch (...)
-	{
-		v3d_msg("Catch an exception at the main application level. Basically you should never see this. Please click Ok to quit and send the error log to the Vaa3D developers to figure out the problem.");
-		return false;
-	}
+    try
+    {
+        return app.exec();
+    }
+    catch (...)
+    {
+        v3d_msg("Catch an exception at the main application level. Basically you should never see this. Please click Ok to quit and send the error log to the Vaa3D developers to figure out the problem.");
+        return false;
+    }
 
 #endif
 

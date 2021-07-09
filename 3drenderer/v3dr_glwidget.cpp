@@ -196,7 +196,6 @@ V3dR_GLWidget::V3dR_GLWidget(iDrawExternalParameter* idep, QWidget* mainWindow, 
     //}
 
 #endif
-
     QSurfaceFormat f; // = QGLFormat::defaultFormat();
                 //= format();
     {
@@ -668,6 +667,7 @@ void V3dR_GLWidget::stillPaint()
 //	}
 //	else // here system must be idle
     {
+        qDebug()<<"debug in v3dr_glwidget.cpp V3dR_GLWidget::stillPaint()";
         still_timer.stop();
         _still = true;
             DO_updateGL(); // update at once, stream texture for full-resolution

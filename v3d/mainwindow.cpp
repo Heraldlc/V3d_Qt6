@@ -57,7 +57,7 @@ Sept 30, 2008: disable  open in the same window function, also add flip image fu
 #include "import_images_tool_dialog.h"
 #include "DownloadManager.h" // CMB 08-Oct-2010
 #include "mapview.h"
-
+#include <QAction>
 #include "../imaging/v3d_imaging.h"
 
 #ifdef __v3d_custom_toolbar__
@@ -72,8 +72,7 @@ Sept 30, 2008: disable  open in the same window function, also add flip image fu
 //#include "../mozak/MozakUI.h";
 //#endif
 
-//#include "dialog_pointcloudatlas_linkerloader.h"
-//#include "atlas_window.h"
+
 MainWindow::MainWindow()
 {
     //initialize every pointer to 0. added on 080612
@@ -228,11 +227,15 @@ MainWindow::MainWindow()
     setAcceptDrops(true); //080827
     //
 
-
+#if defined(USE_Qt5)
     workspace = new QMdiArea;
     setCentralWidget(workspace);
     connect(workspace, SIGNAL(subWindowActivated(QMdiSubWindow *)),  this, SLOT(updateMenus()));
-
+#else
+    workspace = new QMdiArea;
+    setCentralWidget(workspace);
+    connect(workspace, SIGNAL(subWindowActivated(QMdiSubWindow *)),  this, SLOT(updateMenus()));
+#endif
     createActions();
     createMenus();
     createToolBars();
@@ -278,12 +281,9 @@ MainWindow::~MainWindow()
 }
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-//    disconnect(workspace, SIGNAL(windowActivated(QWidget *)),  this, SLOT(updateMenus())); //instead of above line
-//    V3dApplication::handleCloseEvent(event);
-
-    //if (workspace)  workspace->deleteLater(); //110802 RZC //will call ~XFormView to raise BAD_ACCESS
-   //修改 disconnect(workspace, SIGNAL(windowActivated(QWidget *)),  this, SLOT(updateMenus())); //instead of above line
-    disconnect(workspace, SIGNAL(subWindowActivated(QMdiSubWindow *)),  this, SLOT(updateMenus()));
+    //自己改的
+    qDebug()<<"jazz debug in mainwindow.cpp MainWindow::closeEvent";
+    disconnect(workspace, SIGNAL(subWindowActivated(QMdiSubWindow *)),  this, SLOT(updateMenus())); //instead of above line
     V3dApplication::handleCloseEvent(event);
 }
 void MainWindow::transactionStart()
@@ -307,37 +307,6 @@ void MainWindow::updateTriviewWindow()
 void MainWindow::updateTriview()
 {
     qDebug()<<"triggered in MainWindow ... ...";
-        TriviewControl *tvControl = (TriviewControl *)(this->curHiddenSelectedWindow());
-        if(tvControl)
-        {
-            // updateMinMax then changeFocus
-            V3DLONG currslice = tvControl->getValidZslice();
-            V3DLONG preslice = tvControl->getPreValidZslice();
-
-            qDebug()<<"the triview window exist ... ..."<<currslice<<preslice;
-
-            if(currslice>preslice)
-            {
-                qDebug()<<"update triview window ... ...";
-
-                tvControl->updateMinMax(currslice-1);
-
-                V3DLONG x, y, z;
-                tvControl->getFocusLocation( x, y, z);
-                tvControl->setFocusLocation( x, y, currslice);
-
-                tvControl->setPreValidZslice(currslice);
-            }
-
-            QCoreApplication::processEvents();
-            return;
-        }
-        else
-        {
-            printf("The pointer to triview window is NULL!\n");
-            QCoreApplication::processEvents();
-            return;
-        }
     sub_thread.setPriority(QThread::HighPriority);
     if(this->curHiddenSelectedWindow())
     {
@@ -378,8 +347,6 @@ void MainWindow::updateRunPlugin() //20110426 YuY
             foreach(QString qstr, existingPluginsList)
             {
                 if ( qstr.contains(canonicalFilePath) ||
-                    //qstr.endsWith(canonicalFilePath) || //by PHC, 20120210
-                    //QFileInfo(qstr).fileName().endsWith(canonicalFilePath)
                     QFileInfo(qstr).fileName().contains(canonicalFilePath)
                     ) //20110429 YuY
                 {
@@ -457,7 +424,20 @@ void MainWindow::updateRunPlugin() //20110426 YuY
             }
             qint64 etime_plugin = timer_plugin.elapsed();
             qDebug() << " **** the plugin preprocessing takes [" << etime_plugin <<" milliseconds]";
+            //uncommented version is only used for bench testing by Zhi Z, 20151103
+//            if(v3dclp.fileList.size()>0)
+//            {
+//                QString timer_log = QString(v3dclp.fileList.at(0)) + "_" + QFileInfo(pluginname).baseName() + "_" + pluginfunc +"_time.log";
+//                QFile file(timer_log);
+//                if (!file.open(QFile::WriteOnly|QFile::Truncate))
+//                {
+//                    cout <<"Error opening the log file "<<timer_log.toStdString().c_str() << endl;
+//                }
 
+//                QTextStream stream (&file);
+//                stream << "the plugin preprocessing takes\t"<< etime_plugin <<" milliseconds"<<"\n";
+//                file.close();
+//            }
         }
         else
         {
@@ -499,27 +479,27 @@ void MainWindow::triggerRunPlugin()
     emit imageLoaded2Plugin();
 }
 void MainWindow::handleCoordinatedCloseEvent_real() {
-    // qDebug("***vaa3d: MainWindow::closeEvent");
+
+    qDebug("jazz debug in mainwindow.cpp MainWindow::handleCoordinatedCloseEvent_real()");
     writeSettings(); //added on 090501 to save setting (default preferences)
     foreach (V3dR_MainWindow* p3DView, list_3Dview_win)
     {
         if (p3DView)
         {
             p3DView->postClose(); //151117. PHC
-        v3d_msg("haha");
+           //v3d_msg("haha");
         }
     }
-    //exit(1); //this is one bruteforce way to disable the strange seg fault. 080430. A simple to enhance this is to set a b_changedContent flag indicates if there is any unsaved edit of an image,
-
 #if defined(USE_Qt5)
     workspace->closeAllSubWindows();
 #else
-   // workspace->closeAllWindows();
-     workspace->closeAllSubWindows();
+    workspace->closeAllSubWindows();
 #endif
+     //this is one bruteforce way to disable the strange seg fault. 080430. A simple to enhance this is to set a b_changedContent flag indicates if there is any unsaved edit of an image,
 }
 void MainWindow::handleCoordinatedCloseEvent(QCloseEvent *event)
 {
+    qDebug()<<"jazz debug in mainwindow.cpp MainWindow::handleCoordinatedCloseEvent";
     handleCoordinatedCloseEvent_real();
     if (activeMdiChild())
     {
@@ -612,7 +592,6 @@ void MainWindow::dropEvent(QDropEvent *event)
 #endif
 
             fileName = url;
-
             qDebug() <<tr("  the file to open: [")+ fileName +("]");
         }
         event->acceptProposedAction();
@@ -625,8 +604,8 @@ void MainWindow::dropEvent(QDropEvent *event)
     fileName.replace("%20"," ");//fixed the space path issue on Linux machine by Zhi Zhou May 14 2015
 #endif
 
-
-     fileName.remove(0,8);//自己改的
+    //
+    fileName.remove(0,8);
     if (!QFile::exists(fileName))
     {
         v3d_msg(QString("The file [%1] specified does not exist").arg(fileName));
@@ -638,6 +617,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 }
 void MainWindow::newFile()
 {
+    qDebug()<<"jazz debug in mainwindow.cpp MainWindow::newFile";
     XFormWidget *child = createMdiChild();
     //child->newFile();
     //child->setOpenFileName();
@@ -645,6 +625,7 @@ void MainWindow::newFile()
 }
 void MainWindow::open()
 {
+        qDebug()<<"jazz debug in mainwindow.cpp MainWindow::open";
     QString fileName = QFileDialog::getOpenFileName(this);
     loadV3DFile(fileName, true, global_setting.b_autoOpenImg3DViewer); // loadV3DFile func changed to 3 args. YuY Nov. 18, 2010. change false to global_setting.b_autoOpenImg3DViewer. 2011-02-09, PHC
 }
@@ -794,7 +775,6 @@ V3dR_MainWindow * MainWindow::find3DViewer(QString fileName)
     {
         return 0;
     }
-    return 0;
 }
 void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool b_forceopen3dviewer)
 {
@@ -803,18 +783,22 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
         XFormWidget *existing_imgwin = findMdiChild(fileName);
         if (existing_imgwin)
         {
+
+#if defined(USE_Qt5)
             workspace->setActiveSubWindow(existing_imgwin);
+#else
+            workspace->setActiveSubWindow(existing_imgwin);
+#endif
             return;
         }
         V3dR_MainWindow *existing_3dviewer = find3DViewer(fileName);
         if (existing_3dviewer)
         {
             existing_3dviewer->activateWindow();
-
-
             return;
         }
 
+        //
 
         QFileInfo curfile_info(fileName);
 
@@ -836,6 +820,7 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                     try
                     {
                         child_rawimg = createMdiChild();
+                        qDebug()<<"jazz debug in mainwindow.cpp MainWindow::loadV3DFile";
                         if (child_rawimg->loadFile(cc.raw_image_file_list.at(i))) {
                             statusBar()->showMessage(tr("File loaded [%1]").arg(cc.raw_image_file_list.at(i)), 2000);
                             if (global_setting.b_yaxis_up)
@@ -849,10 +834,11 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
 
                             child_rawimg->show();
 
-
+#if defined(USE_Qt5)
                             workspace->cascadeSubWindows();
-
-
+#else
+                            workspace->cascadeSubWindows();
+#endif
                             //setCurrentFile(fileName);
                         } else {
                             child_rawimg->close();
@@ -872,13 +858,16 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                     try
                     {
                         child_maskimg = createMdiChild();
+                         qDebug()<<"jazz debug in mainwindow.cpp MainWindow::loadV3DFile";
                         if (child_maskimg->loadFile(cc.labelfield_image_file_list.at(i))) {
                             statusBar()->showMessage(tr("File loaded [%1]").arg(cc.labelfield_image_file_list.at(i)), 2000);
                             child_maskimg->show();
 
-
+#if defined(USE_Qt5)
                             workspace->cascadeSubWindows();
-
+#else
+                            workspace->cascadeSubWindows();
+#endif
                             //setCurrentFile(fileName);
                         } else {
                             child_maskimg->close();
@@ -938,10 +927,14 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                 V3dR_MainWindow *my3dwin = 0;
                 try
                 {
+                    qDebug()<<"jazz debug my3dwin ----------------------------------0";
                     my3dwin = new V3dR_MainWindow(mypara_3Dview);
+                    qDebug()<<"jazz debug my3dwin ----------------------------------1";
                     my3dwin->setParent(0);
                     my3dwin->setDataTitle(fileName);
+                     qDebug()<<"jazz debug my3dwin ----------------------------------2";
                     my3dwin->show();
+                     qDebug()<<"jazz debug my3dwin ----------------------------------3";
                     mypara_3Dview->window3D = my3dwin;
                     if (child_rawimg)
                     {
@@ -1018,7 +1011,7 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                 v3d_msg("You fail to open a 3D view window. You may have opened too many stacks (if so please close some first) or try to render a too-big 3D view (if so please contact Hanchuan Peng for a 64-bit version of Vaa3D).");
                 return;
             }
-            list_3Dview_win.append(my3dwin); //081003: no longer need to do this here. I changed the V3dR_MainWindow so that when it create, it will add it into the list; and close the window, then it will delete itself from the list
+            //list_3Dview_win.append(my3dwin); //081003: no longer need to do this here. I changed the V3dR_MainWindow so that when it create, it will add it into the list; and close the window, then it will delete itself from the list
         }
         else if (cur_suffix=="ATLAS")
         {
@@ -1042,13 +1035,17 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                     return;
                 }
                 XFormWidget *child = createMdiChild();
+                 qDebug()<<"jazz debug in mainwindow.cpp MainWindow::loadV3DFile";
                 if (child->loadFile(cur_atlas_list[kk].imgfile)) {
                     statusBar()->showMessage(tr("File loaded [%1]").arg(cur_atlas_list[kk].imgfile), 2000);
                     child->show();
 
-
+#if defined(USE_Qt5)
+                    workspace->cascadeSubWindows();
+#else
                     workspace->cascadeSubWindows();
 
+#endif
                     //update the image data listAtlasFiles member
                     cur_atlas_list[kk].on = true; //since this one has been opened
                     child->getImageData()->listAtlasFiles = cur_atlas_list;
@@ -1098,16 +1095,13 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
             {
                 size_t start_t = clock();
                 XFormWidget *child = createMdiChild();
+
                 v3d_msg(QString("Trying to load an image file [%1]").arg(fileName), 0);
+                qDebug()<<"jazz debug in mainwindow.cpp cur_suffix==V3DRAW  ";
 
                 if (child->loadFile(fileName))
                 {
-//                    if(!child) return;
-//                    if(!child->getImageData()) return;
-
-                    //if(child->getValidZslice()<child->getImageData()->getZDim()-1) return; // avoid crash when the child is closed by user, Dec 29, 2010 by YuY
-                    //bug!!! by PHC. This is a very bad bug. 2011-02-09. this makes all subsequent operations unable to finish. should be disabled!!.
-
+                    qDebug()<<"jazz debug in mainwindow.cpp child->loadFile(fileName)";
                     statusBar()->showMessage(QString("File [%1] loaded").arg(fileName), 2000);
                     if (global_setting.b_autoConvert2_8bit)
                     {
@@ -1130,12 +1124,11 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                     {
                         child->getImageData()->flip(axis_y);
                     }
+                    qDebug()<<"jazz debug in mainwindow.cpp child->show()之前";
                     child->show();
-                    //workspace->cascade(); //080821 //110805, by PHC, since RZC claims the resize MDI works now, so this should not be needed.
-                    // create sampled data 512x512x256 and save it for use in 3dviewer
-                    // to improve openning speed. ZJL 111019
-                    // qDebug("   child->mypara_3Dview = %0p", &(child->mypara_3Dview));
-                    // saveDataFor3DViewer( &(child->mypara_3Dview));
+                    qDebug()<<"jazz debug in mainwindow.cpp child->show()之后";
+                    workspace->cascadeSubWindows(); //080821 //110805, by PHC, since RZC claims the resize MDI works now, so this should not be needed.
+
                     if (b_forceopen3dviewer || (global_setting.b_autoOpenImg3DViewer))
                     {
                         child->doImage3DView();
@@ -1145,6 +1138,7 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                 }
                 else
                 {
+                     qDebug()<<"jazz debug in mainwindow.cpp  child->close();";
                     child->close();
                     if (QMessageBox::question(0, "File Open options",
                                               QString("Cannot open the specified image [%1] using Vaa3D's default file opener. "
@@ -1381,7 +1375,105 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                                 "The file may have certain problem - check the file format, or is simply too big but you don't have enough memory.").arg(fileName));
             }
         }
-
+//		else if (cur_suffix=="HRAW") // For openning hierarchical data from large data set. ZJL 20120302
+//        {
+//			QString basename = curfile_info.baseName();
+//
+//			QString hraw_prefix = "test";//""curfile_info.absolutePath()  + basename.left(basename.indexOf(".")); // before the first "."
+//
+//			string prefix = hraw_prefix.toStdString();
+//			//string prefix ="/Volumes/PengMapView/mapview_testdata/ananya/test";
+//
+//             try
+//             {
+//                  size_t start_t = clock();
+//
+//                  // contents of .hraw file
+//                  // L, M, N, l, m, n
+//                  // level : level nums
+//                  // outsz[3]
+//
+//                  int L = 14; //log(8)/log(2.0);
+//                  int M = 38; //log(8)/log(2.0);
+//                  int N = 3;  //log(8)/log(2.0);
+//                  int l = 512;//log(256)/log(2.0);
+//                  int m = 256;//log(128)/log(2.0);
+//                  int n = 64; //log(64)/log(2.0);
+//                  int level = 0;
+//
+//                  ImageMapView mapview;
+//                  mapview.setPara(prefix, L, M, N, l, m, n);
+//
+//                  unsigned char * outimg1d = 0;
+//                  V3DLONG origin[3] = {0, 0, 0};
+//                  V3DLONG outsz[4] = {512, 256, 64, 1};
+//
+//                  mapview.getImage(level, outimg1d, origin[0], origin[1], origin[2], outsz[0], outsz[1], outsz[2]);
+//
+//                  XFormWidget *child = createMdiChild();
+//                  child->setImageData(outimg1d, outsz[0], outsz[1], outsz[2], outsz[3], V3D_UINT8);
+//                  child->mypara_3Dview.image4d = child->getImageData();
+//
+//                  // mapview control
+//                  Mapview_Paras mv_paras;
+//                  mv_paras.L=L; mv_paras.M=M; mv_paras.N=N;
+//                  mv_paras.l=l; mv_paras.m=m; mv_paras.n=n;
+//                  mv_paras.origin[0] = origin[0]; mv_paras.origin[1] = origin[1]; mv_paras.origin[2] = origin[2];
+//                  mv_paras.outsz[0] = outsz[0]; mv_paras.outsz[1] = outsz[1]; mv_paras.outsz[2] = outsz[2]; mv_paras.outsz[3] = outsz[3]; mv_paras.outsz[3] = outsz[3];
+//                  mv_paras.hraw_prefix=hraw_prefix;
+//                  mv_paras.level = level;
+//
+//                  child->mapview_paras = mv_paras;
+//                  child->mapview = mapview;
+//
+//                  child->setWindowTitle_Prefix(hraw_prefix.toAscii());
+//                  child->setWindowTitle_Suffix("");
+//
+//                  child->reset();
+//
+//                  if (global_setting.b_autoConvert2_8bit)
+//                  {
+//                       if (global_setting.default_rightshift_bits<0) //when set as -1 or other <0 values, then invoke the dialog.
+//                       {
+//                            if (child->getImageData()->getDatatype()==V3D_UINT16)
+//                                 child->popupImageProcessingDialog(tr(" -- convert 16bit image to 8 bit"));
+//                            else if (child->getImageData()->getDatatype()==V3D_FLOAT32)
+//                                 child->popupImageProcessingDialog(tr(" -- convert 32bit (single-precision float) image to 8 bit"));
+//                       }
+//                       else //otherwise do the conversion directly
+//                       {
+//                            if (child->getImageData()->getDatatype()==V3D_UINT16)
+//                                 child->getImageData()->proj_general_convert16bit_to_8bit(global_setting.default_rightshift_bits);
+//                            else if (child->getImageData()->getDatatype()==V3D_FLOAT32)
+//                                 child->getImageData()->proj_general_convert32bit_to_8bit(global_setting.default_rightshift_bits);
+//                       }
+//                  }
+//
+//                  if (global_setting.b_yaxis_up)
+//                  {
+//                       child->getImageData()->flip(axis_y);
+//                  }
+//
+//                  child->show();
+//
+//                  // create mapview control window
+//                  child->createMapviewControlWin();
+//
+//                  if (b_forceopen3dviewer || (global_setting.b_autoOpenImg3DViewer))
+//                  {
+//                       child->doImage3DView();
+//                  }
+//
+//                  size_t end_t = clock();
+//                  qDebug()<<"time consume ..."<<end_t-start_t;
+//
+//             }
+//             catch(...)
+//             {
+//                  QMessageBox::warning(0, "warning: fail to create window", "You fail to open a new window for the specified image. The file may have certain problem, or is simply too big but you don't have enough memory.");
+//                  v3d_msg(QString("Fail to create window for the file [%1]\n").arg(fileName));
+//             }
+//        } // end hraw
         else // changed by YuY Nov. 19, 2010. Msg corrected by PHC, 2011-06-04
         {
             v3d_msg(QString("The file [%1] has an unsupported file name extension and cannot be opened properly! "
@@ -1420,9 +1512,11 @@ void MainWindow::import_GeneralImageFile()
         XFormWidget *existing = findMdiChild(fileName);
         if (existing) {
 
-
-           workspace->setActiveSubWindow(existing);
-
+#if defined(USE_Qt5)
+            workspace->setActiveSubWindow(existing);
+#else
+            workspace->setActiveSubWindow(existing);
+#endif
             return;
         }
         try
@@ -1450,9 +1544,11 @@ void MainWindow::import_Leica()
         XFormWidget *existing = findMdiChild(fileName);
         if (existing) {
 
-
+#if defined(USE_Qt5)
             workspace->setActiveSubWindow(existing);
-
+#else
+            workspace->setActiveSubWindow(existing);
+#endif
             return;
         }
         try
@@ -1606,6 +1702,23 @@ QString MainWindow::strippedName(const QString &fullFileName)
 }
 void MainWindow::atlasView()
 {
+    /*
+    QString fileName = QFileDialog::getOpenFileName(this);
+    if (!fileName.isEmpty()) {
+        XFormWidget *existing = findMdiChild(fileName);
+        if (existing) {
+            workspace->setActiveWindow(existing);
+            return;
+        }
+        XFormWidget *child = createMdiChild();
+        if (child->loadFile(fileName)) {
+            statusBar()->showMessage(tr("File loaded"), 2000);
+            child->show();
+        } else {
+            child->close();
+        }
+    }
+ */
 }
 void MainWindow::save()
 {
@@ -1627,7 +1740,7 @@ void MainWindow::saveAs()
 }
 void MainWindow::cut()
 {
-       //activeMdiChild()->cut();
+    //    activeMdiChild()->cut();
 }
 void MainWindow::copy()
 {
@@ -1874,7 +1987,12 @@ void MainWindow::updateWindowMenu()
     windowMenu->addAction(nextAct);
     windowMenu->addAction(previousAct);
     windowMenu->addAction(separator_ImgWindows_Act);
+
+#if defined(USE_Qt5)
     QList<QMdiSubWindow *> windows = workspace->subWindowList();
+#else
+    QList<QMdiSubWindow *> windows = workspace->subWindowList();
+#endif
     separator_ImgWindows_Act->setVisible(!windows.isEmpty());
     int i;
     for (i = 0; i < windows.size(); ++i) {
@@ -1895,7 +2013,7 @@ void MainWindow::updateWindowMenu()
 #else
 //        connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
 //        windowMapper->setMapping(action, child);
-         connect(action, &QAction::triggered, [=]() { workspace->setActiveSubWindow(child); });
+         connect(action, &QAction::triggered, [=]() { workspace->setActiveSubWindow( child ); });
 #endif
     }
     //now add the 3D viewer list
@@ -2203,8 +2321,6 @@ void MainWindow::createActions()
     connect(closeAct, SIGNAL(triggered()),
             workspace, SLOT(closeActiveSubWindow()));
 #else
-//    connect(closeAct, SIGNAL(triggered()),
-//            workspace, SLOT(closeActiveWindow()));
     connect(closeAct, SIGNAL(triggered()),
             workspace, SLOT(closeActiveSubWindow()));
 #endif
@@ -2212,7 +2328,7 @@ void MainWindow::createActions()
     closeAllAct->setStatusTip(tr("Close all the windows"));
 
 
-    connect(closeAllAct, SIGNAL(triggered()), workspace, SLOT(closeAllWindows()));
+//    connect(closeAllAct, SIGNAL(triggered()), workspace, SLOT(closeAllWindows()));
     connect(closeAllAct, SIGNAL(triggered()), this, SLOT(handleCoordinatedCloseEvent_real()));
 
 
@@ -2221,23 +2337,21 @@ void MainWindow::createActions()
 #if defined(USE_Qt5)
     connect(tileAct, SIGNAL(triggered()), workspace, SLOT(tileSubWindows()));
 #else
-    //connect(tileAct, SIGNAL(triggered()), workspace, SLOT(tile()));
-        connect(tileAct, SIGNAL(triggered()), workspace, SLOT(tileSubWindows()));
+    connect(tileAct, SIGNAL(triggered()), workspace, SLOT(tileSubWindows()));
 #endif
     cascadeAct = new QAction(tr("&Cascade"), this);
     cascadeAct->setStatusTip(tr("Cascade the windows"));
 #if defined(USE_Qt5)
     connect(cascadeAct, SIGNAL(triggered()), workspace, SLOT(cascadeSubWindows()));
 #else
-    //connect(cascadeAct, SIGNAL(triggered()), workspace, SLOT(cascade()));
-        connect(cascadeAct, SIGNAL(triggered()), workspace, SLOT(cascadeSubWindows()));
+    connect(cascadeAct, SIGNAL(triggered()), workspace, SLOT(cascadeSubWindows()));
 #endif
     arrangeAct = new QAction(tr("Arrange &icons"), this);
     arrangeAct->setStatusTip(tr("Arrange the icons"));
-#if defined(USE_Qt5)
-#else
-    //connect(arrangeAct, SIGNAL(triggered()), workspace, SLOT(arrangeIcons()));
-#endif
+//#if defined(USE_Qt5)
+//#else
+//    connect(arrangeAct, SIGNAL(triggered()), workspace, SLOT(arrangeIcons()));
+//#endif
     nextAct = new QAction(tr("Ne&xt"), this);
     nextAct->setShortcut(tr("Ctrl+F6"));
     nextAct->setStatusTip(tr("Move the focus to the next window"));
@@ -2245,8 +2359,6 @@ void MainWindow::createActions()
     connect(nextAct, SIGNAL(triggered()),
             workspace, SLOT(activateNextSubWindow()));
 #else
-//    connect(nextAct, SIGNAL(triggered()),
-//            workspace, SLOT(activateNextWindow()));
     connect(nextAct, SIGNAL(triggered()),
             workspace, SLOT(activateNextSubWindow()));
 #endif
@@ -2258,11 +2370,8 @@ void MainWindow::createActions()
     connect(previousAct, SIGNAL(triggered()),
             workspace, SLOT(activatePreviousSubWindow()));
 #else
-//    connect(previousAct, SIGNAL(triggered()),
-//            workspace, SLOT(activatePreviousWindow()));
     connect(previousAct, SIGNAL(triggered()),
             workspace, SLOT(activatePreviousSubWindow()));
-
 #endif
     separator_ImgWindows_Act = new QAction(this);
     separator_ImgWindows_Act->setSeparator(true);
@@ -2453,11 +2562,11 @@ void MainWindow::createActions()
     procModeDefault = new QAction(tr("Vaa3D Default"), this);
     procModeDefault->setCheckable(true);
     procModeDefault->setChecked(true);
-   // connect(procModeDefault, SIGNAL(triggered()), this, SLOT(func_procModeDefault()));
+    connect(procModeDefault, SIGNAL(triggered()), this, SLOT(func_procModeDefault()));
     procModeNeuronAnnotator = new QAction(tr("Janelia FlyWorkstation Annotator"), this);
     procModeNeuronAnnotator->setCheckable(true);
     procModeNeuronAnnotator->setChecked(false);
-    //connect(procModeNeuronAnnotator, SIGNAL(triggered()), this, SLOT(func_procModeNeuronAnnotator()));
+    connect(procModeNeuronAnnotator, SIGNAL(triggered()), this, SLOT(func_procModeNeuronAnnotator()));
 #endif
 }
 void MainWindow::createMenus()
@@ -2583,36 +2692,47 @@ void MainWindow::writeSettings()
 //This also applies to intercepting events for MDI child widgets: you must install your event filter on the parentWidget().
 XFormWidget *MainWindow::createMdiChild()
 {
-    //    XFormWidget *child = new XFormWidget((QWidget *)0, Qt::WA_DeleteOnClose); //change to "this" does not change anything of the exit seg fault, 080429
-    //																	//080814: important fix to assure the destructor function will be called.
-    XFormWidget *child = new XFormWidget((QWidget *)0);
+    //我自己改的
+   // XFormWidget *child = new XFormWidget((QWidget *)0);
+    XFormWidget *child = new XFormWidget((QMdiSubWindow *)0);
 
+#if defined(USE_Qt5)
     workspace->addSubWindow(child);  //child is wrapped in his parentWidget()
-
+#else
+    workspace->addSubWindow(child);  //child is wrapped in his parentWidget()
+#endif
     //for (int j=1; j<1000; j++) QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents); //100811 RZC: no help to update the workspace->windowList()
 
-
+#if defined(USE_Qt5)
     qDebug()<<"MainWindow::createMdiChild *** workspace->windowList:" << workspace->subWindowList() <<"+="<< child; //STRANGE: child isn't in windowList here ???
     connect(workspace, SIGNAL(subWindowActivated(QMdiSubWindow *)),  child, SLOT(onActivated(QMdiSubWindow *))); //110802 RZC
-
+#else
+    qDebug()<<"MainWindow::createMdiChild *** workspace->windowList:" << workspace->subWindowList() <<"+="<< child; //STRANGE: child isn't in windowList here ???
+    connect(workspace, SIGNAL(subWindowActivated(QMdiSubWindow *)),  child, SLOT(onActivated(QMdiSubWindow *))); //110802 RZC
+#endif
     //workspace->setActiveWindow(child);
+
+    //下面的一行我自己加的
+   // workspace->setActiveSubWindow(child);
+
+
+
     //to enable coomunication of child windows
     child->setMainControlWindow(this);
     child->adjustSize();
     QSize tmpsz = child->size();
     QSize oldszhint = child->sizeHint();
     printf("size hint=%d %d min size hint=%d %d\n", oldszhint.width(), oldszhint.height(), child->minimumSizeHint().width(), child->minimumSizeHint().height());
-    //	child->resize(tmpsz.width()+1, tmpsz.height()+1);
-    //	child->updateGeometry();
-    //    child->showMaximized();
-    //	child->showNormal();
-    //    connect(child, SIGNAL(copyAvailable(bool)), cutAct, SLOT(setEnabled(bool)));
-    //    connect(child, SIGNAL(copyAvailable(bool)), copyAct, SLOT(setEnabled(bool)));
     return child;
 }
 XFormWidget *MainWindow::activeMdiChild()
 {
+
+#if defined(USE_Qt5)
     return qobject_cast<XFormWidget *>(workspace->activeSubWindow());
+#else
+    return qobject_cast<XFormWidget *>(workspace->activeSubWindow());
+#endif
 }
 XFormWidget *MainWindow::findMdiChild(const QString &fileName)
 {
@@ -2620,8 +2740,11 @@ XFormWidget *MainWindow::findMdiChild(const QString &fileName)
     QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
     if (canonicalFilePath.size()==0) canonicalFilePath = fileName; //090818 RZC 20110427 YuY
     XFormWidget *mdiChildFind;
+#if defined(USE_Qt5)
     foreach (QMdiSubWindow *window, workspace->subWindowList()) {
-
+#else
+     foreach (QMdiSubWindow *window, workspace->subWindowList()) {
+#endif
         XFormWidget *mdiChild = qobject_cast<XFormWidget *>(window);
         QString mdiChildPath = // CMB Oct-14-2010
                 QFileInfo(mdiChild->userFriendlyCurrentFile()).canonicalFilePath();
@@ -2639,8 +2762,11 @@ XFormWidget *MainWindow::findMdiChild(const QString &fileName)
     {
         // try find image name contains the input string from the end
 
+#if defined(USE_Qt5)
         foreach (QMdiSubWindow *window, workspace->subWindowList()) {
-
+#else
+        foreach (QMdiSubWindow *window, workspace->subWindowList()) {
+#endif
             XFormWidget *mdiChild = qobject_cast<XFormWidget *>(window);
             QString mdiChildPath = // CMB Oct-14-2010
                     QFileInfo(mdiChild->userFriendlyCurrentFile()).canonicalFilePath();
@@ -2669,9 +2795,11 @@ XFormWidget ** MainWindow::retrieveAllMdiChild(int & nchild)
 {
     nchild=0;
 
-
+#if defined(USE_Qt5)
     foreach (QMdiSubWindow *window, workspace->subWindowList()) {
-
+#else
+    foreach (QMdiSubWindow *window, workspace->subWindowList()) {
+#endif
         nchild++;
     }
     if (nchild<=0)
@@ -2679,9 +2807,11 @@ XFormWidget ** MainWindow::retrieveAllMdiChild(int & nchild)
     XFormWidget ** plist = new XFormWidget * [nchild];
     int i=0;
 
-
+#if defined(USE_Qt5)
     foreach (QMdiSubWindow *window, workspace->subWindowList()) {
-
+#else
+    foreach (QMdiSubWindow *window, workspace->subWindowList()) {
+#endif
         plist[i++] = qobject_cast<XFormWidget *>(window);
     }
     return plist;
@@ -2690,9 +2820,11 @@ bool MainWindow::setCurHiddenSelectedWindow( XFormWidget* a) //by PHC, 101009
 {
     bool b_found=false;
 
-
+#if defined(USE_Qt5)
     foreach (QMdiSubWindow *window, workspace->subWindowList()) //ensure the value is valid (especially the window has not been closed)
-
+#else
+   foreach (QMdiSubWindow *window, workspace->subWindowList()) //ensure the value is valid (especially the window has not been closed)
+#endif
     {
         if (a == qobject_cast<XFormWidget *>(window))
         {b_found=true; break;}
@@ -2818,7 +2950,6 @@ void MainWindow::func_procCellSeg_manualCorrect(){if (activeMdiChild()) activeMd
 // Mode
 void MainWindow::func_procModeDefault()
 {
-    //注释 namainwindows干啥的
 //    V3dApplication::deactivateNaMainWindow();
 //    V3dApplication::activateMainWindow();
 }
@@ -2828,37 +2959,40 @@ void MainWindow::func_procModeNeuronAnnotator()
 //    V3dApplication::activateNaMainWindow();
 }
 void MainWindow::setV3DDefaultModeCheck(bool checkState) {
-    //procModeDefault->setChecked(checkState);
+    procModeDefault->setChecked(checkState);
 }
 void MainWindow::setNeuronAnnotatorModeCheck(bool checkState) {
-    //procModeNeuronAnnotator->setChecked(checkState);
+    procModeNeuronAnnotator->setChecked(checkState);
 }
 #endif
 
 #ifdef _ALLOW_TERAFLY_MENU_
 void MainWindow::func_open_terafly()
 {
-    V3d_PluginLoader *pl = new V3d_PluginLoader(this);
-    //terafly::TeraFly::domenu("TeraFly", *pl, this);
+//    V3d_PluginLoader *pl = new V3d_PluginLoader(this);
+//    terafly::TeraFly::domenu("TeraFly", *pl, this);
 }
 void MainWindow::func_open_teraconverter()
 {
-    V3d_PluginLoader *pl = new V3d_PluginLoader(this);
-    //terafly::TeraFly::domenu("TeraConverter", *pl, this);
+//    V3d_PluginLoader *pl = new V3d_PluginLoader(this);
+//    terafly::TeraFly::domenu("TeraConverter", *pl, this);
 }
 
 void MainWindow::func_open_neuron_game()
 {
-    V3d_PluginLoader *pl = new V3d_PluginLoader(this);
+//    V3d_PluginLoader *pl = new V3d_PluginLoader(this);
 //#ifdef __ALLOW_VR_FUNCS__
 //    qRegisterMetaType<itm::integer_array>("itm::integer_array");
-//	mozak::MozakUI::init(pl);
+//    mozak::MozakUI::init(pl);
 //#endif
 }
 #endif
 
 void MainWindow::func_procPC_Atlas_view_atlas_computeVanoObjStat()
-{										
+{
+    //	QString inName = QFileDialog::getOpenFileName(this, tr("Open a Point Cloud Atlas File"),
+    //													"",
+    //													tr("point cloud annotation linker file (*.ano *)"));
     QString inName = QFileDialog::getExistingDirectory(this, tr("Select a directory contain .ano files"),"");
     QStringList listRecompute;
     QFileInfo fi_inName(inName);
@@ -2884,14 +3018,17 @@ void MainWindow::func_procPC_Atlas_view_atlas_computeVanoObjStat()
     //ask which channel to compute info
     bool ok1;
 
-
+#if defined(USE_Qt5)
     int ch_ind = QInputDialog::getInt(this, tr("channel"),
                                           tr("The selected directory contains %1 .ano files. <br><br> which image channel to compute the image objects statistics?").arg(listRecompute.size()),
                                           1, 1, 3, 1, &ok1) - 1;
     //now do for every file
-
+#else
+    int ch_ind = QInputDialog::getInt(this, tr("channel"),
+                                          tr("The selected directory contains %1 .ano files. <br><br> which image channel to compute the image objects statistics?").arg(listRecompute.size()),
+                                          1, 1, 3, 1, &ok1) - 1;
     //now do for every file
-
+#endif
     My4DImage *grayimg=0, *maskimg=0;
     grayimg = new My4DImage;
     maskimg = new My4DImage;

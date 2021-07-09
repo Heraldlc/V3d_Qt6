@@ -572,7 +572,7 @@ public:
     {
         qDebug()<<"jazz debug init_members in v3dr_glwidgets.h";
         _still = _stillpaint_need = _stillpaint_pending = false;
-       // connect(&still_timer, SIGNAL(timeout()), this, SLOT(stillPaint())); //only connect once
+       connect(&still_timer, SIGNAL(timeout()), this, SLOT(stillPaint())); //only connect once
         still_timer.start(still_timer_interval);
 
         t_mouseclick_left = mouse_held = mouse_in_view = 0;

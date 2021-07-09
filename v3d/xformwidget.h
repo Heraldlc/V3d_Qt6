@@ -56,28 +56,28 @@ class ChannelTabWidget;
 
 struct iDrawExternalParameter
 {
-	My4DImage* image4d;
-	XFormWidget *xwidget;
-	V3dR_MainWindow *window3D; //pointer to 3DView main window, by RZC 080921, 090503
-	QList <V3dR_MainWindow *> * p_list_3Dview_win; //by PHC, 081003. This is linked to a mainwindow, which will keep record of all generated V3dR_MainWindows
-	MainWindow *V3Dmainwindow; //the pointer to the V3D main window, so that V3dR can get the global setting preferences. add on 090503
+    My4DImage* image4d;
+    XFormWidget *xwidget;
+    V3dR_MainWindow *window3D; //pointer to 3DView main window, by RZC 080921, 090503
+    QList <V3dR_MainWindow *> * p_list_3Dview_win; //by PHC, 081003. This is linked to a mainwindow, which will keep record of all generated V3dR_MainWindows
+    MainWindow *V3Dmainwindow; //the pointer to the V3D main window, so that V3dR can get the global setting preferences. add on 090503
 
-	QStringList swc_file_list;
-	QStringList pointcloud_file_list;
-	QString surface_file;
-	QString labelfield_file;
+    QStringList swc_file_list;
+    QStringList pointcloud_file_list;
+    QString surface_file;
+    QString labelfield_file;
         QString marker_file;
 
-	//some external controls for the 3d viewer
-	//float zthickness; //the default z-thickness when start the 3d viewer. 100626
+    //some external controls for the 3d viewer
+    //float zthickness; //the default z-thickness when start the 3d viewer. 100626
 
-	int b_local; // 0,1,2,3
-	LocationSimple local_start, local_size;
-	QPoint local_win_pos;
-	QSize local_win_size;
+    int b_local; // 0,1,2,3
+    LocationSimple local_start, local_size;
+    QPoint local_win_pos;
+    QSize local_win_size;
 
-	bool b_use_512x512x256;
-	bool b_still_open;
+    bool b_use_512x512x256;
+    bool b_still_open;
 
      // used for saving resampled 512X512X256 data, ZJL
 
@@ -114,8 +114,8 @@ struct iDrawExternalParameter
           bufSize[0]=bufSize[1]=bufSize[2]=bufSize[3]=bufSize[4]=0;
           data4dp=0; data4d_uint8=0;
           dim1=dim2=dim3=dim4=dim5=0;
-		start1=start2=start3=start4=start5=0;
-		size1=size2=size3=size4=size5=0;
+        start1=start2=start3=start4=start5=0;
+        size1=size2=size3=size4=size5=0;
           bSavedDataFor3DViewer = true;
           /*zthickness=1;*/}
      ~iDrawExternalParameter() {if (xwidget==0 && image4d) delete image4d;
@@ -143,76 +143,76 @@ public:
     void disconnectColorGUI(); //110721 RZC
     void setColorGUI(); //110721 RZC
     QWidget* createColorGUI(); //110719 RZC
-	void createGUI();
-	void connectEventSignals();
-	void disconnectEventSignals();
-	void updateDataRelatedGUI();
+    void createGUI();
+    void connectEventSignals();
+    void disconnectEventSignals();
+    void updateDataRelatedGUI();
     bool setCTypeBasedOnImageData();
-	void cleanData();
-	bool loadData();
-	bool importLeicaData();
-	bool importGeneralImgSeries(const QStringList & mylist, TimePackType timepacktype);
+    void cleanData();
+    bool loadData();
+    bool importLeicaData();
+    bool importGeneralImgSeries(const QStringList & mylist, TimePackType timepacktype);
 
     bool loadFile(QString filename);
     bool importGeneralImageFile(QString filename);
     bool importLeicaFile(QString filename);
-	QString userFriendlyCurrentFile() {return (openFileNameLabel);}
-	QString getOpenFileNameLabel() {return openFileNameLabel;}
+    QString userFriendlyCurrentFile() {return (openFileNameLabel);}
+    QString getOpenFileNameLabel() {return openFileNameLabel;}
 
-	bool saveData();
-	bool saveFile(QString filename);
+    bool saveData();
+    bool saveFile(QString filename);
 
-	My4DImage * getImageData() {return imgData;} //080326
+    My4DImage * getImageData() {return imgData;} //080326
 
-	bool newProcessedImage(QString filename, unsigned char *ndata1d, V3DLONG nsz0, V3DLONG nsz1, V3DLONG nsz2, V3DLONG nsz3, ImagePixelType ndatatype); //080408
-	// for replace imageData and filename
-	bool setImageData(unsigned char *ndata1d, V3DLONG nsz0, V3DLONG nsz1, V3DLONG nsz2, V3DLONG nsz3, ImagePixelType ndatatype); //090818 RZC
-	bool setCurrentFileName(QString cfilename);
+    bool newProcessedImage(QString filename, unsigned char *ndata1d, V3DLONG nsz0, V3DLONG nsz1, V3DLONG nsz2, V3DLONG nsz3, ImagePixelType ndatatype); //080408
+    // for replace imageData and filename
+    bool setImageData(unsigned char *ndata1d, V3DLONG nsz0, V3DLONG nsz1, V3DLONG nsz2, V3DLONG nsz3, ImagePixelType ndatatype); //090818 RZC
+    bool setCurrentFileName(QString cfilename);
 
 
-	//for communication of windows
-	void setMainControlWindow(MainWindow * p) {p_mainWindow = p;}
-	virtual MainWindow * getMainControlWindow() {return p_mainWindow;}
+    //for communication of windows
+    void setMainControlWindow(MainWindow * p) {p_mainWindow = p;}
+    virtual MainWindow * getMainControlWindow() {return p_mainWindow;}
 
-	void forceToChangeFocus(int x, int y, int z); //081210
-	void changeFocusFromExternal(int x, int y, int z); //this should be called from external. When no cross-image communication is needed, should not use this.
+    void forceToChangeFocus(int x, int y, int z); //081210
+    void changeFocusFromExternal(int x, int y, int z); //this should be called from external. When no cross-image communication is needed, should not use this.
     void changeFocusToExternal(int newx, int newy, int newz); // this is the function to call other image-view's changeFocusFromExternal() function
 
         void setWindowTitle_Prefix(const char *prefix);
         void setWindowTitle_Suffix(const char *sfix);
 
-	V3DLONG estimateRoughAmountUsedMemory(); //080810
+    V3DLONG estimateRoughAmountUsedMemory(); //080810
 
-	bool getFlagImgValScaleDisplay(); //100814
+    bool getFlagImgValScaleDisplay(); //100814
 
-	My4DImage * selectSubjectImage();
-	My4DImage * selectImage();
-	QList <BlendingImageInfo> selectBlendingImages();
+    My4DImage * selectSubjectImage();
+    My4DImage * selectImage();
+    QList <BlendingImageInfo> selectBlendingImages();
 
-	void setColorType(ImageDisplayColorType myctype) {Ctype = myctype;}
-	ImageDisplayColorType getColorType() {return Ctype;}
+    void setColorType(ImageDisplayColorType myctype) {Ctype = myctype;}
+    ImageDisplayColorType getColorType() {return Ctype;}
     QRadioButton* colorMapRadioButton() {return colorMapDispType;} //110723 RZC
 
-	iDrawExternalParameter mypara_3Dview;
-	iDrawExternalParameter mypara_3Dlocalview;
-	V3D_atlas_viewerDialog *atlasViewerDlg;
+    iDrawExternalParameter mypara_3Dview;
+    iDrawExternalParameter mypara_3Dlocalview;
+    V3D_atlas_viewerDialog *atlasViewerDlg;
 
-	V3DLONG bbx0, bbx1, bby0, bby1, bbz0, bbz1; //by PHC. 100821. the current regional bbox. for curve based zoomin
-	void setLocal3DViewerBBox(V3DLONG x0, V3DLONG x1, V3DLONG y0, V3DLONG y1, V3DLONG z0, V3DLONG z1)
-	{
-		bbx0 = x0;
-		bbx1 = x1;
-		bby0 = y0;
-		bby1 = y1;
-		bbz0 = z0;
-		bbz1 = z1;
-	}
+    V3DLONG bbx0, bbx1, bby0, bby1, bbz0, bbz1; //by PHC. 100821. the current regional bbox. for curve based zoomin
+    void setLocal3DViewerBBox(V3DLONG x0, V3DLONG x1, V3DLONG y0, V3DLONG y1, V3DLONG z0, V3DLONG z1)
+    {
+        bbx0 = x0;
+        bbx1 = x1;
+        bby0 = y0;
+        bby1 = y1;
+        bbz0 = z0;
+        bbz1 = z1;
+    }
 
 
-	double disp_zoom; //081114
-	bool b_use_dispzoom;
+    double disp_zoom; //081114
+    bool b_use_dispzoom;
 
-	bool bDispMarkerLabel;
+    bool bDispMarkerLabel;
 
     // for mapview ZJL
     void createMapviewControlWin();
@@ -225,72 +225,84 @@ public:
      ImageMapView mapview; // mapview
 
 protected:
-	virtual void changeEvent(QEvent* e);    //110802 RZC
-	virtual void hideEvent(QHideEvent * e); //110808 RZC
+    virtual void changeEvent(QEvent* e);    //110802 RZC
+    virtual void hideEvent(QHideEvent * e); //110808 RZC
 
-	void keyPressEvent ( QKeyEvent * e); //100815, PHC
-	void closeEvent ( QCloseEvent * event );  //080814
-	//void focusInEvent ( QFocusEvent * event ); //080829
+    void keyPressEvent ( QKeyEvent * e); //100815, PHC
+    void closeEvent ( QCloseEvent * event );  //080814
+    //void focusInEvent ( QFocusEvent * event ); //080829
 
-	void loadH264Image( char const* filename );
-	void loadHDF5( char const* filename );
+    void loadH264Image( char const* filename );
+    void loadHDF5( char const* filename );
 
-	void * p_customStruct; //a convenient pointer to pass back and forth some useful parameter information for an engine
+    void * p_customStruct; //a convenient pointer to pass back and forth some useful parameter information for an engine
 
 private:
-	// communication of different images windows
-	MainWindow * p_mainWindow;
-	bool bSendSignalToExternal, bAcceptSignalFromExternal, bUsingMultithreadedImageIO;
+    // communication of different images windows
+    MainWindow * p_mainWindow;
+    bool bSendSignalToExternal, bAcceptSignalFromExternal, bUsingMultithreadedImageIO;
 
-	My4DImage *imgData;
+    My4DImage *imgData;
     ImageDisplayColorType Ctype;
     ImageDisplayColorType Ctype_glass;
 
-	QString openFileNameLabel;
+    QString openFileNameLabel;
 
-	// Interface components
-	bool bExistGUI;
+    // Interface components
+    bool bExistGUI;
     bool bLinkFocusViews;
     bool bDisplayFocusCross;
 
-	QGroupBox *dataGroup, *viewGroup, *infoGroup;
-	QGroupBox *mainGroup, *coordGroup, *scaleGroup, *typeGroup;
+    QGroupBox *dataGroup, *viewGroup, *infoGroup;
+    QGroupBox *mainGroup, *coordGroup, *scaleGroup, *typeGroup;
 
-	QScrollBar *xSlider, *ySlider, *zSlider;
-	QSpinBox *xValueSpinBox, *yValueSpinBox, *zValueSpinBox;
-	QLabel *xSliderLabel, *ySliderLabel, *zSliderLabel;
-	QCheckBox *linkFocusCheckBox;
-	QCheckBox *displayFocusCrossCheckBox;
+    QScrollBar *xSlider, *ySlider, *zSlider;
+    QSpinBox *xValueSpinBox, *yValueSpinBox, *zValueSpinBox;
+    QLabel *xSliderLabel, *ySliderLabel, *zSliderLabel;
+    QCheckBox *linkFocusCheckBox;
+    QCheckBox *displayFocusCrossCheckBox;
 
     QScrollBar *xScaleSlider, *yScaleSlider, *zScaleSlider;
-	QLabel *xScaleSliderLabel, *yScaleSliderLabel, *zScaleSliderLabel;
-	QCheckBox *lookingGlassCheckBox;
-	QPushButton *zoomWholeViewButton;
+    QLabel *xScaleSliderLabel, *yScaleSliderLabel, *zScaleSliderLabel;
+    QCheckBox *lookingGlassCheckBox;
+
+
+
+
+    //加一个按钮 实现三角形的效果
+    QPushButton *btn;
+
+
+
+
+
+
+    QPushButton *zoomWholeViewButton;
 
     QRadioButton *colorRedType, *colorGreenType, *colorBlueType, *colorAllType;
     QRadioButton *colorRed2GrayType, *colorGreen2GrayType, *colorBlue2GrayType, *colorAll2GrayType;
     QRadioButton *colorMapDispType;
-	QCheckBox *imgValScaleDisplayCheckBox;
+    QCheckBox *imgValScaleDisplayCheckBox;
 
-	QCheckBox * cBox_bSendSignalToExternal, * cBox_bAcceptSignalFromExternal;
+    QCheckBox * cBox_bSendSignalToExternal, * cBox_bAcceptSignalFromExternal;
 
     QPushButton *landmarkCopyButton, *landmarkPasteButton, *landmarkSaveButton, *landmarkLoadButton; //080107
-	QPushButton *landmarkManagerButton;
-	//QCheckBox *landmarkLabelDispCheckBox;
+    QPushButton *landmarkManagerButton;
+    //QCheckBox *landmarkLabelDispCheckBox;
 
     QPushButton *resetButton, *openFileNameButton, *whatsThisButton, *imgProcessButton, *imgV3DButton; //, *imgV3DROIButton;
 
-	QHBoxLayout *allLayout;
-	  QVBoxLayout *dataGroupLayout;
-	    QGridLayout *xyzViewLayout;
-	    QVBoxLayout *infoGroupLayout;
-	  QVBoxLayout *mainGroupLayout;
-	    QGridLayout *coordGroupLayout;
-	    QGridLayout *scaleGroupLayout;
-	    QGridLayout *typeGroupLayout;
-	    QGridLayout *LandmarkGroupLayout;
+    QHBoxLayout *allLayout;
+      QVBoxLayout *dataGroupLayout;
+        QGridLayout *xyzViewLayout;
+        QVBoxLayout *infoGroupLayout;
+      QVBoxLayout *mainGroupLayout;
+        QGridLayout *coordGroupLayout;
+        QGridLayout *scaleGroupLayout;
+        QGridLayout *typeGroupLayout;
+        QGridLayout *LandmarkGroupLayout;
 
-	XFormView *xy_view; //change in Z
+    XFormView *xy_view; //change in Z
     XFormView *yz_view; //change in X
     XFormView *zx_view; //change in Y
 
@@ -308,32 +320,29 @@ private:
     QPushButton *hideDisplayInfoButton;
 
 
-	MyTextBrowser *focusPointFeatureWidget;
+    MyTextBrowser *focusPointFeatureWidget;
 
     QMenu menuTriviewZoom;
-	void createMenuOfTriviewZoom();
+    void createMenuOfTriviewZoom();
 
     QMenu menu3DViewer;
-	void createMenuOf3DViewer();
+    void createMenuOf3DViewer();
 
 public slots:
 //    void changeColorType(ImageDisplayColorType c);
 
 //110722 RZC, for directly updating pixmap of 3view.  //110803 RZC, add bGlass
-	void mixChannelColorPlaneX(const QPixmap& pxm, bool bGlass) {yz_view->setPixmap(pxm, bGlass);}
-	void mixChannelColorPlaneY(const QPixmap& pxm, bool bGlass) {zx_view->setPixmap(pxm, bGlass);}
-	void mixChannelColorPlaneZ(const QPixmap& pxm, bool bGlass) {xy_view->setPixmap(pxm, bGlass);}
+    void mixChannelColorPlaneX(const QPixmap& pxm, bool bGlass) {yz_view->setPixmap(pxm, bGlass);}
+    void mixChannelColorPlaneY(const QPixmap& pxm, bool bGlass) {zx_view->setPixmap(pxm, bGlass);}
+    void mixChannelColorPlaneZ(const QPixmap& pxm, bool bGlass) {xy_view->setPixmap(pxm, bGlass);}
 //110802 RZC, for show/hide channelTabGlass
-#if defined(USE_Qt5)
-	void onActivated(QMdiSubWindow* );
-#else
-    //void onActivated(QWidget* );
-    void onActivated(QMdiSubWindow* );
-#endif
-//110803 RZC, for sync multiple ChannelTabWidget
-	void syncChannelTabWidgets(ChannelTabWidget* sender);
 
-	void setColorRedType();
+    void onActivated(QMdiSubWindow* );
+
+//110803 RZC, for sync multiple ChannelTabWidget
+    void syncChannelTabWidgets(ChannelTabWidget* sender);
+
+    void setColorRedType();
     void setColorGreenType();
     void setColorBlueType();
     void setColorAllType();
@@ -341,58 +350,58 @@ public slots:
     void setColorGreen2GrayType();
     void setColorBlue2GrayType();
     void setColorAll2GrayType();
-	void setColorMapDispType(ImageDisplayColorType Ctype=colorPseudoMaskColor, bool bGlass=false); //110725 RZC, add Ctype //110803 RZC, add bGlass
-	void switchMaskColormap();
+    void setColorMapDispType(ImageDisplayColorType Ctype=colorPseudoMaskColor, bool bGlass=false); //110725 RZC, add Ctype //110803 RZC, add bGlass
+    void switchMaskColormap();
 
     void toggleLinkFocusCheckBox();
     void toggleDisplayFocusCrossCheckBox();
-	void toggleImgValScaleDisplay();
-	void toggleLookingGlassCheckBox();
+    void toggleImgValScaleDisplay();
+    void toggleLookingGlassCheckBox();
 
-	void doMenuOfTriviewZoom();
+    void doMenuOfTriviewZoom();
     void triview_zoomin();
     void triview_zoomout();
-	void triview_zoom1();
-	void triview_zoom2();
-	void triview_zoomhalf();
-	void triview_setzoom(double z, bool b_multiply); //b_multiply determine is z is the target zoom, or the target zoom should be product of the current zoom multply z
+    void triview_zoom1();
+    void triview_zoom2();
+    void triview_zoomhalf();
+    void triview_setzoom(double z, bool b_multiply); //b_multiply determine is z is the target zoom, or the target zoom should be product of the current zoom multply z
 
-	void popupImageProcessingDialog();
-	void popupImageProcessingDialog(QString item);
-	void doImage3DView();
-	void doImage3DLocalMarkerView();
-	void doImage3DLocalRoiView();
-	void doImage3DLocalBBoxView(); //do not have arguments so that can be used as the slot of a timer signal
+    void popupImageProcessingDialog();
+    void popupImageProcessingDialog(QString item);
+    void doImage3DView();
+    void doImage3DLocalMarkerView();
+    void doImage3DLocalRoiView();
+    void doImage3DLocalBBoxView(); //do not have arguments so that can be used as the slot of a timer signal
     void doImage3DView(bool tmp_b_use_512x512x256, int b_local=0, V3DLONG bbx0=-1, V3DLONG bbx1=-1, V3DLONG bby0=-1, V3DLONG bby1=-1, V3DLONG bbz0=-1, V3DLONG bbz1=-1,
                        bool show=true); // @ADDED by Alessandro on 2015-09-29. Postpone show() if required.
-	void doMenuOf3DViewer();
-	void aboutInfo();
+    void doMenuOf3DViewer();
+    void aboutInfo();
 
     void setOpenFileName();
     void reset();
 
-	//this should be called from external. When no cross-image communication is needed, should not use this.
-	void changeFocusXToExternal(int c); //will call changeFocusToExternal(int,int,int)
-	void changeFocusYToExternal(int c); //will call changeFocusToExternal(int,int,int)
-	void changeFocusZToExternal(int c); //will call changeFocusToExternal(int,int,int)
+    //this should be called from external. When no cross-image communication is needed, should not use this.
+    void changeFocusXToExternal(int c); //will call changeFocusToExternal(int,int,int)
+    void changeFocusYToExternal(int c); //will call changeFocusToExternal(int,int,int)
+    void changeFocusZToExternal(int c); //will call changeFocusToExternal(int,int,int)
 
-	void toggleCheckBox_bSendSignalToExternal();
-	void toggleCheckBox_bAcceptSignalFromExternal();
+    void toggleCheckBox_bSendSignalToExternal();
+    void toggleCheckBox_bAcceptSignalFromExternal();
 
-	void copyLandmarkToPublicBuffer();
-	void pasteLandmarkFromPublicBuffer();
-	void saveLandmarkToFile();
-	void loadLandmarkFromFile();
-	void openLandmarkManager();
+    void copyLandmarkToPublicBuffer();
+    void pasteLandmarkFromPublicBuffer();
+    void saveLandmarkToFile();
+    void loadLandmarkFromFile();
+    void openLandmarkManager();
 
-	void toggleLandmarkLabelDisp() {bDispMarkerLabel = !bDispMarkerLabel; this->updateViews();}
+    void toggleLandmarkLabelDisp() {bDispMarkerLabel = !bDispMarkerLabel; this->updateViews();}
 
-	void launchAtlasViewer(int curTab=0);
+    void launchAtlasViewer(int curTab=0);
 
-	void cascadeWindows();
-	void updateViews(); //090615: a convenient function to call my4dimage updateViews()
+    void cascadeWindows();
+    void updateViews(); //090615: a convenient function to call my4dimage updateViews()
 
-	void updateTriview(); // call MainWindow updateTriview() Dec-21-2010 YuY
+    void updateTriview(); // call MainWindow updateTriview() Dec-21-2010 YuY
 
     // for mapview
     void changeXOffset_mapv(int x);
@@ -406,212 +415,212 @@ public slots:
 
 
 signals:
-	void colorChanged(int); //110722 RZC, connected to ChannelTable::updateXFormWidget(int)
-	void colorChangedGlass(int); //110803 RZC, connected to ChannelTable::updateXFormWidget(int)
+    void colorChanged(int); //110722 RZC, connected to ChannelTable::updateXFormWidget(int)
+    void colorChangedGlass(int); //110803 RZC, connected to ChannelTable::updateXFormWidget(int)
 
     void external_focusXChanged(int c);
     void external_focusYChanged(int c);
     void external_focusZChanged(int c);
 
-	void external_validZSliceChanged(long z);
+    void external_validZSliceChanged(long z);
 
 
 #define __used_by_v3d_interface__
 public:    // in mainwindow_interface.cpp
 
-	bool transferImageData(Image4DSimple *img, unsigned char *a);
-	QList<QPolygon> get3ViewROI();
-	bool set3ViewROI(QList<QPolygon> & roi_list);
+    bool transferImageData(Image4DSimple *img, unsigned char *a);
+    QList<QPolygon> get3ViewROI();
+    bool set3ViewROI(QList<QPolygon> & roi_list);
 
-	void finishEditingSWC();
+    void finishEditingSWC();
 
-	void open3DWindow();
-	void openROI3DWindow();
-	void close3DWindow();
-	void closeROI3DWindow();
-	void pushObjectIn3DWindow();
-	void pushImageIn3DWindow();
-	int pushTimepointIn3DWindow(int timepoint);
+    void open3DWindow();
+    void openROI3DWindow();
+    void close3DWindow();
+    void closeROI3DWindow();
+    void pushObjectIn3DWindow();
+    void pushImageIn3DWindow();
+    int pushTimepointIn3DWindow(int timepoint);
 
-	bool screenShot3DWindow(QString filename);
-	bool screenShotROI3DWindow(QString filename);
+    bool screenShot3DWindow(QString filename);
+    bool screenShotROI3DWindow(QString filename);
 
-	V3dR_GLWidget * getView3D();
-	V3dR_GLWidget * getLocalView3D();
+    V3dR_GLWidget * getView3D();
+    V3dR_GLWidget * getLocalView3D();
 
-	// a few interface functions for external plugin use. prototyped by PHC. 2010-Dec-10
+    // a few interface functions for external plugin use. prototyped by PHC. 2010-Dec-10
 
-	virtual void getFocusLocation(V3DLONG & cx, V3DLONG & cy, V3DLONG & cz) const
-	{
-		if (imgData)
-		{
-			cx = imgData->getFocusX()+1;
-			cy = imgData->getFocusY()+1;
-			cz = imgData->getFocusZ()+1;
-		}
-	}
-	virtual void setFocusLocation(V3DLONG cx, V3DLONG cy, V3DLONG cz)
-	{
-		if (imgData)
-		{
-			forceToChangeFocus(cx, cy, cz);
-			imgData->updateViews(); // update trivews
-		}
-	}
+    virtual void getFocusLocation(V3DLONG & cx, V3DLONG & cy, V3DLONG & cz) const
+    {
+        if (imgData)
+        {
+            cx = imgData->getFocusX()+1;
+            cy = imgData->getFocusY()+1;
+            cz = imgData->getFocusZ()+1;
+        }
+    }
+    virtual void setFocusLocation(V3DLONG cx, V3DLONG cy, V3DLONG cz)
+    {
+        if (imgData)
+        {
+            forceToChangeFocus(cx, cy, cz);
+            imgData->updateViews(); // update trivews
+        }
+    }
 
-	virtual void setFocusLocation2Center()
-	{
-		if (imgData)
-		{
-			// reinit focus to center along x, y, z
-			V3DLONG sx, sy, sz;
+    virtual void setFocusLocation2Center()
+    {
+        if (imgData)
+        {
+            // reinit focus to center along x, y, z
+            V3DLONG sx, sy, sz;
 
-			sx = imgData->getXDim();
-			sy = imgData->getYDim();
-			sz = imgData->getZDim();
+            sx = imgData->getXDim();
+            sy = imgData->getYDim();
+            sz = imgData->getZDim();
 
-			forceToChangeFocus(sx/2, sy/2, sz/2);
-			imgData->updateViews(); // update trivews
-		}
-	}
+            forceToChangeFocus(sx/2, sy/2, sz/2);
+            imgData->updateViews(); // update trivews
+        }
+    }
 
-	virtual void updateMinMax(V3DLONG nFrame)
-	{
-		if (imgData)
-		{
-			//imgData->updateminmaxvalues();
+    virtual void updateMinMax(V3DLONG nFrame)
+    {
+        if (imgData)
+        {
+            //imgData->updateminmaxvalues();
 
-			V3DLONG sx, sy, sz, sc;
+            V3DLONG sx, sy, sz, sc;
 
-			sx = imgData->getXDim();
-			sy = imgData->getYDim();
-			sz = imgData->getZDim();
-			sc = imgData->getCDim();
+            sx = imgData->getXDim();
+            sy = imgData->getYDim();
+            sz = imgData->getZDim();
+            sc = imgData->getCDim();
 
-			if(nFrame<0 || nFrame>=sz) // changed by YuY Feb 8, 2011
-				return;
+            if(nFrame<0 || nFrame>=sz) // changed by YuY Feb 8, 2011
+                return;
 
-			V3DLONG offsets = nFrame*sx*sy;
-			V3DLONG pagesz = sx*sy;
+            V3DLONG offsets = nFrame*sx*sy;
+            V3DLONG pagesz = sx*sy;
 
-			switch (imgData->getDatatype())
-			{
-				case V3D_UINT8:
-					for(V3DLONG i=0;i<sc;i++)
-					{
-						unsigned char minvv,maxvv;
-						V3DLONG tmppos_min, tmppos_max;
-						unsigned char *datahead = (unsigned char *)(imgData->getRawDataAtChannel(i));
+            switch (imgData->getDatatype())
+            {
+                case V3D_UINT8:
+                    for(V3DLONG i=0;i<sc;i++)
+                    {
+                        unsigned char minvv,maxvv;
+                        V3DLONG tmppos_min, tmppos_max;
+                        unsigned char *datahead = (unsigned char *)(imgData->getRawDataAtChannel(i));
 
-						minMaxInVector(datahead+offsets, pagesz, tmppos_min, minvv, tmppos_max, maxvv);
+                        minMaxInVector(datahead+offsets, pagesz, tmppos_min, minvv, tmppos_max, maxvv);
 
-						if(imgData->p_vmax[i]<maxvv)
-							imgData->p_vmax[i] = maxvv;
-						if(imgData->p_vmin[i]>minvv)
-							imgData->p_vmin[i] = minvv;
-					}
-					break;
+                        if(imgData->p_vmax[i]<maxvv)
+                            imgData->p_vmax[i] = maxvv;
+                        if(imgData->p_vmin[i]>minvv)
+                            imgData->p_vmin[i] = minvv;
+                    }
+                    break;
 
-				case V3D_UINT16:
-					for(V3DLONG i=0;i<sc;i++)
-					{
-						USHORTINT16 minvv,maxvv;
-						V3DLONG tmppos_min, tmppos_max;
-						USHORTINT16 *datahead = (USHORTINT16 *)(imgData->getRawDataAtChannel(i));
+                case V3D_UINT16:
+                    for(V3DLONG i=0;i<sc;i++)
+                    {
+                        USHORTINT16 minvv,maxvv;
+                        V3DLONG tmppos_min, tmppos_max;
+                        USHORTINT16 *datahead = (USHORTINT16 *)(imgData->getRawDataAtChannel(i));
 
-						minMaxInVector(datahead+offsets, pagesz, tmppos_min, minvv, tmppos_max, maxvv);
+                        minMaxInVector(datahead+offsets, pagesz, tmppos_min, minvv, tmppos_max, maxvv);
 
-						if(imgData->p_vmax[i]<maxvv)
-							imgData->p_vmax[i] = maxvv;
-						if(imgData->p_vmin[i]>minvv)
-							imgData->p_vmin[i] = minvv;
-					}
-					break;
+                        if(imgData->p_vmax[i]<maxvv)
+                            imgData->p_vmax[i] = maxvv;
+                        if(imgData->p_vmin[i]>minvv)
+                            imgData->p_vmin[i] = minvv;
+                    }
+                    break;
 
-				case V3D_FLOAT32:
-					for(V3DLONG i=0;i<sc;i++)
-					{
-						float minvv,maxvv;
-						V3DLONG tmppos_min, tmppos_max;
-						float *datahead = (float *)(imgData->getRawDataAtChannel(i));
+                case V3D_FLOAT32:
+                    for(V3DLONG i=0;i<sc;i++)
+                    {
+                        float minvv,maxvv;
+                        V3DLONG tmppos_min, tmppos_max;
+                        float *datahead = (float *)(imgData->getRawDataAtChannel(i));
 
-						minMaxInVector(datahead+offsets, pagesz, tmppos_min, minvv, tmppos_max, maxvv);
+                        minMaxInVector(datahead+offsets, pagesz, tmppos_min, minvv, tmppos_max, maxvv);
 
-						if(imgData->p_vmax[i]<maxvv)
-							imgData->p_vmax[i] = maxvv;
-						if(imgData->p_vmin[i]>minvv)
-							imgData->p_vmin[i] = minvv;
-					}
-					break;
+                        if(imgData->p_vmax[i]<maxvv)
+                            imgData->p_vmax[i] = maxvv;
+                        if(imgData->p_vmin[i]>minvv)
+                            imgData->p_vmin[i] = minvv;
+                    }
+                    break;
 
-				default:
-					v3d_msg("Invalid data type found in updateMinMax().");
-					return;
-			}
-		}
-	}
+                default:
+                    v3d_msg("Invalid data type found in updateMinMax().");
+                    return;
+            }
+        }
+    }
 
-	virtual void getTriViewColorDispType(int & mytype)
-	{
-		mytype = (int) ( this->getColorType() );
-	}
-	virtual void setTriViewColorDispType(int mytype)
-	{
-		this->setColorType((ImageDisplayColorType)mytype);
-	}
+    virtual void getTriViewColorDispType(int & mytype)
+    {
+        mytype = (int) ( this->getColorType() );
+    }
+    virtual void setTriViewColorDispType(int mytype)
+    {
+        this->setColorType((ImageDisplayColorType)mytype);
+    }
 
-	virtual void * getCustomStructPointer() const
-	{
-		return (this->p_customStruct);
-	}
+    virtual void * getCustomStructPointer() const
+    {
+        return (this->p_customStruct);
+    }
 
-	virtual void setCustomStructPointer(void *a)
-	{
-		this->p_customStruct = a;
-	}
+    virtual void setCustomStructPointer(void *a)
+    {
+        this->p_customStruct = a;
+    }
 
-	virtual V3DLONG getValidZslice() const
-	{
-		if (imgData)
-		{
-			return imgData->getValidZSliceNum();
-		}
+    virtual V3DLONG getValidZslice() const
+    {
+        if (imgData)
+        {
+            return imgData->getValidZSliceNum();
+        }
                 return 0;
-	}
+    }
 
-	virtual void setValidZslice(V3DLONG curslice)
-	{
-		if (imgData)
-		{
-			imgData->setValidZSliceNum(curslice);
-		}
-	}
+    virtual void setValidZslice(V3DLONG curslice)
+    {
+        if (imgData)
+        {
+            imgData->setValidZSliceNum(curslice);
+        }
+    }
 
-	virtual V3DLONG getPreValidZslice() const
-	{
-		if (imgData)
-		{
-			return imgData->getPreValidZSliceNum();
-		}
+    virtual V3DLONG getPreValidZslice() const
+    {
+        if (imgData)
+        {
+            return imgData->getPreValidZSliceNum();
+        }
                 return 0;
-	}
+    }
 
-	virtual void setPreValidZslice(V3DLONG preslice)
-	{
-		if (imgData)
-		{
-			imgData->setPreValidZSliceNum(preslice);
-		}
-	}
+    virtual void setPreValidZslice(V3DLONG preslice)
+    {
+        if (imgData)
+        {
+            imgData->setPreValidZSliceNum(preslice);
+        }
+    }
 
-	virtual void trigger(V3DLONG curslice)
-	{
-		if (imgData && curslice>0)
-		{
-			qDebug()<<"triggering here ..."<<curslice;
-			emit external_validZSliceChanged(curslice);
-		}
-	}
+    virtual void trigger(V3DLONG curslice)
+    {
+        if (imgData && curslice>0)
+        {
+            qDebug()<<"triggering here ..."<<curslice;
+            emit external_validZSliceChanged(curslice);
+        }
+    }
 
 };
 
