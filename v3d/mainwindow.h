@@ -41,12 +41,14 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) “Automatic reconstructi
 
 //#include <QtWidgets>
 
+//#include <QtGui>
+
 // These two explicit includes make my IDE work better - CMB 08-Oct-2010
 #include <QMainWindow>
 
 
 #include <QMdiArea>
-
+#include <QMdiSubWindow>
 
 #include "v3d_actions.h"
 #include "v3d_compile_constraints.h"
@@ -288,16 +290,15 @@ private:
      //void saveDataFor3DViewer(iDrawExternalParameter* _idep);
 #ifdef __v3d_custom_toolbar__
 public :
-
     QMdiArea *workspace;
+
 
 private:
 #else
 #if defined(USE_Qt5)
     QMdiArea *workspace;
 #else
-    //QWorkspace *workspace;
-        QMdiArea *workspace;
+    QMdiArea *workspace;
 #endif
 #endif
     QSignalMapper *windowMapper;
@@ -484,16 +485,21 @@ public: //for image processing, some of the parameters should be globally set
         {
             workspace->update();
 
-
-           foreach (QWidget* w, workspace->subWindowList()) w->update();
+#if defined(USE_Qt5)
+            foreach (QWidget* w, workspace->subWindowList()) w->update();
+#else
+            foreach (QWidget* w, workspace->subWindowList()) w->update();
+#endif
         }
     }
     void cascadeWindows()
     {
 
-
+#if defined(USE_Qt5)
         if (workspace) workspace->cascadeSubWindows();
-
+#else
+        if (workspace) workspace->cascadeSubWindows();
+#endif
     }
 #define __used_by_v3d_interface__
     //Vaa3DPluginMenu *pluginProcMenu;

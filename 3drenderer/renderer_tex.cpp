@@ -656,6 +656,7 @@ void Renderer_gl1::paint()
 
 void Renderer_gl1::prepareVol()
 {
+    qDebug()<<"jazz debug in renderer_tex.cpp Renderer_gl1::prepareVol()";
     // In the b_renderTextureLast case we need to clear the volume before we draw the markers, not after.
     // Note that in the case where the textures are rendered first, drawVol() will
     // clear the volume if MIP is the mode, so we don't have to do it here.

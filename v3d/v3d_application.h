@@ -80,8 +80,8 @@ public:
             //naMainWindow->handleCoordinatedCloseEvent(event);
         }
 #endif
-
         QCoreApplication::postEvent(theApp, new QEvent(QEvent::Quit)); // this more OK
+
     }
 
     static MainWindow* getMainWindow() {
@@ -116,7 +116,7 @@ public:
 #ifdef _ALLOW_WORKMODE_MENU_
         mainWindow->setV3DDefaultModeCheck(false);
         if (naMainWindow!=0) {
-            //naMainWindow->setV3DDefaultModeCheck(false);
+           // naMainWindow->setV3DDefaultModeCheck(false);
         }
 #endif
     }
@@ -135,7 +135,7 @@ public:
             activateMainWindowHelper(naMainWindow);
             naMainWindowIsActive=true;
         }
-        //naMainWindow->setNeuronAnnotatorModeCheck(true);
+        naMainWindow->setNeuronAnnotatorModeCheck(true);
         mainWindow->setNeuronAnnotatorModeCheck(true);
     }
 
@@ -145,7 +145,7 @@ public:
             naMainWindowIsActive=false;
         }
         if (naMainWindow!=0) {
-            //naMainWindow->setNeuronAnnotatorModeCheck(false);
+            naMainWindow->setNeuronAnnotatorModeCheck(false);
         }
         mainWindow->setNeuronAnnotatorModeCheck(false);
     }

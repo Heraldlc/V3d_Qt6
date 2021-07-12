@@ -109,11 +109,6 @@ void V3dR_GLWidget::closeEvent(QCloseEvent* e)
     qDebug("V3dR_GLWidget::closeEvent");  // never run to here for non-frame window, unless called directly, by RZC 080814
     deleteRenderer();
 
-    /////////////////////////////////////////////////////
-    //deleteLater(); //Schedules this object for deletion
-
-
-    //QWidget::closeEvent(e); //accept
     closeEvent(e);
     /////////////////////////////////////////////////////
 }
@@ -122,9 +117,6 @@ V3dR_GLWidget::~V3dR_GLWidget()
 {
     qDebug("V3dR_GLWidget::~V3dR_GLWidget =======================================");
     _in_destructor = true;
-
-    //if (colormapDlg && colormapDlg->DecRef(this)<1) {}//colormapDlg = 0 safely called in destructor of colormapDlg;
-    //if (surfaceDlg && surfaceDlg->DecRef(this)<1) {} //surfaceDlg = 0  safely called in destructor of surfaceDlg;
 
     deleteRenderer(); //090711 RZC: maybe too late, because some version Qt destroyed GL context before here.
 
@@ -196,7 +188,6 @@ V3dR_GLWidget::V3dR_GLWidget(iDrawExternalParameter* idep, QWidget* mainWindow, 
     //}
 
 #endif
-
     QSurfaceFormat f; // = QGLFormat::defaultFormat();
                 //= format();
     {
@@ -668,6 +659,7 @@ void V3dR_GLWidget::stillPaint()
 //	}
 //	else // here system must be idle
     {
+        qDebug()<<"debug in v3dr_glwidget.cpp V3dR_GLWidget::stillPaint()";
         still_timer.stop();
         _still = true;
             DO_updateGL(); // update at once, stream texture for full-resolution

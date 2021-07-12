@@ -78,7 +78,7 @@ protected:
     virtual void cleanShader(); // called by ~Renderer_gl2 	// makeCurrent
 
     virtual void drawObj();  // called by paint()
-    //注释virtual void drawVol();  // called by paint() //use default.
+    //virtual void drawVol();  // called by paint() //use default.
 
     virtual void equAlphaBlendingProjection();
     virtual void equMaxIntensityProjection();

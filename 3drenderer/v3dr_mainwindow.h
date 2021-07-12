@@ -44,7 +44,8 @@ Last update: 080814: move iDrawExternalParameter to v3d_core.h
 #include "v3dr_common.h"
 
 #include "qtr_widget.h"
-
+#include "mymainwinodw.h"
+class MyMainWinodw;
 
 class V3dR_GLWidget;
 
@@ -60,6 +61,10 @@ public:
 	QString getTitlePrefix() {return title_prefix;}
 	QString getDataTitle() {return data_title;}
 	V3dR_GLWidget * getGLWidget() {return glWidget;}
+    //三角形类指针
+    MyMainWinodw *myWin;
+
+
 
 protected:
     virtual void closeEvent(QCloseEvent* e);
@@ -72,8 +77,12 @@ protected:
     virtual void changeEvent(QEvent* e);
     virtual void keyPressEvent(QKeyEvent * e);
     virtual void keyReleaseEvent(QKeyEvent * e);
+    //三角形slot 不作为槽函数使用
+        void on_showBtn_clicked();
 
 public slots:
+
+
     void postClose();
 
     void setXCutLockIcon(bool);
@@ -183,6 +192,8 @@ public:
     //QPointer<V3dR_GLWidget> glWidget; // guarded pointers to QObjects, by RZC 080924
     V3dR_GLWidget * glWidget; // normal pointers to QObjects
     static QWidget* lastActive; //for glWidget->updateTool()
+
+
 
 
     //QWidget *centralWidget;

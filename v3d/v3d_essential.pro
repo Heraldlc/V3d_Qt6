@@ -108,21 +108,21 @@ LOCAL_DIR = ../common_lib/ 				# unix-liked platform: macx, unix, win32-msys-min
 
 MINGW_DIR = /mingw # platform: win32-msys-mingw
 win32 { # platform: win32-command-mingw
-	MINGW_DIR = c:/mingw
-	LOCAL_DIR = ../common_lib/      # c:/msys/local
-	CONFIG = $$unique(CONFIG)
-	CONFIG -= debug # for Qt-win32 which only has release install(no debug)
+        MINGW_DIR = c:/mingw
+        LOCAL_DIR = ../common_lib/      # c:/msys/local
+        CONFIG = $$unique(CONFIG)
+        CONFIG -= debug # for Qt-win32 which only has release install(no debug)
     CONFIG += console
 LIBS += -L$$MINGW_DIR/lib \
-	-L$$LOCAL_DIR/lib_win32
-    
-    DEFINES += __ALLOW_VR_FUNCS__  
-    
-    # @ADD 2020-2-14 RZC: Microsoft C errors: 
-    # error C2589: '(' : illegal token on right side of '::' for std::min/max 
+        -L$$LOCAL_DIR/lib_win32
+
+    DEFINES += __ALLOW_VR_FUNCS__
+
+    # @ADD 2020-2-14 RZC: Microsoft C errors:
+    # error C2589: '(' : illegal token on right side of '::' for std::min/max
     # error C2011: 'sockaddr' : 'struct' type redefinition
     DEFINES += NOMINMAX  _WINSOCKAPI_
- 
+
 }
 
 
@@ -186,6 +186,7 @@ CONFIG += thread
 
 # Input
 HEADERS += ../basic_c_fun/mg_utilities.h \
+      ../3drenderer/mymainwinodw.h \
     ../basic_c_fun/mg_image_lib.h \
     ../basic_c_fun/basic_memory.h \
     ../basic_c_fun/stackutil.h \
@@ -231,9 +232,9 @@ HEADERS += ../basic_c_fun/mg_utilities.h \
     ../3drenderer/line_box_intersection_check.h \
     ../neuron_tracing/heap.h \
     ../neuron_tracing/fastmarching_linker.h \
-	../imaging/v3d_imaging.h \
+        ../imaging/v3d_imaging.h \
     ../neuron_toolbox/vaa3d_neurontoolbox.h \
-	../multithreadimageIO/v3d_multithreadimageIO.h \
+        ../multithreadimageIO/v3d_multithreadimageIO.h \
     v3d_global_preference_dialog.h \
     v3d_compile_constraints.h \
     v3d_version_info.h \
@@ -315,6 +316,8 @@ SOURCES += ../basic_c_fun/mg_utilities.cpp \
     ../gmm/fit_gmm.cpp \
     ../cellseg/template_matching_seg.cpp \
    ../3drenderer/v3dr_mainwindow.cpp \
+#   ../3drenderer/triangle.cpp \
+../3drenderer/mymainwinodw.cpp \
     ../3drenderer/v3dr_glwidget.cpp \
     ../3drenderer/renderer.cpp \
     ../3drenderer/renderer_tex.cpp \
@@ -335,7 +338,7 @@ SOURCES += ../basic_c_fun/mg_utilities.cpp \
    ../3drenderer/barFigureDialog.cpp \
         ../imaging/v3d_imaging.cpp \
     ../neuron_toolbox/vaa3d_neurontoolbox.cpp \
-	../multithreadimageIO/v3d_multithreadimageIO.cpp \
+        ../multithreadimageIO/v3d_multithreadimageIO.cpp \
     v3d_version_info.cpp \
     v3d_application.cpp \
     main.cpp \
@@ -455,7 +458,7 @@ unix:!macx {
 }
 
 #added 20140324 to cope with centos 64bit GL library issue. by HP
-#add -lglut -lGLU to fix the GL referencing issue on Ubuntu, otherwise it complains 
+#add -lglut -lGLU to fix the GL referencing issue on Ubuntu, otherwise it complains
 unix!macx:LIBS += -lglut -lGLU
 
 macx:LIBS += -L../common_lib/lib_mac32
@@ -480,7 +483,7 @@ macx:dragdropfix{
 win32:LIBS += -lm -lv3dtiff \
 -lv3dnewmat
 
-win32:LIBS += -L../common_lib/mingw -lglew -lhdf5 -lszip -lzlib -lSDL2 -lteem  -lbz2 -lz -lopenvr_api -lwsock32 #for nrrd support #for nrrd support
+win32:LIBS += -L../common_lib/mingw -lglew -lhdf5 -lszip -lzlib -lSDL2 -lv3dnewmat -lteem  -lbz2 -lz -lopenvr_api -lwsock32 #for nrrd support #for nrrd support
 #    -lglut32 # win32-mingw, on unix link libglut.a
 #win32:LIBS += -L../common_lib/src_packages/mylib_tiff -lmylib	#for win32 disable using MYLIB
 
