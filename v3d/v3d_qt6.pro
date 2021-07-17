@@ -142,7 +142,8 @@ HEADERS += \
     ../webservice/impl/ConsoleObserverServiceImpl.h \
     ../webservice/impl/EntityAdapter.h \
     ../cell_counter/CellCounter3D.h \
-    CommandManager.h 
+    CommandManager.h  \
+    myopenglwidget.h
 
 
 SOURCES += \
@@ -256,7 +257,8 @@ SOURCES += \
     ../webservice/impl/ConsoleObserverServiceImpl.cpp \
     ../webservice/impl/EntityAdapter.cpp \
     ../cell_counter/CellCounter3D.cpp \
-    CommandManager.cpp
+    CommandManager.cpp \
+    myopenglwidget.cpp
 
 #FORMS += \
 #    ../neuron_annotator/gui/NaMainWindow.ui \

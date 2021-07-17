@@ -59,10 +59,9 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) Automatic reconstruction 
 #include <QtGui>
 #include <QCloseEvent>
 #include <QDialog>
-#if defined(USE_Qt5)
-#include <QGLFormat>
-#else
-#endif
+
+//#include <QGLFormat>
+
 #include<QWidget>
 #include <QMessageBox>
 bool V3dR_GLWidget::disableUndoRedo = false;
@@ -134,7 +133,7 @@ V3dR_GLWidget::~V3dR_GLWidget()
 }
 
 V3dR_GLWidget::V3dR_GLWidget(iDrawExternalParameter* idep, QWidget* mainWindow, QString title)
-   // : QOpenGLWidget_proxy(mainWindow) //090705
+    : QOpenGLWidget_proxy(mainWindow) //090705解除注释就可以初始化了,这就非常的恶心，找了那么久，原因居然是这个
 {
     qDebug("V3dR_GLWidget::V3dR_GLWidget ========================================");
 
@@ -172,41 +171,45 @@ V3dR_GLWidget::V3dR_GLWidget(iDrawExternalParameter* idep, QWidget* mainWindow, 
         // supports multi-sampling
         f.setSamples( 4 ); // (1,2,4), For ATI must force samples, by RZC 081001
     }
-#else
-    QSurfaceFormat f ;// = QGLFormat::defaultFormat();
-                //= format();
-    {
+//#else
+//    QGLFormat f ;// = QGLFormat::defaultFormat();
+//                //= format();
+//    {
 //        f.setDepth(true);
 //        f.setStencil(true);
-        f.setDepthBufferSize(24);
-        f.setStencilBufferSize(8);
 
-        if(_isMultipleSampleSupported()) //090729
-        {
+//        if(_isMultipleSampleSupported()) //090729
+//        {
 //            f.setSampleBuffers(true); // ensure using multiple-sample-buffers for smooth line and edge, by RZC 080825
-            f.setSamples( 4 ); // (1,2,4), For ATI must force samples, by RZC 081001
-        }
-        else
-        {
+//            f.setSamples( 4 ); // (1,2,4), For ATI must force samples, by RZC 081001
+//        }
+//        else
+//        {
 //            f.setSampleBuffers(false); //081003: this must be set as false for Maci, Tiger for Simposon WM2.
-            f.setSamples( 0 ); //090730: For X11 must force 0
-        }
+//            f.setSamples( 0 ); //090730: For X11 must force 0
+//        }
 
-//        f.setOverlay(true); // no use
-//        f.setAccum(true);   // use blend a rectangle instead of this
-//        f.setAccumBufferSize(16);
-        f.setStereo(true);    // 081126, for glDrawBuffers, QGLFormat do NOT support AUX_BUFFER !!!, will cause system DEAD
-        QSurfaceFormat::setDefaultFormat(f);
-    }
+        //f.setOverlay(true); // no use
+        //f.setAccum(true);   // use blend a rectangle instead of this
+        //f.setAccumBufferSize(16);
+        //f.setStereo(true);    // 081126, for glDrawBuffers, QGLFormat do NOT support AUX_BUFFER !!!, will cause system DEAD
+    //}
 
 #endif
+    QSurfaceFormat f; // = QGLFormat::defaultFormat();
+                //= format();
+    {
+        // Just set what we want. Qt5 will determine whether or not the system
+        // supports multi-sampling
+        f.setSamples( 4 ); // (1,2,4), For ATI must force samples, by RZC 081001
+    }
 
     //dynamic choice GLFormat
     if (!skipFormat)
         setFormat(f);
 
     ///////////////////////////////////////////////////////////////
-    //makeCurrent(); //090729: this make sure created GL context
+    makeCurrent(); //090729: this make sure created GL context
     //  2008-11-22 RZC, 090628 RZC
     //choice renderer according to OpenGl version, MUST put in initializeGL
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -389,6 +392,14 @@ void V3dR_GLWidget::initializeGL()
         // Set this here as it initializes things under the hood, and GL code can't be called before
         // this routine
         bool dummy = _isMultipleSampleSupported();
+
+        QSurfaceFormat format;
+        format.setDepthBufferSize(24);
+        format.setStencilBufferSize(8);
+        format.setVersion(3, 2);
+        format.setProfile(QSurfaceFormat::CoreProfile);
+        setFormat(format); // must be called before the widget or its parent window gets shown
+
 #endif
 #endif
 
@@ -397,7 +408,7 @@ void V3dR_GLWidget::initializeGL()
 
     settingRenderer(); //091007, 100719 moved to position before renderer->setupData
 
-     preparingRenderer();
+    preparingRenderer();
 }
 
 
@@ -664,6 +675,7 @@ void V3dR_GLWidget::stillPaint()
 //	}
 //	else // here system must be idle
     {
+        qDebug()<<"debug in v3dr_glwidget.cpp V3dR_GLWidget::stillPaint()";
         still_timer.stop();
         _still = true;
             DO_updateGL(); // update at once, stream texture for full-resolution
@@ -2316,6 +2328,7 @@ void V3dR_GLWidget::setXRotation(int angle)
     }
 }
 
+//实现鼠标移动的函数
 void V3dR_GLWidget::setXRotation(float angle)
 {
     NORMALIZE_angle( angle );

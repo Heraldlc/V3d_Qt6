@@ -219,7 +219,7 @@ V3dR_MainWindow::V3dR_MainWindow(iDrawExternalParameter* idep)
     }
     //////////////////////////////////////////////////////////////////
 
-    //if (glWidget)	POST_EVENT(glWidget, QEvent::Type(QEvent_OpenFiles)); // move to V3dR_GLWidget::initializeGL for dynamic renderer, 081122 by RZC
+    if (glWidget)	POST_EVENT(glWidget, QEvent::Type(QEvent_OpenFiles)); // move to V3dR_GLWidget::initializeGL for dynamic renderer, 081122 by RZC
 
     //创建控制信号
     qDebug("V3dR_MainWindow::createControlWidgets");
@@ -483,7 +483,8 @@ bool V3dR_GLWidget::screenShot(QString filename)
 #if defined(USE_Qt5)
     QImage image1 = this->grabFramebuffer();
 #else
-    QImage image1 = this->grabFrameBuffer();
+    //QImage image1 = this->grabFrameBuffer();
+    QImage image1 = this->grabFramebuffer();
 #endif
 
         const char* format = SAVE_IMG_FORMAT;

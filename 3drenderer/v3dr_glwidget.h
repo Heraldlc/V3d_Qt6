@@ -45,8 +45,8 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) Automatic reconstruction 
 
 
 
-#include "glsl_r.h"
-#include "GLee2glew.h"
+//#include "glsl_r.h"
+//#include "GLee2glew.h"
 
 
 //replaced by PHC 20200131 to be the following
@@ -55,7 +55,8 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) Automatic reconstruction 
 #include<QOpenGLWidget>
 //using QOpenGLWidget_proxy = QGLWidget;
 using QOpenGLWidget_proxy = QOpenGLWidget;
-#include <QOpenGLFunctions>
+#include <QOpenGLFunctions_1_1>
+
 #include <QOpenGLWindow>
 
 #include <QMetaObject>
@@ -81,7 +82,7 @@ class V3dr_surfaceDialog;
 
 //typedef void(*PluginMouseFunc)(QOpenGLWidget_proxy*); // May 29, 2012 by Hang
 //多加了继承类,继承顺序不能颠倒 全改成了公有继承
-class V3dR_GLWidget: public QOpenGLWidget, public QOpenGLFunctions, public View3DControl
+class V3dR_GLWidget :  public QOpenGLWidget,public QOpenGLFunctions_1_1 , public View3DControl
 
 {
     Q_OBJECT;
@@ -138,7 +139,7 @@ public:
 protected:
     virtual void choiceRenderer();
     virtual void settingRenderer(); // for setting the default renderer state when initialize
-     virtual void initializeGL();
+    virtual void initializeGL();
     virtual void resizeGL(int width, int height);
     virtual void paintGL();
 
@@ -572,7 +573,7 @@ public:
     {
         qDebug()<<"jazz debug init_members in v3dr_glwidgets.h";
         _still = _stillpaint_need = _stillpaint_pending = false;
-       // connect(&still_timer, SIGNAL(timeout()), this, SLOT(stillPaint())); //only connect once
+       connect(&still_timer, SIGNAL(timeout()), this, SLOT(stillPaint())); //only connect once
         still_timer.start(still_timer_interval);
 
         t_mouseclick_left = mouse_held = mouse_in_view = 0;

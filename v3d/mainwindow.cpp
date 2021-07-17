@@ -815,16 +815,16 @@ V3dR_MainWindow * MainWindow::find3DViewer(QString fileName)
 }
 void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool b_forceopen3dviewer)
 {
+    qDebug()<<"DLC in loadV3DFile";
     if (!fileName.isEmpty())
     {
         XFormWidget *existing_imgwin = findMdiChild(fileName);
         if (existing_imgwin)
         {
+           qDebug()<<"DLC before setActiveSubWindow";
+           workspace->setActiveSubWindow(existing_imgwin);
 
-
-           // workspace->setActiveSubWindow(existing_imgwin);
-
-            return;
+           return;
         }
         V3dR_MainWindow *existing_3dviewer = find3DViewer(fileName);
         if (existing_3dviewer)
@@ -865,7 +865,7 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                             {
                                 child_rawimg->doImage3DView();
                             }
-
+                qDebug()<<"DLC: before child_rawing->show";
                             child_rawimg->show();
 
 
@@ -957,6 +957,9 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                 V3dR_MainWindow *my3dwin = 0;
                 try
                 {
+                    QSurfaceFormat format;
+                    format.setSamples(16);
+
                     my3dwin = new V3dR_MainWindow(mypara_3Dview);
                     my3dwin->setParent(0);
                     my3dwin->setDataTitle(fileName);
@@ -1126,7 +1129,7 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
 
                     //if(child->getValidZslice()<child->getImageData()->getZDim()-1) return; // avoid crash when the child is closed by user, Dec 29, 2010 by YuY
                     //bug!!! by PHC. This is a very bad bug. 2011-02-09. this makes all subsequent operations unable to finish. should be disabled!!.
-
+            qDebug()<<"DLC in try child->loadFile";
                     statusBar()->showMessage(QString("File [%1] loaded").arg(fileName), 2000);
                     if (global_setting.b_autoConvert2_8bit)
                     {
@@ -1149,6 +1152,7 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                     {
                         child->getImageData()->flip(axis_y);
                     }
+            qDebug()<<"DLC before child->show";
                     child->show();
                     //workspace->cascade(); //080821 //110805, by PHC, since RZC claims the resize MDI works now, so this should not be needed.
                     // create sampled data 512x512x256 and save it for use in 3dviewer
@@ -1157,10 +1161,11 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                     // saveDataFor3DViewer( &(child->mypara_3Dview));
                     if (b_forceopen3dviewer || (global_setting.b_autoOpenImg3DViewer))
                     {
+                        qDebug()<<"DLC before child->doImage3DView";
                         child->doImage3DView();
                     }
                     size_t end_t = clock();
-                    qDebug()<<"time consume ..."<<end_t-start_t;
+             qDebug()<<"time consume ..."<<end_t-start_t;
                 }
                 else
                 {

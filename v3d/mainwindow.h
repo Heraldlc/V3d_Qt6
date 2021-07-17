@@ -296,7 +296,7 @@ private:
 #if defined(USE_Qt5)
     QMdiArea *workspace;
 #else
-    QWorkspace *workspace;
+    QMdiArea *workspace;
 #endif
 #endif
     QSignalMapper *windowMapper;

@@ -265,9 +265,11 @@ void V3dR_MainWindow::createControlWidgets()
     //QFont smallFont;   smallFont.setPixelSize(12); smallFont.setBold(false);
     //rotateBarGroup->setFont(smallFont); // no any use
 
+    //这三个是三个小圆圈
 	xRotSlider = createRotateSlider();
     yRotSlider = createRotateSlider();
     zRotSlider = createRotateSlider();
+    //这三个是有度的东西
 	  xRotBox = createRotateSpinBox();
 	  yRotBox = createRotateSpinBox();
 	  zRotBox = createRotateSpinBox();
@@ -369,12 +371,12 @@ void V3dR_MainWindow::createControlWidgets()
 	case 1: {// volume
 		int d1, d2, d3;
 
-//        d1 = MAX(0, glWidget->dataDim1()-1);
-//        d2 = MAX(0, glWidget->dataDim2()-1);
-//		d3 = MAX(0, glWidget->dataDim3()-1);
-        d1 = 5;
-        d2 = 5;
-        d3 = 5;
+        d1 = MAX(0, glWidget->dataDim1()-1);
+        d2 = MAX(0, glWidget->dataDim2()-1);
+        d3 = MAX(0, glWidget->dataDim3()-1);
+//        d1 = 5;
+//        d2 = 5;
+//        d3 = 5;
 		xcminSlider = createCutPlaneSlider(d1);
 		xcmaxSlider = createCutPlaneSlider(d1);
 		ycminSlider = createCutPlaneSlider(d2);
@@ -416,12 +418,12 @@ void V3dR_MainWindow::createControlWidgets()
 	case 2: {// x-section
 		int d1, d2, d3;
 
-//		d1 = MAX(0, glWidget->dataDim1()-1);
-//		d2 = MAX(0, glWidget->dataDim2()-1);
-//		d3 = MAX(0, glWidget->dataDim3()-1);
-        d1 = 5;
-        d2 = 5;
-        d3 = 5;
+        d1 = MAX(0, glWidget->dataDim1()-1);
+        d2 = MAX(0, glWidget->dataDim2()-1);
+        d3 = MAX(0, glWidget->dataDim3()-1);
+//        d1 = 5;
+//        d2 = 5;
+//        d3 = 5;
 		xCSSlider = createCutPlaneSlider(d1);
 		yCSSlider = createCutPlaneSlider(d2);
 		zCSSlider = createCutPlaneSlider(d3);
@@ -507,7 +509,7 @@ void V3dR_MainWindow::createControlWidgets()
     glWidgetArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     glWidgetArea->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding); //QSizePolicy::Ignored, QSizePolicy::Ignored);
     glWidgetArea->setMinimumSize(MINVIEW_SIZEX, MINVIEW_SIZEY);
-    //注释，nmd？？？if (glWidget)  	glWidgetArea->setWidget(glWidget);
+   if (glWidget)  	glWidgetArea->setWidget(glWidget);
 
     timeSlider = new QScrollBar(Qt::Horizontal);
     timeSlider->setRange(0,0);
@@ -757,7 +759,7 @@ void V3dR_MainWindow::connectSignal()
 
 #define __connect_rotation__
 	//rotation group //////////////////////////////////////////////////
-
+    //信号连接
 	if (xRotSlider) {
 		connect(xRotSlider, SIGNAL(valueChanged(int)), glWidget, SLOT(setXRotation(int)));
 		connect(glWidget, SIGNAL(xRotationChanged(int)), xRotSlider, SLOT(setValue(int)));
@@ -828,7 +830,6 @@ void V3dR_MainWindow::connectSignal()
 			connect(yShiftBox, SIGNAL(valueChanged(int)), yShiftSlider, SLOT(setValue(int)));
 		}
 	}
-
 	if (rotReset)
 	{
 		connect(rotReset, SIGNAL(clicked()), glWidget, SLOT(resetRotation()));
@@ -1100,11 +1101,6 @@ void V3dR_MainWindow::initControlValue()
 	//////////////////////////////////////////////////////////////////////////
 	// updateGL here immediately to prevent a delay flash due to following Renderer::init when using POST_updateGL, by RZC 080927
 	if (glWidget) glWidget->update();  // 081122, CAUTION: call updateGL from initializeGL will cause infinite loop call
-
-
-
-
-
 }
 
 void V3dR_MainWindow::setXCutLockIcon(bool b)
@@ -1181,7 +1177,7 @@ void V3dR_MainWindow::initVolumeTimeRange()
 void V3dR_MainWindow::initVolumeCutRange()
 {
     qDebug()<<"jazz debug V3dR_MainWindow::initVolumeCutRange in v3dr_control_signal.cpp";
-    /*
+
 	if (! glWidget) return;
 
 	int d1, d2, d3;
@@ -1245,7 +1241,7 @@ void V3dR_MainWindow::initVolumeCutRange()
 		zCSSlider->setMaximum(d3);
 		zCSSlider->setValue((zCSSlider->minimum()+zCSSlider->maximum())/2);
 	}
-    */
+
 }
 
 void V3dR_MainWindow::initSurfaceCutRange()
@@ -1311,7 +1307,7 @@ void V3dR_MainWindow::createMenuOfSurfFile()
 		printf("Fail to run the V3dR_MainWindow::createMenuOfSurfFile() function.\n");
 		return;
 	}
-/*
+
     Act = new QAction(tr("&Load/Create Surface From File"), this);
     connect(Act, SIGNAL(triggered()), glWidget, SLOT(loadObjectFromFile()));
     menuSurfFile.addAction(Act);
@@ -1350,7 +1346,7 @@ void V3dR_MainWindow::createMenuOfSurfFile()
 		}
     }
 #endif
-*/
+
 }
 
 void V3dR_MainWindow::doMenuOfSurfFile()
@@ -1405,7 +1401,9 @@ QSpinBox *V3dR_MainWindow::createRotateSpinBox()
 {
 	QSpinBox *box = new QSpinBox;
 	box->setRange(0, 360);
-	box->setSuffix("\xB0");
+    //box->setSuffix("\xB0");
+    box->setSuffix("°");
+
 	return box;
 }
 

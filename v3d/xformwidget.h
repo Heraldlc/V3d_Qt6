@@ -128,7 +128,8 @@ struct iDrawExternalParameter
 #if defined(USE_Qt5)
 class XFormWidget : public QMdiSubWindow, public TriviewControl //class XFormWidget : public QMainWindow
 #else
-class XFormWidget : public QWidget, public TriviewControl //class XFormWidget : public QMainWindow
+//class XFormWidget : public QWidget, public TriviewControl //class XFormWidget : public QMainWindow
+class XFormWidget : public QMdiSubWindow, public TriviewControl
 #endif
 {
     Q_OBJECT;
@@ -267,6 +268,9 @@ private:
 	QCheckBox *lookingGlassCheckBox;
 	QPushButton *zoomWholeViewButton;
 
+    //DLC 自己家的三角形按钮，实现显示三角形
+    QPushButton *btn;
+
     QRadioButton *colorRedType, *colorGreenType, *colorBlueType, *colorAllType;
     QRadioButton *colorRed2GrayType, *colorGreen2GrayType, *colorBlue2GrayType, *colorAll2GrayType;
     QRadioButton *colorMapDispType;
@@ -327,7 +331,8 @@ public slots:
 #if defined(USE_Qt5)
 	void onActivated(QMdiSubWindow* );
 #else
-	void onActivated(QWidget* );
+    //void onActivated(QWidget* );
+    void onActivated(QMdiSubWindow*);
 #endif
 //110803 RZC, for sync multiple ChannelTabWidget
 	void syncChannelTabWidgets(ChannelTabWidget* sender);
