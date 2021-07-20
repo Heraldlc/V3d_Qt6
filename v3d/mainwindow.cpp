@@ -2959,10 +2959,10 @@ void MainWindow::func_procModeNeuronAnnotator()
 //    V3dApplication::activateNaMainWindow();
 }
 void MainWindow::setV3DDefaultModeCheck(bool checkState) {
-   // procModeDefault->setChecked(checkState);
+    procModeDefault->setChecked(checkState);
 }
 void MainWindow::setNeuronAnnotatorModeCheck(bool checkState) {
-   // procModeNeuronAnnotator->setChecked(checkState);
+    procModeNeuronAnnotator->setChecked(checkState);
 }
 #endif
 

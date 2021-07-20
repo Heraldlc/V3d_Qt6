@@ -265,6 +265,18 @@ private:
     QScrollBar *xScaleSlider, *yScaleSlider, *zScaleSlider;
     QLabel *xScaleSliderLabel, *yScaleSliderLabel, *zScaleSliderLabel;
     QCheckBox *lookingGlassCheckBox;
+
+
+
+
+    //加一个按钮 实现三角形的效果
+    QPushButton *btn;
+
+
+
+
+
+
     QPushButton *zoomWholeViewButton;
 
     QRadioButton *colorRedType, *colorGreenType, *colorBlueType, *colorAllType;
@@ -279,7 +291,7 @@ private:
     //QCheckBox *landmarkLabelDispCheckBox;
 
     QPushButton *resetButton, *openFileNameButton, *whatsThisButton, *imgProcessButton, *imgV3DButton; //, *imgV3DROIButton;
-        QPushButton *btn;
+
     QHBoxLayout *allLayout;
       QVBoxLayout *dataGroupLayout;
         QGridLayout *xyzViewLayout;

@@ -308,6 +308,12 @@ private:
 #ifdef _ALLOW_WORKMODE_MENU_
     QMenu *modeMenu;
 #endif
+
+
+
+
+
+
     QMenu *helpMenu;
     QMenu *basicProcMenu, *advancedProcMenu, *pipelineProcMenu, *visualizeProcMenu;
     QMenu *proc_export_menu;

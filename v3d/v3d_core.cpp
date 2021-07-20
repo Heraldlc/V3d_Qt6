@@ -3084,6 +3084,15 @@ void XFormWidget::initialize()
 
     //landmarkLabelDispCheckBox = NULL;
 
+
+
+
+    //自己加的
+    btn = NULL;
+
+
+
+
     resetButton = NULL;
     openFileNameButton = NULL;
     imgProcessButton = NULL;
@@ -3924,9 +3933,6 @@ void XFormWidget::createGUI()
     zx_view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
      zx_view->setFocusPolicy(Qt::ClickFocus);
 
-    //    viewGroup->setFixedWidth(xy_view->frameGeometry().width()+yz_view->frameGeometry().width());
-
-     // information group
 
      infoGroup = new QGroupBox(dataGroup);
      infoGroup->setTitle("Information of your selections");
@@ -3934,16 +3940,6 @@ void XFormWidget::createGUI()
      focusPointFeatureWidget = new MyTextBrowser(infoGroup);
     //	focusPointFeatureWidget->setFixedWidth(qMax(200, xy_view->width()+yz_view->width()));
     focusPointFeatureWidget->setFixedWidth(qMax(200, xy_view->get_disp_width()+yz_view->get_disp_width()));
-    //focusPointFeatureWidget->setFixedHeight(50);
-    //focusPointFeatureWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-
-     //viewGroup->setFixedWidth(xy_view->width()+yz_view->width()+10);
-    //    viewGroup->setMinimumSize(xy_view->width()+yz_view->width(), xy_view->height()+zx_view->height()+50);
-    //    viewGroup->setFixedWidth(xy_view->width()+yz_view->width()+10);
-
-    //    dataGroup->setFixedWidth(xy_view->frameGeometry().width()+yz_view->frameGeometry().width()+10);
-
-    // setup the control panel
 
     mainGroup = new QGroupBox(self);
     mainGroup->setFixedWidth(300);
@@ -4024,8 +4020,13 @@ void XFormWidget::createGUI()
 
     resetButton = new QPushButton(scaleGroup);
     resetButton->setText("Reset");
-btn = new QPushButton(scaleGroup);
-btn->setText("SJX");
+
+
+    //自己加的
+    btn = new QPushButton(scaleGroup);
+    btn->setText("自己的三角形");
+
+
     zoomWholeViewButton = new QPushButton();
     zoomWholeViewButton->setText("TriView zoom=1. Click to set.");
 
@@ -4068,13 +4069,6 @@ btn->setText("SJX");
 
     whatsThisButton = new QPushButton(mainGroup);
     whatsThisButton->setText("Help ... ");
-    //whatsThisButton->setCheckable(true);
-
-    // All layouts
-
-//    allLayout = new QHBoxLayout(this);
-//    allLayout->addWidget(dataGroup);
-//    allLayout->addWidget(mainGroup);
 
     xyzViewLayout = new QGridLayout(viewGroup);
     xyzViewLayout->addWidget(xy_view, 0, 0, 1, 1, Qt::AlignRight | Qt::AlignBottom);
@@ -4116,11 +4110,6 @@ btn->setText("SJX");
     coordGroupLayout->addWidget(ySlider, 2, 1, 1, 13);
     coordGroupLayout->addWidget(yValueSpinBox, 2, 14, 1, 6);
 
-//  coordGroupLayout->addWidget(linkFocusCheckBox, 3, 0, 1, 14);
-//	coordGroupLayout->addWidget(displayFocusCrossCheckBox, 4, 0, 1, 14);
-//	coordGroupLayout->addWidget(cBox_bSendSignalToExternal, 5, 0, 1, 6);
-//	coordGroupLayout->addWidget(cBox_bAcceptSignalFromExternal, 5, 7, 1, 7);
-
     coordGroupLayout->addWidget(displayFocusCrossCheckBox, 		3, 0, 1, 8);
     coordGroupLayout->addWidget(cBox_bSendSignalToExternal,     3, 8, 1, 6);
     coordGroupLayout->addWidget(cBox_bAcceptSignalFromExternal, 3, 8+6, 1, 6);
@@ -4136,10 +4125,13 @@ btn->setText("SJX");
 
     scaleGroupLayout->addWidget(yScaleSlider, 2, 0, 1, 13);
     scaleGroupLayout->addWidget(yScaleSliderLabel, 2, 14, 1, 6);
-
-    scaleGroupLayout->addWidget(lookingGlassCheckBox, 3, 0, 1, 9);
+//本来是3，0，1，13的
+    scaleGroupLayout->addWidget(lookingGlassCheckBox, 3, 0, 1, 10);
+//自己加的三角形按钮
+    scaleGroupLayout->addWidget(btn,3,11,1,2);
     scaleGroupLayout->addWidget(resetButton, 3, 14, 1, 6);
-    scaleGroupLayout->addWidget(btn,3,10,1,3);
+
+
 
     scaleGroupLayout->addWidget(zoomWholeViewButton, 4, 0, 1, 20);
 
@@ -4202,6 +4194,7 @@ btn->setText("SJX");
     setFocusPolicy(Qt::StrongFocus);
     self->setFocus();
     setWidget( self );
+
 
 
     //QTimer::singleShot(500, this, SLOT(Focus()));
@@ -5081,19 +5074,13 @@ void XFormWidget::connectEventSignals()
     connect(landmarkSaveButton, SIGNAL(clicked()), this, SLOT(saveLandmarkToFile()));
     connect(landmarkManagerButton, SIGNAL(clicked()), this, SLOT(openLandmarkManager()));
 
-    connect(resetButton, SIGNAL(clicked()), this, SLOT(reset()));
+    //三角形连接信号
+    connect(btn,&QPushButton::clicked,[=](){
+        v3d_msg("这这里实现三角形的窗口");
 
-
-
-
-
-    connect(btn,&QPushButton::clicked,this,[=](){
-        QWidget *win = new QWidget();
-        win->show();
     });
 
-
-
+    connect(resetButton, SIGNAL(clicked()), this, SLOT(reset()));
     //connect(openFileNameButton, SIGNAL(clicked()), this, SLOT(setOpenFileName())); //	remove this button on 080402
 
     //connect(landmarkLabelDispCheckBox, SIGNAL(clicked()), this, SLOT(toggleLandmarkLabelDisp()));
