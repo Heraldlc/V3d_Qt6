@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.15.0, 2021-07-12T13:01:21. -->
+<!-- Written by QtCreator 4.15.0, 2021-07-15T16:09:47. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -294,9 +294,8 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">vaa3d2</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:F:/v3d_mingw1/v3d_github/v3d_external/v3d_main/v3d/vaa3d.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">F:/v3d_mingw1/v3d_github/v3d_external/v3d_main/v3d/vaa3d.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:F:/v3d_mingw1/v3d_github/v3d_dlc_ljs/V3d_Qt6/v3d/vaa3d.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">F:/v3d_mingw1/v3d_github/v3d_dlc_ljs/V3d_Qt6/v3d/vaa3d.pro</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
