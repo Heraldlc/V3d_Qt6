@@ -118,7 +118,7 @@ public:
 
     bool hasError() {return b_error;}
     void makeCurrent(); //ensure right-GL-context when resize-view, animate, mouse-drop, delete-object, select-object etc. across multiple views, 081105
-        void drawString(float x, float y, float z, const char* text, int shadow=0, int fontsize=0);
+    void drawString(float x, float y, float z, const char* text, int shadow=0, int fontsize=0);
     bool beStill();
 
 public:
@@ -133,7 +133,7 @@ public:
 // link to OpenGL window
     virtual void setupView(int width, int height);		//link to QGLWidget::resizeGL
     virtual void initialize(int version=0);				//link to QGLWidget::initializeGL
-        virtual void reinitializeVol(int version=0) {}							//MUST makeCurrent for concurrent contexts
+    virtual void reinitializeVol(int version=0) {}							//MUST makeCurrent for concurrent contexts
     virtual void paint();								//link to QGLWidget::paintGL
     virtual int hitPoint(int x, int y)					//called by mouse press event
         {

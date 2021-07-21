@@ -27,6 +27,7 @@ RESOURCES += ../neuron_annotator/resources.qrc
 
 # Input
 HEADERS += \
+    ../3drenderer/showtriangle.h \
     ../neuron_annotator/animation/AnimationFrame.h \
     ../neuron_annotator/animation/interpolate.h \
     ../neuron_annotator/animation/KeyFrame.h \
@@ -248,6 +249,7 @@ SOURCES += \
 #    ../neuron_annotator/analysis/AnalysisTools.cpp \
 #    ../neuron_annotator/analysis/MaskChan.cpp \
 #    ../neuron_annotator/analysis/DilationErosion.cpp \
+    ../3drenderer/showtriangle.cpp \
     ../webservice/gsoap2/stdsoap2.cpp \
     ../webservice/console/envC.cpp \
     ../webservice/console/cdsC.cpp \

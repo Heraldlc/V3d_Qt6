@@ -4024,7 +4024,7 @@ void XFormWidget::createGUI()
 
     //自己加的
     btn = new QPushButton(scaleGroup);
-    btn->setText("自己的三角形");
+    btn->setText("SJX");
 
 
     zoomWholeViewButton = new QPushButton();
@@ -5074,9 +5074,7 @@ void XFormWidget::connectEventSignals()
     connect(landmarkSaveButton, SIGNAL(clicked()), this, SLOT(saveLandmarkToFile()));
     connect(landmarkManagerButton, SIGNAL(clicked()), this, SLOT(openLandmarkManager()));
 
-    //三角形连接信号
-//#include "myopenglwidget.h"
-    //connect(btn, SIGNAL(clicked()),this, SLOT(showImg()));
+
 
     connect(resetButton, SIGNAL(clicked()), this, SLOT(reset()));
     //connect(openFileNameButton, SIGNAL(clicked()), this, SLOT(setOpenFileName())); //	remove this button on 080402

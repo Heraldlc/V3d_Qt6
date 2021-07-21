@@ -45,6 +45,8 @@ Last update: 080814: move iDrawExternalParameter to v3d_core.h
 
 #include "qtr_widget.h"
 
+//DLC
+#include "showtriangle.h"
 
 class V3dR_GLWidget;
 
@@ -60,6 +62,9 @@ public:
 	QString getTitlePrefix() {return title_prefix;}
 	QString getDataTitle() {return data_title;}
 	V3dR_GLWidget * getGLWidget() {return glWidget;}
+
+    //DLC显示三角形
+    showTriangle *myWin;
 
 protected:
     virtual void closeEvent(QCloseEvent* e);
@@ -116,6 +121,8 @@ public slots:
 //    void setYRotStep(int t);
 //    void setZRotStep(int t);
 //    void setNSteps(int t);
+    //DLC槽函数
+    void onShowBtnClicked();
 
 public:
 	iDrawExternalParameter null_idep; //090918: for editing swc

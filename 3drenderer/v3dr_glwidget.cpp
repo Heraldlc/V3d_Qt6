@@ -133,7 +133,7 @@ V3dR_GLWidget::~V3dR_GLWidget()
 }
 
 V3dR_GLWidget::V3dR_GLWidget(iDrawExternalParameter* idep, QWidget* mainWindow, QString title)
-    : QOpenGLWidget_proxy(mainWindow) //090705解除注释就可以初始化了,这就非常的恶心，找了那么久，原因居然是这个
+    : QOpenGLWidget(mainWindow) //090705解除注释就可以初始化了,这就非常的恶心，找了那么久，原因居然是这个
 {
     qDebug("V3dR_GLWidget::V3dR_GLWidget ========================================");
 
@@ -163,50 +163,19 @@ V3dR_GLWidget::V3dR_GLWidget(iDrawExternalParameter* idep, QWidget* mainWindow, 
         isGLinfoDetected = 1;
     }
 
-#if defined(USE_Qt5)
+
     QSurfaceFormat f; // = QGLFormat::defaultFormat();
                 //= format();
-    {
-        // Just set what we want. Qt5 will determine whether or not the system
-        // supports multi-sampling
-        f.setSamples( 4 ); // (1,2,4), For ATI must force samples, by RZC 081001
-    }
-//#else
-//    QGLFormat f ;// = QGLFormat::defaultFormat();
-//                //= format();
-//    {
-//        f.setDepth(true);
-//        f.setStencil(true);
 
-//        if(_isMultipleSampleSupported()) //090729
-//        {
-//            f.setSampleBuffers(true); // ensure using multiple-sample-buffers for smooth line and edge, by RZC 080825
-//            f.setSamples( 4 ); // (1,2,4), For ATI must force samples, by RZC 081001
-//        }
-//        else
-//        {
-//            f.setSampleBuffers(false); //081003: this must be set as false for Maci, Tiger for Simposon WM2.
-//            f.setSamples( 0 ); //090730: For X11 must force 0
-//        }
+    f.setSamples( 4 ); // (1,2,4), For ATI must force samples, by RZC 081001
+    f.setDepthBufferSize(24);
+    f.setStencilBufferSize(8);
 
-        //f.setOverlay(true); // no use
-        //f.setAccum(true);   // use blend a rectangle instead of this
-        //f.setAccumBufferSize(16);
-        //f.setStereo(true);    // 081126, for glDrawBuffers, QGLFormat do NOT support AUX_BUFFER !!!, will cause system DEAD
-    //}
-
-#endif
-    QSurfaceFormat f; // = QGLFormat::defaultFormat();
-                //= format();
-    {
-        // Just set what we want. Qt5 will determine whether or not the system
-        // supports multi-sampling
-        f.setSamples( 4 ); // (1,2,4), For ATI must force samples, by RZC 081001
-    }
 
     //dynamic choice GLFormat
     if (!skipFormat)
         setFormat(f);
+    QSurfaceFormat::setDefaultFormat(f);
 
     ///////////////////////////////////////////////////////////////
     makeCurrent(); //090729: this make sure created GL context
@@ -374,34 +343,13 @@ void V3dR_GLWidget::initializeGL()
     qDebug("V3dR_GLWidget::initializeGL");
 
     // Qt OpenGL context format detection
-#if (QT_VERSION > 0x040200)
-#if defined(USE_Qt5)
     initializeOpenGLFunctions();
-    // Set this here as it initializes things under the hood, and GL code can't be called before
-    // this routine
-    bool dummy = _isMultipleSampleSupported();
-#else
-//		QGLFormat f = format();
-//		qDebug("   GLformat: (version = 0x%x) (samples double-buffer stereo plane overlay = %d %d %d %d %d)",
-//				int(QGLFormat::openGLVersionFlags()),
-//				f.samples(), f.doubleBuffer(), f.stereo(), f.plane(), f.hasOverlay());
-//		qDebug("   GLformat: (r g b a = %d %d %d %d) + (depth stencil accum = %d %d %d)",
-//				f.redBufferSize(), f.greenBufferSize(), f.blueBufferSize(), f.alphaBufferSize(),
-//				f.depthBufferSize(), f.stencilBufferSize(), f.accumBufferSize());
-        initializeOpenGLFunctions();
-        // Set this here as it initializes things under the hood, and GL code can't be called before
-        // this routine
-        bool dummy = _isMultipleSampleSupported();
 
-        QSurfaceFormat format;
-        format.setDepthBufferSize(24);
-        format.setStencilBufferSize(8);
-        format.setVersion(3, 2);
-        format.setProfile(QSurfaceFormat::CoreProfile);
-        setFormat(format); // must be called before the widget or its parent window gets shown
-
-#endif
-#endif
+    QSurfaceFormat format;
+    format.setDepthBufferSize(24);
+    format.setStencilBufferSize(8);
+    format.setProfile(QSurfaceFormat::CompatibilityProfile);
+    QSurfaceFormat::setDefaultFormat(format);
 
     //choice renderer according to OpenGl version
     choiceRenderer();
@@ -799,64 +747,64 @@ void V3dR_GLWidget::mouseMoveEvent(QMouseEvent *event)
 }
 
 //滚轮事件注释
-void V3dR_GLWidget::wheelEvent(QWheelEvent *event)
+void V3dR_GLWidget::wheelEvent(QGraphicsSceneWheelEvent *event)
 {
     qDebug()<<"V3dR_GLWidget::wheelEvent ... ...";
 
     //20170804 RZC: add zoomin_sign in global_setting.b_scrollupZoomin
     //-1 : scrolldown zoomin
     //+1 : scrollup zoomin
-//	int zoomin_sign = -1;  //default
-//#ifndef test_main_cpp
-//	if (_idep && _idep->V3Dmainwindow)
-//	{
-//		zoomin_sign = (_idep->V3Dmainwindow->global_setting.b_scrollupZoomin)? +1 : -1;
-//	}
-//#endif
+    int zoomin_sign = -1;  //default
+#ifndef test_main_cpp
+    if (_idep && _idep->V3Dmainwindow)
+    {
+        zoomin_sign = (_idep->V3Dmainwindow->global_setting.b_scrollupZoomin)? +1 : -1;
+    }
+#endif
 
-//	setFocus(); // accept KeyPressEvent, by RZC 081028
+    setFocus(); // accept KeyPressEvent, by RZC 081028
 
-//	float d = (event->delta())/100;  // ~480
-//	//qDebug("V3dR_GLWidget::wheelEvent->delta = %g",d);
-//	#define MOUSE_ZOOM(dz)    (int(dz*4* MOUSE_SENSITIVE));
-//	#define MOUSE_ZROT(dz)    (int(dz*8* MOUSE_SENSITIVE));
+    float d = (event->delta())/100;  // ~480
+    //qDebug("V3dR_GLWidget::wheelEvent->delta = %g",d);
+    #define MOUSE_ZOOM(dz)    (int(dz*4* MOUSE_SENSITIVE));
+    #define MOUSE_ZROT(dz)    (int(dz*8* MOUSE_SENSITIVE));
 
-//	int zoomStep = MOUSE_ZOOM(d);
-//    int zRotStep = MOUSE_ZROT(d);
+    int zoomStep = MOUSE_ZOOM(d);
+    int zRotStep = MOUSE_ZROT(d);
 
-//    if (IS_TRANSLATE_MODIFIER) // shift+mouse control view space translation, 081104
-//    {
-//    	viewRotation(0, 0, zRotStep);
-//    }
-//    else if (IS_MODEL_MODIFIER) // alt+mouse control model space rotation, 081104
-//    {
-//    	modelRotation(0, 0, zRotStep);
-//    }
-//    else // default
-//    {
-//        (renderer->hitWheel(event->x(), event->y())); //by PHC, 130424. record the wheel location when zoom-in or out
+    if (IS_TRANSLATE_MODIFIER) // shift+mouse control view space translation, 081104
+    {
+        viewRotation(0, 0, zRotStep);
+    }
+    else if (IS_MODEL_MODIFIER) // alt+mouse control model space rotation, 081104
+    {
+        modelRotation(0, 0, zRotStep);
+    }
+    else // default
+    {
+        (renderer->hitWheel(event->pos().x(), event->pos().y())); //by PHC, 130424. record the wheel location when zoom-in or out
 
-//#ifdef _NEURON_ASSEMBLER_
-//		// As Alessandro points out in [CViewer::invokedFromVaa3D], Vaa3D somehow does not really disconnect setZoom slot
-//		// when scrolling (zooming with mouse wheel) in terafly environment. This additional if-else selection aims to avoid
-//		// Vaa3D's zooming action when the cursor is in the erasing mode of Neuron Assembler.             -- MK, Jan, 2020
-//		if (!terafly::PMain::isInstantiated()) setZoom((zoomin_sign * zoomStep) + _zoom);
-//		else
-//		{
-//			if (!terafly::CImport::instance()->isEmpty() && terafly::PMain::getInstance()->FragTracerPluginLoaderPtr != nullptr)
-//			{
-//				if (terafly::CViewer::getCurrent()->editingMode.compare("erase") && terafly::CViewer::getCurrent()->editingMode.compare("connect"))
-//					setZoom((zoomin_sign * zoomStep) + _zoom);
-//			}
-//			else setZoom((zoomin_sign * zoomStep) + _zoom);
-//		}
-//#else
-//		setZoom((zoomin_sign * zoomStep) + _zoom);  //20170804 RZC: add zoomin_sign in global_setting.b_scrollupZoomin
-//#endif
+#ifdef _NEURON_ASSEMBLER_
+        // As Alessandro points out in [CViewer::invokedFromVaa3D], Vaa3D somehow does not really disconnect setZoom slot
+        // when scrolling (zooming with mouse wheel) in terafly environment. This additional if-else selection aims to avoid
+        // Vaa3D's zooming action when the cursor is in the erasing mode of Neuron Assembler.             -- MK, Jan, 2020
+        if (!terafly::PMain::isInstantiated()) setZoom((zoomin_sign * zoomStep) + _zoom);
+        else
+        {
+            if (!terafly::CImport::instance()->isEmpty() && terafly::PMain::getInstance()->FragTracerPluginLoaderPtr != nullptr)
+            {
+                if (terafly::CViewer::getCurrent()->editingMode.compare("erase") && terafly::CViewer::getCurrent()->editingMode.compare("connect"))
+                    setZoom((zoomin_sign * zoomStep) + _zoom);
+            }
+            else setZoom((zoomin_sign * zoomStep) + _zoom);
+        }
+#else
+        setZoom((zoomin_sign * zoomStep) + _zoom);  //20170804 RZC: add zoomin_sign in global_setting.b_scrollupZoomin
+#endif
 
-//    }
+    }
 
-//	event->accept();
+    event->accept();
 }
 
 void V3dR_GLWidget::handleKeyPressEvent(QKeyEvent * e)  //090428 RZC: make public function to finally overcome the crash problem of hook MainWindow
@@ -3144,7 +3092,7 @@ void V3dR_GLWidget::confidenceDialog()
         int ret = d.exec();
         if (ret==QDialog::Rejected)
             break;
-        DO_updateGL();;
+        update();
 
     }
     while (true);

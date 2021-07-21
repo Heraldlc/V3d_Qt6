@@ -264,7 +264,12 @@ MainWindow::MainWindow()
 #define __AUTOLAUNCH_OPEN_NEURON_GAME___
     /// RZC 20170620: disable auto launch
     // func_open_neuron_game(); // 2017.03.28 automatically open Mozak for Morphology Annotators
+
+    const GLubyte* OpenGLVersion = glGetString(GL_VERSION);
+    qDebug()<<"使用openGL version为："<< QString((char*)OpenGLVersion); //DLC,显示不出来，失败
+
 }
+
 //void MainWindow::postClose() //090812 RZC
 //{
 //	qDebug("***v3d: MainWindow::postClose");
