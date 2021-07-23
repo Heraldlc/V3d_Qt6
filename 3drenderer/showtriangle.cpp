@@ -53,29 +53,84 @@ void showTriangle::paintGL()
     //控制旋转
     glRotatef(m_rTri, 0.0f, 1.0f, 0.0f);                //绕 y轴 旋转三角形
     glBegin(GL_TRIANGLES);
+    //前侧面
         glColor3f(1.0f, 0.0f, 0.0f); //设置该点为红色
         glVertex3f(0.0f, 1.0f, 0.0f); //上顶点，z轴暂时都不管
-        glColor3f(0.0f, 1.0f, 0.0f); //设置该店为绿色
-        glVertex3f(-1.0f, -1.0f, 0.0f); //左下点
+        glColor3f(0.0f, 1.0f, 0.0f); //设置该点为绿色
+        glVertex3f(-1.0f, -1.0f, 1.0f); //左下点
         glColor3f(0.0f, 0.0f, 1.0f); //设置该点为蓝色
-        glVertex3f(1.0f, -1.0f, 0.0f); //右下角
+        glVertex3f(1.0f, -1.0f, 1.0f); //右下角
+
+    //右侧面
+        glColor3f(0.5f, 0.5f, 0.5f);
+        glVertex3f(0.0f, 1.0f, 0.0f); //上顶点
+        glColor3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(1.0f, -1.0f, 1.0f); //左下 连接正面右下
+        glColor3f(0.0f, 1.0f, 0.0f);
+        glVertex3f(1.0f, -1.0f, -1.0f); //右下
+
+    //后侧面
+        glColor3f(1.0f, 0.0f, 0.0f);
+        glVertex3f(0.0f, 1.0f, 0.0f);  //上
+        glColor3f(0.0f, 1.0f, 0.0f);
+        glVertex3f(1.0f, -1.0f, -1.0f);  //左下
+        glColor3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(-1.0f, -1.0f, -1.0f);  //右下
+
+
+    //左侧面
+        glColor3f(1.0f, 0.0f, 0.0f);
+        glVertex3f(0.0f, 1.0f, 0.0f); //上
+        glColor3f(0.0f, 0.0f, 1.0f);
+        glVertex3f(-1.0f, -1.0f, -1.0f); //左下
+        glColor3f(0.0f, 1.0f, 0.0f);
+        glVertex3f(-1.0f, -1.0f, 1.0f); //右下
+
     glEnd(); //三角形绘制结束
 
     glLoadIdentity(); //重置，因为坐标轴已经旋转
     glTranslatef(1.5f, 0.0f, -6.0f); //右移1.5单位 注意！有更改，因为重置后中心点为屏幕中心
     glRotatef(m_rQuad, 1.0f, 0.0f, 0.0f); //绕 x轴进行旋转
-    glColor3f(0.5f, 0.5f, 1.0f);                        //一次性将当前色设置为蓝色
+    //glColor3f(0.5f, 0.5f, 1.0f);                        //一次性将当前色设置为蓝色
     glBegin(GL_QUADS);
-        glVertex3f(-1.0f, 1.0f, 0.0f);                  //左上
-        glVertex3f(1.0f, 1.0f, 0.0f);                   //右上
-        //glVertex3f(0.5f, 0.0f, 0.0f);
-        glVertex3f(1.0f, -1.0f, 0.0f);                  //左下
-        //glVertex3f(0.0f, -2.0f, 0.0f);
-        glVertex3f(-1.0f, -1.0f, 0.0f);                 //右下
+    glVertex3f(1.0f, 1.0f, -1.0f);                  //右上(顶面)
+    glVertex3f(-1.0f, 1.0f, -1.0f);                 //左上(顶面)
+    glVertex3f(-1.0f, 1.0f, 1.0f);                  //左下(顶面)
+    glVertex3f(1.0f, 1.0f, 1.0f);                   //右下(顶面)
+
+    glColor3f(1.0f, 0.5f, 0.0f);                    //橙色
+    glVertex3f(1.0f, -1.0f, 1.0f);                  //右上(底面)
+    glVertex3f(-1.0f, -1.0f, 1.0f);                 //左上(底面)
+    glVertex3f(-1.0f, -1.0f, -1.0f);                //左下(底面)
+    glVertex3f(1.0f, -1.0f, -1.0f);                 //右下(底面)
+
+    glColor3f(1.0f, 0.0f, 0.0f);                    //红色
+    glVertex3f(1.0f, 1.0f, 1.0f);                   //右上(前面)
+    glVertex3f(-1.0f, 1.0f, 1.0f);                  //左上(前面)
+    glVertex3f(-1.0f, -1.0f, 1.0f);                 //左下(前面)
+    glVertex3f(1.0f, -1.0f, 1.0f);                  //右下(前面)
+
+    glColor3f(1.0f, 1.0f, 0.0f);                    //黄色
+    glVertex3f(1.0f, -1.0f, -1.0f);                 //右上(后面)
+    glVertex3f(-1.0f, -1.0f, -1.0f);                //左上(后面)
+    glVertex3f(-1.0f, 1.0f, -1.0f);                 //左下(后面)
+    glVertex3f(1.0f, 1.0f, -1.0f);                  //右下(后面)
+
+    glColor3f(0.0f, 0.0f, 1.0f);                    //蓝色
+    glVertex3f(-1.0f, 1.0f, 1.0f);                  //右上(左面)
+    glVertex3f(-1.0f, 1.0f, -1.0f);                 //左上(左面)
+    glVertex3f(-1.0f, -1.0f, -1.0f);                //左下(左面)
+    glVertex3f(-1.0f, -1.0f, 1.0f);                 //右下(左面)
+
+    glColor3f(1.0f, 0.0f, 1.0f);                    //紫色
+    glVertex3f(1.0f, 1.0f, -1.0f);                  //右上(右面)
+    glVertex3f(1.0f, 1.0f, 1.0f);                   //左上(右面)
+    glVertex3f(1.0f, -1.0f, 1.0f);                  //左下(右面)
+    glVertex3f(1.0f, -1.0f, -1.0f);                 //右下(右面
     glEnd(); //四边形绘制结束
 
-    m_rTri += 0.5f;  //增加三角形旋转变量
-    m_rQuad -= 0.5f; //减少四边形的选装变量
+    m_rTri += 0.2f;  //增加三角形旋转变量
+    m_rQuad -= 0.7f; //减少四边形的选装变量
 }
 
 void showTriangle::keyPressEvent(QKeyEvent *event)

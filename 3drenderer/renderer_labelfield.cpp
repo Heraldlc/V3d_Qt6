@@ -543,7 +543,7 @@ void Renderer_gl1::drawLabelfieldSurf()
     if (sShowSurfObjects==0 || lf_busy) return;
     //qDebug("    Renderer_gl1::drawLabelfieldSurf");
 
-    //glPushMatrix();
+    glPushMatrix();
 
     for (int pass=0; pass<numPassFloatDraw(sShowSurfObjects); pass++)
     {
@@ -569,7 +569,7 @@ void Renderer_gl1::drawLabelfieldSurf()
     }
     setFloatDrawOp(-1, sShowSurfObjects);
 
-    //glPopMatrix();
+    glPopMatrix();
 }
 
 

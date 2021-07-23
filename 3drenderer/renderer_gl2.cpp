@@ -151,6 +151,7 @@ void Renderer_gl2::drawObj()
     shader = shaderObj;
     if (IF_OBJ_SHADER )// && polygonMode==3)
     {
+        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
         shader->begin(); //must before setUniform
     }
 
@@ -252,6 +253,7 @@ void Renderer_gl2::shaderTexBegin(bool stream)
 
     if (IF_VOL_SHADER)
     {
+        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
         shader->begin(); //must before setUniform
         shader->setUniform1i("volume",   0); //GL_TEXTURE0
         shader->setUniform1i("colormap", 1); //GL_TEXTURE1

@@ -83,7 +83,7 @@ class V3dr_surfaceDialog;
 
 //typedef void(*PluginMouseFunc)(QOpenGLWidget_proxy*); // May 29, 2012 by Hang
 //多加了继承类,继承顺序不能颠倒 全改成了公有继承
-class V3dR_GLWidget :  public QOpenGLWidget,public QOpenGLFunctions_1_1 , public View3DControl
+class V3dR_GLWidget :  public QOpenGLWidget, protected QOpenGLFunctions , public View3DControl
 
 {
     Q_OBJECT;

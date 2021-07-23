@@ -167,7 +167,7 @@ V3dR_GLWidget::V3dR_GLWidget(iDrawExternalParameter* idep, QWidget* mainWindow, 
     QSurfaceFormat f; // = QGLFormat::defaultFormat();
                 //= format();
 
-    f.setSamples( 4 ); // (1,2,4), For ATI must force samples, by RZC 081001
+    f.setSamples(4); // (1,2,4), For ATI must force samples, by RZC 081001
     f.setDepthBufferSize(24);
     f.setStencilBufferSize(8);
 
@@ -568,6 +568,7 @@ void V3dR_GLWidget::leaveEvent(QEvent*)
 {
     qDebug("V3dR_GLWidget::leaveEvent");
     mouse_in_view = 0;
+    update();  //DLC ADD
 }
 void V3dR_GLWidget::focusInEvent(QFocusEvent*)
 {

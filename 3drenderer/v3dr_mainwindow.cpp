@@ -156,6 +156,19 @@ V3dR_MainWindow::~V3dR_MainWindow()
 	// must closed before there! and do nothing is most OK, by RZC 2008-09-27
 }
 
+////////DLC add/////////////////////////////////
+void V3dR_MainWindow::onShowBtnClicked()
+{
+    //点击后即可弹出一个新窗口，显示opengl渲染结果
+        qDebug()<<"槽函数被调用了";
+        //QMainWindow *newQMain = new QMainWindow(this);
+        showTriangle* myWin = new showTriangle(this);
+        myWin->resize(500, 500);
+        qDebug()<<"show之前";
+        myWin->show();
+        qDebug()<<"show之后";
+}
+//////////////////////////////////////////
 
 V3dR_MainWindow::V3dR_MainWindow(iDrawExternalParameter* idep)
 {
@@ -205,33 +218,35 @@ V3dR_MainWindow::V3dR_MainWindow(iDrawExternalParameter* idep)
 
 
     //////////////////////////////////////////////////////////////////
-//    glWidget = 0;
-//    qDebug("glWidget = new V3dR_GLWidget jazz debug in v3dr_mainwindow.cpp");
-//    glWidget = new V3dR_GLWidget(_idep, this, data_title); // 'this' pointer for glWidget calling back
-//#if defined(USE_Qt5)
-//    if ( !glWidget ) //Under Qt5, the GL Widget is not valid until after it's shown
-//#else
-//   // if (!glWidget || !(glWidget->isValid()))
-//     if ( !glWidget )
-//#endif
-//    {
-//    	MESSAGE("ERROR: Failed to create OpenGL Widget or Context!!! \n");
-//    }
-//    //////////////////////////////////////////////////////////////////
+    glWidget = 0;
+    qDebug("glWidget = new V3dR_GLWidget jazz debug in v3dr_mainwindow.cpp");
+    glWidget = new V3dR_GLWidget(_idep, this, data_title); // 'this' pointer for glWidget calling back
+#if defined(USE_Qt5)
+    if ( !glWidget ) //Under Qt5, the GL Widget is not valid until after it's shown
+#else
+   // if (!glWidget || !(glWidget->isValid()))
+     if ( !glWidget )
+#endif
+    {
+        MESSAGE("ERROR: Failed to create OpenGL Widget or Context!!! \n");
+    }
+    //////////////////////////////////////////////////////////////////
 
-//    if (glWidget)	POST_EVENT(glWidget, QEvent::Type(QEvent_OpenFiles)); // move to V3dR_GLWidget::initializeGL for dynamic renderer, 081122 by RZC
+    //if (glWidget)	POST_EVENT(glWidget, QEvent::Type(QEvent_OpenFiles)); // move to V3dR_GLWidget::initializeGL for dynamic renderer, 081122 by RZC
 
     //DLC 以上暂时屏蔽用作三角形刷新测试
-    onShowBtnClicked();
-
+    //onShowBtnClicked();
+    showTriangle *dlcWin = new showTriangle(glWidget);
+    dlcWin->resize(300,300);
+    dlcWin->show();
 
     //创建控制信号
     qDebug("V3dR_MainWindow::createControlWidgets");
-//    createControlWidgets(); // RZC 080930, 090420: included connectSignal() & initControlValue()
+    createControlWidgets(); // RZC 080930, 090420: included connectSignal() & initControlValue()
 
 
-//    setAcceptDrops(true); //081031
-//	setFocusPolicy(Qt::StrongFocus); // STRANGE: cannot accept foucusInEvent when mouse click, 081119
+    setAcceptDrops(true); //081031
+    setFocusPolicy(Qt::StrongFocus); // STRANGE: cannot accept foucusInEvent when mouse click, 081119
 
     qDebug("V3dR_MainWindow::V3dR_MainWindow ===== end");
 }
@@ -986,14 +1001,3 @@ QSize V3dR_MainWindow::getSize()
 */
 
 
-void V3dR_MainWindow::onShowBtnClicked()
-{
-    //点击后即可弹出一个新窗口，显示opengl渲染结果
-        qDebug()<<"槽函数被调用了";
-        //QMainWindow *newQMain = new QMainWindow(this);
-        showTriangle* myWin = new showTriangle(this);
-        myWin->resize(500, 500);
-        qDebug()<<"show之前";
-        myWin->show();
-        qDebug()<<"show之后";
-}
