@@ -19,7 +19,7 @@ CXXFLAGS      = -fno-keep-inline-dllexport -DTEEM_STATIC -DWITH_NONAMESPACES -DW
 INCPATH       = -I. -I. -I../common_lib/include -I../common_lib/include/SDL -I../common_lib/include/glew -I../common_lib/include/openvr -I../common_lib/include -IF:/QT6/6.1.0/mingw81_64/include -IF:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets -IF:/QT6/6.1.0/mingw81_64/include/QtOpenGL -IF:/QT6/6.1.0/mingw81_64/include/QtSvg -IF:/QT6/6.1.0/mingw81_64/include/QtWidgets -IF:/QT6/6.1.0/mingw81_64/include/QtGui -IF:/QT6/6.1.0/mingw81_64/include/QtNetwork -IF:/QT6/6.1.0/mingw81_64/include/QtXml -IF:/QT6/6.1.0/mingw81_64/include/QtCore -Irelease -I. -IC:/VulkanSDK/1.0.51.0/Include -IF:/QT6/6.1.0/mingw81_64/mkspecs/win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-s -Wl,-subsystem,console -mthreads
-LIBS        =        -Lc:\mingw\lib -L..\common_lib\lib_win32 -L..\common_lib\lib -L -L\release -lOpengl32 -lglu32 -L..\jba\c++ -lm -lv3dtiff -lv3dnewmat -L..\common_lib\mingw -lglew -lhdf5 -lszip -lzlib -lSDL2 -lteem -lbz2 -lz -lopenvr_api -lwsock32 F:\QT6\6.1.0\mingw81_64\lib\libQt6OpenGLWidgets.a F:\QT6\6.1.0\mingw81_64\lib\libQt6OpenGL.a F:\QT6\6.1.0\mingw81_64\lib\libQt6Svg.a F:\QT6\6.1.0\mingw81_64\lib\libQt6Widgets.a F:\QT6\6.1.0\mingw81_64\lib\libQt6Gui.a F:\QT6\6.1.0\mingw81_64\lib\libQt6Network.a F:\QT6\6.1.0\mingw81_64\lib\libQt6Xml.a F:\QT6\6.1.0\mingw81_64\lib\libQt6Core.a   
+LIBS        =        -Lc:\mingw\lib -L..\common_lib\lib_win32 -L..\common_lib\lib -L -L\release -lOpengl32 -lglu32 -L..\jba\c++ -lm -lv3dtiff -L..\common_lib\mingw -lglew -lhdf5 -lszip -lzlib -lSDL2 -lv3dnewmat -lteem -lbz2 -lz -lopenvr_api -lwsock32 F:\QT6\6.1.0\mingw81_64\lib\libQt6OpenGLWidgets.a F:\QT6\6.1.0\mingw81_64\lib\libQt6OpenGL.a F:\QT6\6.1.0\mingw81_64\lib\libQt6Svg.a F:\QT6\6.1.0\mingw81_64\lib\libQt6Widgets.a F:\QT6\6.1.0\mingw81_64\lib\libQt6Gui.a F:\QT6\6.1.0\mingw81_64\lib\libQt6Network.a F:\QT6\6.1.0\mingw81_64\lib\libQt6Xml.a F:\QT6\6.1.0\mingw81_64\lib\libQt6Core.a   
 QMAKE         = F:\QT6\6.1.0\mingw81_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -70,6 +70,7 @@ SOURCES       = ..\basic_c_fun\mg_utilities.cpp \
 		..\gmm\fit_gmm.cpp \
 		..\cellseg\template_matching_seg.cpp \
 		..\3drenderer\v3dr_mainwindow.cpp \
+		..\3drenderer\mymainwinodw.cpp \
 		..\3drenderer\v3dr_glwidget.cpp \
 		..\3drenderer\renderer.cpp \
 		..\3drenderer\renderer_tex.cpp \
@@ -140,6 +141,7 @@ SOURCES       = ..\basic_c_fun\mg_utilities.cpp \
 		CommandManager.cpp release\qrc_v3d.cpp \
 		release\qrc_3drenderer.cpp \
 		release\qrc_resources.cpp \
+		release\moc_mymainwinodw.cpp \
 		release\moc_basic_thread.cpp \
 		release\moc_pluginDialog.cpp \
 		release\moc_v3d_plugin_loader.cpp \
@@ -201,6 +203,7 @@ OBJECTS       = release/mg_utilities.o \
 		release/fit_gmm.o \
 		release/template_matching_seg.o \
 		release/v3dr_mainwindow.o \
+		release/mymainwinodw.o \
 		release/v3dr_glwidget.o \
 		release/renderer.o \
 		release/renderer_tex.o \
@@ -272,6 +275,7 @@ OBJECTS       = release/mg_utilities.o \
 		release/qrc_v3d.o \
 		release/qrc_3drenderer.o \
 		release/qrc_resources.o \
+		release/moc_mymainwinodw.o \
 		release/moc_basic_thread.o \
 		release/moc_pluginDialog.o \
 		release/moc_v3d_plugin_loader.o \
@@ -315,6 +319,7 @@ OBJECTS       = release/mg_utilities.o \
 		release/moc_ConsoleObserverServiceImpl.o
 
 DIST          =  ..\basic_c_fun\mg_utilities.h \
+		..\3drenderer\mymainwinodw.h \
 		..\basic_c_fun\mg_image_lib.h \
 		..\basic_c_fun\basic_memory.h \
 		..\basic_c_fun\stackutil.h \
@@ -562,6 +567,7 @@ DIST          =  ..\basic_c_fun\mg_utilities.h \
 		..\gmm\fit_gmm.cpp \
 		..\cellseg\template_matching_seg.cpp \
 		..\3drenderer\v3dr_mainwindow.cpp \
+		..\3drenderer\mymainwinodw.cpp \
 		..\3drenderer\v3dr_glwidget.cpp \
 		..\3drenderer\renderer.cpp \
 		..\3drenderer\renderer_tex.cpp \
@@ -649,11 +655,11 @@ qmake: FORCE
 qmake_all: FORCE
 
 dist:
-	$(ZIP) vaa3d.zip $(SOURCES) $(DIST) vaa3d.pro F:\QT6\6.1.0\mingw81_64\mkspecs\features\spec_pre.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\device_config.prf F:\QT6\6.1.0\mingw81_64\mkspecs\common\sanitize.conf F:\QT6\6.1.0\mingw81_64\mkspecs\common\gcc-base.conf F:\QT6\6.1.0\mingw81_64\mkspecs\common\g++-base.conf F:\QT6\6.1.0\mingw81_64\mkspecs\features\win32\windows_vulkan_sdk.prf F:\QT6\6.1.0\mingw81_64\mkspecs\common\windows-vulkan.conf F:\QT6\6.1.0\mingw81_64\mkspecs\common\g++-win32.conf F:\QT6\6.1.0\mingw81_64\mkspecs\common\windows-desktop.conf F:\QT6\6.1.0\mingw81_64\mkspecs\qconfig.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_ext_freetype.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_ext_libpng.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3danimation.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3danimation_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dcore.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dcore_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dextras.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dextras_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dinput.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dinput_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dlogic.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dlogic_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquick.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquick_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickanimation.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickanimation_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickextras.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickextras_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickinput.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickinput_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickrender.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickrender_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickscene2d.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickscene2d_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3drender.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3drender_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_activeqt.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_activeqt_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_axbase_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_axcontainer.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_axcontainer_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_axserver.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_axserver_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_bodymovin_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_charts.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_charts_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_concurrent.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_concurrent_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_core.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_core5compat.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_core5compat_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_core_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_datavisualization.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_datavisualization_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_dbus.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_dbus_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_designer.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_designer_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_designercomponents_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_entrypoint_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_fb_support_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_gui.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_gui_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_help.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_help_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labsanimation.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labsanimation_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labsqmlmodels.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labssettings.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labssettings_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labssharedimage.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labssharedimage_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_linguist.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_linguist_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_network.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_network_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_networkauth.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_networkauth_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_opengl.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_opengl_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_openglwidgets.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_openglwidgets_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_packetprotocol_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_printsupport.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_printsupport_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qml.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qml_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmldebug_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmldevtools_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmldom_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmllocalstorage.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmlmodels.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmlmodels_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmltest.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmltest_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmlworkerscript.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3d.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3d_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3dassetimport.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3dassetimport_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3diblbaker.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3diblbaker_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3dparticles.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3dparticles_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3druntimerender.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3druntimerender_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3dutils.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3dutils_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quicklayouts.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quicklayouts_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickparticles_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickshapes_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quicktemplates2.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickwidgets.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickwidgets_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_scxml.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_scxml_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_scxmlqml.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_scxmlqml_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_shadertools.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_shadertools_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_sql.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_sql_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_statemachine.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_statemachine_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_statemachineqml.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_statemachineqml_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_svg.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_svg_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_svgwidgets.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_svgwidgets_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_testlib.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_testlib_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_tools_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_uiplugin.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_uitools.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_uitools_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_virtualkeyboard.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_virtualkeyboard_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_widgets.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_widgets_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_xml.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_xml_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_zlib_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\features\qt_functions.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\qt_config.prf F:\QT6\6.1.0\mingw81_64\mkspecs\win32-g++\qmake.conf F:\QT6\6.1.0\mingw81_64\mkspecs\features\spec_post.prf .qmake.stash F:\QT6\6.1.0\mingw81_64\mkspecs\features\exclusive_builds.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\toolchain.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\default_pre.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\win32\default_pre.prf v3d_essential.pro v3d.pro F:\QT6\6.1.0\mingw81_64\mkspecs\features\resolve_config.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\exclusive_builds_post.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\default_post.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\build_pass.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\warn_off.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\win32\console.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\entrypoint.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\precompile_header.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\qt.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\resources_functions.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\resources.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\moc.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\win32\opengl.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\uic.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\qmake_use.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\file_copies.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\testcase_targets.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\exceptions.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\yacc.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\lex.prf vaa3d.pro v3d.qrc ..\3drenderer\3drenderer.qrc ..\neuron_annotator\resources.qrc F:\QT6\6.1.0\mingw81_64\lib\Qt6OpenGLWidgets.prl F:\QT6\6.1.0\mingw81_64\lib\Qt6OpenGL.prl F:\QT6\6.1.0\mingw81_64\lib\Qt6Svg.prl F:\QT6\6.1.0\mingw81_64\lib\Qt6Widgets.prl F:\QT6\6.1.0\mingw81_64\lib\Qt6Gui.prl F:\QT6\6.1.0\mingw81_64\lib\Qt6Network.prl F:\QT6\6.1.0\mingw81_64\lib\Qt6Xml.prl F:\QT6\6.1.0\mingw81_64\lib\Qt6Core.prl   v3d.qrc ..\3drenderer\3drenderer.qrc ..\neuron_annotator\resources.qrc F:\QT6\6.1.0\mingw81_64\mkspecs\features\data\dummy.cpp ..\basic_c_fun\mg_utilities.h ..\basic_c_fun\mg_image_lib.h ..\basic_c_fun\basic_memory.h ..\basic_c_fun\stackutil.h ..\basic_c_fun\img_definition.h ..\basic_c_fun\volimg_proc_declare.h ..\basic_c_fun\volimg_proc.h ..\basic_c_fun\v3d_message.h ..\basic_c_fun\color_xyz.h ..\basic_c_fun\basic_surf_objs.h ..\basic_c_fun\basic_4dimage.h ..\basic_c_fun\basic_landmark.h ..\basic_c_fun\v3d_interface.h ..\basic_c_fun\v3d_global_preference.h ..\basic_c_fun\customary_structs\v3d_imaging_para.h ..\basic_c_fun\basic_thread.h ..\basic_c_fun\basic_view3d.h ..\plugin_loader\pluginDialog.h ..\plugin_loader\v3d_plugin_loader.h ..\graph\graph.h ..\graph\graph_basic.h ..\graph\dijk.h ..\gmm\fit_gmm.h ..\neuron_editing\apo_xforms.h ..\neuron_editing\neuron_xforms.h ..\neuron_editing\neuron_sim_scores.h ..\neuron_editing\v_neuronswc.h ..\neuron_editing\neuron_format_converter.h ..\neuron_tracing\neuron_tracing.h ..\3drenderer\v3dr_mainwindow.h ..\3drenderer\v3dr_glwidget.h ..\3drenderer\qtr_widget.h ..\3drenderer\GLee2glew.h ..\3drenderer\glsl_r.h ..\3drenderer\renderer.h ..\3drenderer\renderer_gl1.h ..\3drenderer\renderer_gl2.h ..\3drenderer\v3dr_surfaceDialog.h ..\3drenderer\ItemEditor.h ..\3drenderer\v3dr_colormapDialog.h ..\3drenderer\gradients.h ..\3drenderer\v3d_hoverpoints.h ..\3drenderer\barFigureDialog.h ..\3drenderer\line_box_intersection_check.h ..\neuron_tracing\heap.h ..\neuron_tracing\fastmarching_linker.h ..\imaging\v3d_imaging.h ..\neuron_toolbox\vaa3d_neurontoolbox.h ..\multithreadimageIO\v3d_multithreadimageIO.h v3d_global_preference_dialog.h v3d_compile_constraints.h v3d_version_info.h v3d_application.h colormap.h ChannelTable.h rotate_image.h dialog_rotate.h dialog_curve_trace_para.h template_matching_cellseg_dialog.h opt_rotate.h landmark_property_dialog.h dialog_keypoint_features.h histogramsimple.h compute_win_pca.h compute_win_diff.h surfaceobj_annotation_dialog.h surfaceobj_geometry_dialog.h import_filelist_dialog.h import_images_tool_dialog.h vano_linker_loader_dialog.h dialog_imagecrop_bbox.h dialog_imageresample.h dialog_maskroi.h atlas_viewer.h v3d_core.h xformwidget.h mainwindow.h mapview.h DownloadManager.h v3d_actions.h v3d_commandlineparser.h pluginfunchandler.h vr_vaa3d_call.h ..\worm_straighten_c\bdb_minus.h ..\worm_straighten_c\mst_prim_c.h ..\worm_straighten_c\bfs.h ..\worm_straighten_c\spline_cubic.h ..\cellseg\template_matching_seg.h ..\jba\c++\jba_mainfunc.h ..\jba\c++\jba_match_landmarks.h ..\jba\c++\wkernel.h ..\jba\c++\histeq.h ..\jba\c++\convert_type2uint8.h ..\jba\c++\jba_affine_xform.h ..\jba\c++\remove_nonaffine_points.h ..\custom_toolbar\v3d_custom_toolbar.h ..\io\io_bioformats.h ..\io\asc_to_swc.h ..\io\v3d_nrrd.h ..\terafly\src\presentation\theader.h ..\basic_c_fun\INeuronAssembler.h ..\basic_c_fun\IPMain4NeuronAssembler.h old_arthurstyle.h old_arthurwidgets.h ..\vrrenderer\v3dr_gl_vr.h ..\vrrenderer\Cylinder.h ..\vrrenderer\Sphere.h ..\vrrenderer\Matrices.h ..\vrrenderer\lodepng.h ..\vrrenderer\RenderableObject.h ..\vrrenderer\VRFinger.h ..\vrrenderer\V3dR_Communicator.h ..\vrrenderer\VR_MainWindow.h ..\neuron_annotator\animation\AnimationFrame.h ..\neuron_annotator\animation\interpolate.h ..\neuron_annotator\animation\KeyFrame.h ..\neuron_annotator\animation\Movie.h ..\neuron_annotator\data_model\CustomClipPlanes.h ..\neuron_annotator\data_model\Dimension.h ..\neuron_annotator\data_model\Fast3DTexture.h ..\neuron_annotator\data_model\NaLockableData.h ..\neuron_annotator\data_model\NaVolumeData.h ..\neuron_annotator\data_model\MipFragmentData.h ..\neuron_annotator\data_model\DataColorModel.h ..\neuron_annotator\data_model\MipFragmentColors.h ..\neuron_annotator\data_model\GalleryMipImages.h ..\neuron_annotator\data_model\MipMergedData.h ..\neuron_annotator\data_model\NeuronSelectionModel.h ..\neuron_annotator\data_model\ZSliceColors.h ..\neuron_annotator\data_model\SlotMerger.h ..\neuron_annotator\data_model\NaSharedDataSignaller.h ..\neuron_annotator\data_model\NaSharedDataModel.h ..\neuron_annotator\data_model\NeuronFragmentData.h ..\neuron_annotator\data_model\PrivateDataColorModel.h ..\neuron_annotator\data_model\PrivateNeuronFragmentData.h ..\neuron_annotator\data_model\SampledVolumeMetadata.h ..\neuron_annotator\data_model\StagedFileLoader.h ..\neuron_annotator\data_model\PrivateVolumeTexture.h ..\neuron_annotator\data_model\VolumeTexture.h ..\neuron_annotator\entity_model\EntityData.h ..\neuron_annotator\entity_model\Entity.h ..\neuron_annotator\entity_model\Ontology.h ..\neuron_annotator\entity_model\OntologyAnnotation.h ..\neuron_annotator\entity_model\AnnotatedBranch.h ..\neuron_annotator\entity_model\AnnotationSession.h ..\neuron_annotator\gui\NaViewer.h ..\neuron_annotator\gui\Na2DViewer.h ..\neuron_annotator\gui\NaMainWindow.h ..\neuron_annotator\gui\Na3DWidget.h ..\neuron_annotator\gui\NaZStackWidget.h ..\neuron_annotator\gui\NaLargeMIPWidget.h ..\neuron_annotator\gui\PreferencesDialog.h ..\neuron_annotator\gui\DynamicRangeTool.h ..\neuron_annotator\gui\ColorRangeSliderWidget.h ..\neuron_annotator\gui\Stereo3DMode.h ..\neuron_annotator\gui\ScaleBar.h ..\neuron_annotator\microCT\CutPlanner.h ..\neuron_annotator\microCT\SingleCut.h ..\neuron_annotator\render\ActorGL.h ..\neuron_annotator\render\CubeTestActorGL.h ..\neuron_annotator\render\CameraTransformGL.h ..\neuron_annotator\render\LegacyVolumeActor.h ..\neuron_annotator\render\ShaderProgramGL.h ..\neuron_annotator\render\VoxelRayCastShader.h ..\neuron_annotator\render\WireCube.h ..\neuron_annotator\utility\ColorSeparatorConsolidator.h ..\neuron_annotator\utility\FileTreeSearcher.h ..\neuron_annotator\utility\FooDebug.h ..\neuron_annotator\utility\SingleNeuronLsmSetReader.h ..\neuron_annotator\utility\StitchedFileUtility.h ..\neuron_annotator\utility\ImageLoaderBasic.h ..\neuron_annotator\utility\ImageLoader.h ..\neuron_annotator\utility\url_tools.h ..\neuron_annotator\DataFlowModel.h ..\neuron_annotator\utility\NeuronMaskEntry.h ..\neuron_annotator\MultiColorImageStackNode.h ..\neuron_annotator\NeuronAnnotatorResultNode.h ..\neuron_annotator\TimebasedIdentifierGenerator.h ..\neuron_annotator\gui\RendererNeuronAnnotator.h ..\neuron_annotator\gui\GalleryButton.h ..\neuron_annotator\geometry\Vector3D.h ..\neuron_annotator\geometry\Rotation3D.h ..\neuron_annotator\geometry\CameraModel.h ..\neuron_annotator\gui\GammaWidget.h ..\neuron_annotator\gui\AngleWidget.h ..\neuron_annotator\gui\AnnotationWidget.h ..\neuron_annotator\gui\trees\EntityTreeItem.h ..\neuron_annotator\gui\trees\AnnotatedBranchTreeModel.h ..\neuron_annotator\gui\trees\OntologyTreeModel.h ..\neuron_annotator\gui\trees\EntityTreeModel.h ..\neuron_annotator\gui\trees\EntityTreeView.h ..\neuron_annotator\gui\trees\AnnotatedBranchTreeView.h ..\neuron_annotator\gui\trees\OntologyTreeView.h ..\neuron_annotator\gui\MouseClickManager.h ..\neuron_annotator\gui\ZoomSpinBox.h ..\neuron_annotator\gui\ZoomWidget.h ..\neuron_annotator\gui\CompartmentMapWidget.h ..\neuron_annotator\gui\CompartmentMapComboBox.h ..\neuron_annotator\gui\FragmentGalleryWidget.h ..\neuron_annotator\gui\NeuronQAction.h ..\neuron_annotator\gui\NeuronContextMenu.h ..\neuron_annotator\NeuronSelector.h ..\neuron_annotator\ExportFile.h ..\neuron_annotator\utility\JacsUtil.h ..\neuron_annotator\utility\Icons.h ..\neuron_annotator\utility\DataThread.h ..\neuron_annotator\utility\ConsoleObserver.h ..\neuron_annotator\analysis\ScreenPatternAnnotator.h ..\neuron_annotator\analysis\NeuronFragmentEditor.h ..\neuron_annotator\analysis\AlignerUtils.h ..\neuron_annotator\analysis\VolumePatternIndex.h ..\neuron_annotator\analysis\VolumeIndex.h ..\neuron_annotator\analysis\SleepThread.h ..\neuron_annotator\analysis\AnalysisTools.h ..\neuron_annotator\analysis\MaskChan.h ..\neuron_annotator\analysis\DilationErosion.h ..\webservice\gsoap2\stdsoap2.h ..\webservice\console\envH.h ..\webservice\console\envStub.h ..\webservice\console\cdsH.h ..\webservice\console\cdsStub.h ..\webservice\console\cdsConsoleDataServiceProxy.h ..\webservice\console\obsH.h ..\webservice\console\obsStub.h ..\webservice\console\obsConsoleObserverService.h ..\webservice\impl\ConsoleObserverServiceImpl.h ..\webservice\impl\EntityAdapter.h ..\cell_counter\CellCounter3D.h CommandManager.h  ..\basic_c_fun\mg_utilities.cpp ..\basic_c_fun\mg_image_lib.cpp ..\basic_c_fun\stackutil.cpp ..\basic_c_fun\basic_memory.cpp ..\basic_c_fun\v3d_message.cpp ..\basic_c_fun\basic_surf_objs.cpp ..\basic_c_fun\basic_4dimage.cpp ..\basic_c_fun\basic_4dimage_create.cpp ..\plugin_loader\v3d_plugin_loader.cpp ..\plugin_loader\pluginDialog.cpp ..\graph\dijk.cpp ..\neuron_editing\apo_xforms.cpp ..\neuron_editing\neuron_xforms.cpp ..\neuron_editing\neuron_sim_scores.cpp ..\neuron_editing\v_neuronswc.cpp ..\neuron_editing\neuron_format_converter.cpp ..\neuron_editing\global_feature_compute.cpp ..\neuron_tracing\dij_bgl.cpp ..\gmm\fit_gmm.cpp ..\cellseg\template_matching_seg.cpp ..\3drenderer\v3dr_mainwindow.cpp ..\3drenderer\v3dr_glwidget.cpp ..\3drenderer\renderer.cpp ..\3drenderer\renderer_tex.cpp ..\3drenderer\renderer_obj.cpp ..\3drenderer\renderer_labelfield.cpp ..\3drenderer\renderer_gl2.cpp ..\3drenderer\glsl_r.cpp ..\3drenderer\GLee2glew.c ..\3drenderer\renderer_hit.cpp ..\3drenderer\nstroke.cpp ..\3drenderer\nstroke_tracing.cpp ..\3drenderer\v3dr_surfaceDialog.cpp ..\3drenderer\ItemEditor.cpp ..\3drenderer\v3dr_colormapDialog.cpp ..\3drenderer\gradients.cpp ..\3drenderer\v3dr_control_signal.cpp ..\3drenderer\v3d_hoverpoints.cpp ..\3drenderer\barFigureDialog.cpp ..\imaging\v3d_imaging.cpp ..\neuron_toolbox\vaa3d_neurontoolbox.cpp ..\multithreadimageIO\v3d_multithreadimageIO.cpp v3d_version_info.cpp v3d_application.cpp main.cpp mainwindow.cpp mainwindow_interface.cpp mapview.cpp v3d_core.cpp v3dimgproc_entry.cpp my4dimage.cpp v3dimg_proc_neuron.cpp colormap.cpp ChannelTable.cpp rotate_image.cpp dialog_rotate.cpp landmark_property_dialog.cpp dialog_keypoint_features.cpp histogramsimple.cpp surfaceobj_geometry_dialog.cpp import_filelistname.cpp import_tiffseries.cpp vano_linker_loader_dialog.cpp atlas_viewer.cpp DownloadManager.cpp v3d_actions.cpp v3d_commandlineparser.cpp pluginfunchandler.cpp vr_vaa3d_call.cpp ..\worm_straighten_c\bdb_minus.cpp ..\worm_straighten_c\mst_prim_c.cpp ..\worm_straighten_c\bfs_1root.cpp ..\worm_straighten_c\spline_cubic.cpp ..\jba\c++\histeq.cpp ..\custom_toolbar\v3d_custom_toolbar.cpp ..\io\io_bioformats.cpp ..\io\asc_to_swc.cpp ..\io\v3d_nrrd.cpp old_arthurstyle.cpp old_arthurwidgets.cpp ..\webservice\gsoap2\stdsoap2.cpp ..\webservice\console\envC.cpp ..\webservice\console\cdsC.cpp ..\webservice\console\cdsConsoleDataServiceProxy.cpp ..\webservice\console\obsC.cpp ..\webservice\console\obsConsoleObserverService.cpp ..\webservice\impl\ConsoleObserverServiceImpl.cpp ..\webservice\impl\EntityAdapter.cpp ..\cell_counter\CellCounter3D.cpp CommandManager.cpp landmark_property.ui surface_obj_annotation.ui surfaceobj_geometry_dialog.ui dialog_curve_trace.ui template_matching_cellseg.ui v3d_global_preference.ui import_filelist_dialog.ui import_images_tool.ui dialog_vano_linkerloader.ui dialog_pointcloudatlas_linkerloader.ui dialog_imagecrop_bbox.ui dialog_imageresample.ui dialog_maskroi.ui dialog_keypoint_features.ui dialog_url_entry.ui dialog_update_v3d.ui dialog_update_list.ui dialog_update_options.ui dialog_update_downloading.ui dialog_update_checking.ui ..\3drenderer\setVoxSize.ui    
+	$(ZIP) vaa3d.zip $(SOURCES) $(DIST) vaa3d.pro F:\QT6\6.1.0\mingw81_64\mkspecs\features\spec_pre.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\device_config.prf F:\QT6\6.1.0\mingw81_64\mkspecs\common\sanitize.conf F:\QT6\6.1.0\mingw81_64\mkspecs\common\gcc-base.conf F:\QT6\6.1.0\mingw81_64\mkspecs\common\g++-base.conf F:\QT6\6.1.0\mingw81_64\mkspecs\features\win32\windows_vulkan_sdk.prf F:\QT6\6.1.0\mingw81_64\mkspecs\common\windows-vulkan.conf F:\QT6\6.1.0\mingw81_64\mkspecs\common\g++-win32.conf F:\QT6\6.1.0\mingw81_64\mkspecs\common\windows-desktop.conf F:\QT6\6.1.0\mingw81_64\mkspecs\qconfig.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_ext_freetype.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_ext_libpng.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3danimation.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3danimation_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dcore.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dcore_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dextras.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dextras_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dinput.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dinput_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dlogic.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dlogic_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquick.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquick_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickanimation.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickanimation_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickextras.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickextras_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickinput.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickinput_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickrender.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickrender_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickscene2d.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3dquickscene2d_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3drender.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_3drender_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_activeqt.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_activeqt_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_axbase_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_axcontainer.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_axcontainer_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_axserver.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_axserver_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_bodymovin_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_charts.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_charts_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_concurrent.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_concurrent_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_core.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_core5compat.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_core5compat_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_core_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_datavisualization.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_datavisualization_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_dbus.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_dbus_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_designer.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_designer_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_designercomponents_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_devicediscovery_support_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_entrypoint_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_fb_support_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_gui.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_gui_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_help.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_help_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labsanimation.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labsanimation_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labsfolderlistmodel.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labsfolderlistmodel_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labsqmlmodels.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labsqmlmodels_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labssettings.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labssettings_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labssharedimage.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labssharedimage_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labswavefrontmesh.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_labswavefrontmesh_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_linguist.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_linguist_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_network.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_network_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_networkauth.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_networkauth_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_opengl.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_opengl_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_openglwidgets.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_openglwidgets_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_packetprotocol_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_printsupport.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_printsupport_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qml.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qml_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmlcompiler_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmldebug_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmldevtools_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmldom_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmllocalstorage.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmllocalstorage_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmlmodels.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmlmodels_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmltest.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmltest_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmlworkerscript.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_qmlworkerscript_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3d.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3d_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3dassetimport.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3dassetimport_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3diblbaker.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3diblbaker_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3dparticles.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3dparticles_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3druntimerender.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3druntimerender_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3dutils.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick3dutils_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quick_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2impl.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickcontrols2impl_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quicklayouts.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quicklayouts_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickparticles_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickshapes_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quicktemplates2.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quicktemplates2_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickwidgets.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_quickwidgets_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_scxml.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_scxml_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_scxmlqml.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_scxmlqml_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_shadertools.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_shadertools_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_sql.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_sql_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_statemachine.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_statemachine_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_statemachineqml.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_statemachineqml_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_svg.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_svg_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_svgwidgets.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_svgwidgets_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_testlib.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_testlib_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_tools_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_uiplugin.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_uitools.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_uitools_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_virtualkeyboard.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_virtualkeyboard_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_widgets.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_widgets_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_xml.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_xml_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\modules\qt_lib_zlib_private.pri F:\QT6\6.1.0\mingw81_64\mkspecs\features\qt_functions.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\qt_config.prf F:\QT6\6.1.0\mingw81_64\mkspecs\win32-g++\qmake.conf F:\QT6\6.1.0\mingw81_64\mkspecs\features\spec_post.prf .qmake.stash F:\QT6\6.1.0\mingw81_64\mkspecs\features\exclusive_builds.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\toolchain.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\default_pre.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\win32\default_pre.prf v3d_essential.pro v3d.pro F:\QT6\6.1.0\mingw81_64\mkspecs\features\resolve_config.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\exclusive_builds_post.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\default_post.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\build_pass.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\warn_off.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\win32\console.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\entrypoint.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\precompile_header.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\qt.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\resources_functions.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\resources.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\moc.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\win32\opengl.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\uic.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\qmake_use.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\file_copies.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\testcase_targets.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\exceptions.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\yacc.prf F:\QT6\6.1.0\mingw81_64\mkspecs\features\lex.prf vaa3d.pro v3d.qrc ..\3drenderer\3drenderer.qrc ..\neuron_annotator\resources.qrc F:\QT6\6.1.0\mingw81_64\lib\Qt6OpenGLWidgets.prl F:\QT6\6.1.0\mingw81_64\lib\Qt6OpenGL.prl F:\QT6\6.1.0\mingw81_64\lib\Qt6Svg.prl F:\QT6\6.1.0\mingw81_64\lib\Qt6Widgets.prl F:\QT6\6.1.0\mingw81_64\lib\Qt6Gui.prl F:\QT6\6.1.0\mingw81_64\lib\Qt6Network.prl F:\QT6\6.1.0\mingw81_64\lib\Qt6Xml.prl F:\QT6\6.1.0\mingw81_64\lib\Qt6Core.prl   v3d.qrc ..\3drenderer\3drenderer.qrc ..\neuron_annotator\resources.qrc F:\QT6\6.1.0\mingw81_64\mkspecs\features\data\dummy.cpp ..\basic_c_fun\mg_utilities.h ..\3drenderer\mymainwinodw.h ..\basic_c_fun\mg_image_lib.h ..\basic_c_fun\basic_memory.h ..\basic_c_fun\stackutil.h ..\basic_c_fun\img_definition.h ..\basic_c_fun\volimg_proc_declare.h ..\basic_c_fun\volimg_proc.h ..\basic_c_fun\v3d_message.h ..\basic_c_fun\color_xyz.h ..\basic_c_fun\basic_surf_objs.h ..\basic_c_fun\basic_4dimage.h ..\basic_c_fun\basic_landmark.h ..\basic_c_fun\v3d_interface.h ..\basic_c_fun\v3d_global_preference.h ..\basic_c_fun\customary_structs\v3d_imaging_para.h ..\basic_c_fun\basic_thread.h ..\basic_c_fun\basic_view3d.h ..\plugin_loader\pluginDialog.h ..\plugin_loader\v3d_plugin_loader.h ..\graph\graph.h ..\graph\graph_basic.h ..\graph\dijk.h ..\gmm\fit_gmm.h ..\neuron_editing\apo_xforms.h ..\neuron_editing\neuron_xforms.h ..\neuron_editing\neuron_sim_scores.h ..\neuron_editing\v_neuronswc.h ..\neuron_editing\neuron_format_converter.h ..\neuron_tracing\neuron_tracing.h ..\3drenderer\v3dr_mainwindow.h ..\3drenderer\v3dr_glwidget.h ..\3drenderer\qtr_widget.h ..\3drenderer\GLee2glew.h ..\3drenderer\glsl_r.h ..\3drenderer\renderer.h ..\3drenderer\renderer_gl1.h ..\3drenderer\renderer_gl2.h ..\3drenderer\v3dr_surfaceDialog.h ..\3drenderer\ItemEditor.h ..\3drenderer\v3dr_colormapDialog.h ..\3drenderer\gradients.h ..\3drenderer\v3d_hoverpoints.h ..\3drenderer\barFigureDialog.h ..\3drenderer\line_box_intersection_check.h ..\neuron_tracing\heap.h ..\neuron_tracing\fastmarching_linker.h ..\imaging\v3d_imaging.h ..\neuron_toolbox\vaa3d_neurontoolbox.h ..\multithreadimageIO\v3d_multithreadimageIO.h v3d_global_preference_dialog.h v3d_compile_constraints.h v3d_version_info.h v3d_application.h colormap.h ChannelTable.h rotate_image.h dialog_rotate.h dialog_curve_trace_para.h template_matching_cellseg_dialog.h opt_rotate.h landmark_property_dialog.h dialog_keypoint_features.h histogramsimple.h compute_win_pca.h compute_win_diff.h surfaceobj_annotation_dialog.h surfaceobj_geometry_dialog.h import_filelist_dialog.h import_images_tool_dialog.h vano_linker_loader_dialog.h dialog_imagecrop_bbox.h dialog_imageresample.h dialog_maskroi.h atlas_viewer.h v3d_core.h xformwidget.h mainwindow.h mapview.h DownloadManager.h v3d_actions.h v3d_commandlineparser.h pluginfunchandler.h vr_vaa3d_call.h ..\worm_straighten_c\bdb_minus.h ..\worm_straighten_c\mst_prim_c.h ..\worm_straighten_c\bfs.h ..\worm_straighten_c\spline_cubic.h ..\cellseg\template_matching_seg.h ..\jba\c++\jba_mainfunc.h ..\jba\c++\jba_match_landmarks.h ..\jba\c++\wkernel.h ..\jba\c++\histeq.h ..\jba\c++\convert_type2uint8.h ..\jba\c++\jba_affine_xform.h ..\jba\c++\remove_nonaffine_points.h ..\custom_toolbar\v3d_custom_toolbar.h ..\io\io_bioformats.h ..\io\asc_to_swc.h ..\io\v3d_nrrd.h ..\terafly\src\presentation\theader.h ..\basic_c_fun\INeuronAssembler.h ..\basic_c_fun\IPMain4NeuronAssembler.h old_arthurstyle.h old_arthurwidgets.h ..\vrrenderer\v3dr_gl_vr.h ..\vrrenderer\Cylinder.h ..\vrrenderer\Sphere.h ..\vrrenderer\Matrices.h ..\vrrenderer\lodepng.h ..\vrrenderer\RenderableObject.h ..\vrrenderer\VRFinger.h ..\vrrenderer\V3dR_Communicator.h ..\vrrenderer\VR_MainWindow.h ..\neuron_annotator\animation\AnimationFrame.h ..\neuron_annotator\animation\interpolate.h ..\neuron_annotator\animation\KeyFrame.h ..\neuron_annotator\animation\Movie.h ..\neuron_annotator\data_model\CustomClipPlanes.h ..\neuron_annotator\data_model\Dimension.h ..\neuron_annotator\data_model\Fast3DTexture.h ..\neuron_annotator\data_model\NaLockableData.h ..\neuron_annotator\data_model\NaVolumeData.h ..\neuron_annotator\data_model\MipFragmentData.h ..\neuron_annotator\data_model\DataColorModel.h ..\neuron_annotator\data_model\MipFragmentColors.h ..\neuron_annotator\data_model\GalleryMipImages.h ..\neuron_annotator\data_model\MipMergedData.h ..\neuron_annotator\data_model\NeuronSelectionModel.h ..\neuron_annotator\data_model\ZSliceColors.h ..\neuron_annotator\data_model\SlotMerger.h ..\neuron_annotator\data_model\NaSharedDataSignaller.h ..\neuron_annotator\data_model\NaSharedDataModel.h ..\neuron_annotator\data_model\NeuronFragmentData.h ..\neuron_annotator\data_model\PrivateDataColorModel.h ..\neuron_annotator\data_model\PrivateNeuronFragmentData.h ..\neuron_annotator\data_model\SampledVolumeMetadata.h ..\neuron_annotator\data_model\StagedFileLoader.h ..\neuron_annotator\data_model\PrivateVolumeTexture.h ..\neuron_annotator\data_model\VolumeTexture.h ..\neuron_annotator\entity_model\EntityData.h ..\neuron_annotator\entity_model\Entity.h ..\neuron_annotator\entity_model\Ontology.h ..\neuron_annotator\entity_model\OntologyAnnotation.h ..\neuron_annotator\entity_model\AnnotatedBranch.h ..\neuron_annotator\entity_model\AnnotationSession.h ..\neuron_annotator\gui\NaViewer.h ..\neuron_annotator\gui\Na2DViewer.h ..\neuron_annotator\gui\NaMainWindow.h ..\neuron_annotator\gui\Na3DWidget.h ..\neuron_annotator\gui\NaZStackWidget.h ..\neuron_annotator\gui\NaLargeMIPWidget.h ..\neuron_annotator\gui\PreferencesDialog.h ..\neuron_annotator\gui\DynamicRangeTool.h ..\neuron_annotator\gui\ColorRangeSliderWidget.h ..\neuron_annotator\gui\Stereo3DMode.h ..\neuron_annotator\gui\ScaleBar.h ..\neuron_annotator\microCT\CutPlanner.h ..\neuron_annotator\microCT\SingleCut.h ..\neuron_annotator\render\ActorGL.h ..\neuron_annotator\render\CubeTestActorGL.h ..\neuron_annotator\render\CameraTransformGL.h ..\neuron_annotator\render\LegacyVolumeActor.h ..\neuron_annotator\render\ShaderProgramGL.h ..\neuron_annotator\render\VoxelRayCastShader.h ..\neuron_annotator\render\WireCube.h ..\neuron_annotator\utility\ColorSeparatorConsolidator.h ..\neuron_annotator\utility\FileTreeSearcher.h ..\neuron_annotator\utility\FooDebug.h ..\neuron_annotator\utility\SingleNeuronLsmSetReader.h ..\neuron_annotator\utility\StitchedFileUtility.h ..\neuron_annotator\utility\ImageLoaderBasic.h ..\neuron_annotator\utility\ImageLoader.h ..\neuron_annotator\utility\url_tools.h ..\neuron_annotator\DataFlowModel.h ..\neuron_annotator\utility\NeuronMaskEntry.h ..\neuron_annotator\MultiColorImageStackNode.h ..\neuron_annotator\NeuronAnnotatorResultNode.h ..\neuron_annotator\TimebasedIdentifierGenerator.h ..\neuron_annotator\gui\RendererNeuronAnnotator.h ..\neuron_annotator\gui\GalleryButton.h ..\neuron_annotator\geometry\Vector3D.h ..\neuron_annotator\geometry\Rotation3D.h ..\neuron_annotator\geometry\CameraModel.h ..\neuron_annotator\gui\GammaWidget.h ..\neuron_annotator\gui\AngleWidget.h ..\neuron_annotator\gui\AnnotationWidget.h ..\neuron_annotator\gui\trees\EntityTreeItem.h ..\neuron_annotator\gui\trees\AnnotatedBranchTreeModel.h ..\neuron_annotator\gui\trees\OntologyTreeModel.h ..\neuron_annotator\gui\trees\EntityTreeModel.h ..\neuron_annotator\gui\trees\EntityTreeView.h ..\neuron_annotator\gui\trees\AnnotatedBranchTreeView.h ..\neuron_annotator\gui\trees\OntologyTreeView.h ..\neuron_annotator\gui\MouseClickManager.h ..\neuron_annotator\gui\ZoomSpinBox.h ..\neuron_annotator\gui\ZoomWidget.h ..\neuron_annotator\gui\CompartmentMapWidget.h ..\neuron_annotator\gui\CompartmentMapComboBox.h ..\neuron_annotator\gui\FragmentGalleryWidget.h ..\neuron_annotator\gui\NeuronQAction.h ..\neuron_annotator\gui\NeuronContextMenu.h ..\neuron_annotator\NeuronSelector.h ..\neuron_annotator\ExportFile.h ..\neuron_annotator\utility\JacsUtil.h ..\neuron_annotator\utility\Icons.h ..\neuron_annotator\utility\DataThread.h ..\neuron_annotator\utility\ConsoleObserver.h ..\neuron_annotator\analysis\ScreenPatternAnnotator.h ..\neuron_annotator\analysis\NeuronFragmentEditor.h ..\neuron_annotator\analysis\AlignerUtils.h ..\neuron_annotator\analysis\VolumePatternIndex.h ..\neuron_annotator\analysis\VolumeIndex.h ..\neuron_annotator\analysis\SleepThread.h ..\neuron_annotator\analysis\AnalysisTools.h ..\neuron_annotator\analysis\MaskChan.h ..\neuron_annotator\analysis\DilationErosion.h ..\webservice\gsoap2\stdsoap2.h ..\webservice\console\envH.h ..\webservice\console\envStub.h ..\webservice\console\cdsH.h ..\webservice\console\cdsStub.h ..\webservice\console\cdsConsoleDataServiceProxy.h ..\webservice\console\obsH.h ..\webservice\console\obsStub.h ..\webservice\console\obsConsoleObserverService.h ..\webservice\impl\ConsoleObserverServiceImpl.h ..\webservice\impl\EntityAdapter.h ..\cell_counter\CellCounter3D.h CommandManager.h  ..\basic_c_fun\mg_utilities.cpp ..\basic_c_fun\mg_image_lib.cpp ..\basic_c_fun\stackutil.cpp ..\basic_c_fun\basic_memory.cpp ..\basic_c_fun\v3d_message.cpp ..\basic_c_fun\basic_surf_objs.cpp ..\basic_c_fun\basic_4dimage.cpp ..\basic_c_fun\basic_4dimage_create.cpp ..\plugin_loader\v3d_plugin_loader.cpp ..\plugin_loader\pluginDialog.cpp ..\graph\dijk.cpp ..\neuron_editing\apo_xforms.cpp ..\neuron_editing\neuron_xforms.cpp ..\neuron_editing\neuron_sim_scores.cpp ..\neuron_editing\v_neuronswc.cpp ..\neuron_editing\neuron_format_converter.cpp ..\neuron_editing\global_feature_compute.cpp ..\neuron_tracing\dij_bgl.cpp ..\gmm\fit_gmm.cpp ..\cellseg\template_matching_seg.cpp ..\3drenderer\v3dr_mainwindow.cpp ..\3drenderer\mymainwinodw.cpp ..\3drenderer\v3dr_glwidget.cpp ..\3drenderer\renderer.cpp ..\3drenderer\renderer_tex.cpp ..\3drenderer\renderer_obj.cpp ..\3drenderer\renderer_labelfield.cpp ..\3drenderer\renderer_gl2.cpp ..\3drenderer\glsl_r.cpp ..\3drenderer\GLee2glew.c ..\3drenderer\renderer_hit.cpp ..\3drenderer\nstroke.cpp ..\3drenderer\nstroke_tracing.cpp ..\3drenderer\v3dr_surfaceDialog.cpp ..\3drenderer\ItemEditor.cpp ..\3drenderer\v3dr_colormapDialog.cpp ..\3drenderer\gradients.cpp ..\3drenderer\v3dr_control_signal.cpp ..\3drenderer\v3d_hoverpoints.cpp ..\3drenderer\barFigureDialog.cpp ..\imaging\v3d_imaging.cpp ..\neuron_toolbox\vaa3d_neurontoolbox.cpp ..\multithreadimageIO\v3d_multithreadimageIO.cpp v3d_version_info.cpp v3d_application.cpp main.cpp mainwindow.cpp mainwindow_interface.cpp mapview.cpp v3d_core.cpp v3dimgproc_entry.cpp my4dimage.cpp v3dimg_proc_neuron.cpp colormap.cpp ChannelTable.cpp rotate_image.cpp dialog_rotate.cpp landmark_property_dialog.cpp dialog_keypoint_features.cpp histogramsimple.cpp surfaceobj_geometry_dialog.cpp import_filelistname.cpp import_tiffseries.cpp vano_linker_loader_dialog.cpp atlas_viewer.cpp DownloadManager.cpp v3d_actions.cpp v3d_commandlineparser.cpp pluginfunchandler.cpp vr_vaa3d_call.cpp ..\worm_straighten_c\bdb_minus.cpp ..\worm_straighten_c\mst_prim_c.cpp ..\worm_straighten_c\bfs_1root.cpp ..\worm_straighten_c\spline_cubic.cpp ..\jba\c++\histeq.cpp ..\custom_toolbar\v3d_custom_toolbar.cpp ..\io\io_bioformats.cpp ..\io\asc_to_swc.cpp ..\io\v3d_nrrd.cpp old_arthurstyle.cpp old_arthurwidgets.cpp ..\webservice\gsoap2\stdsoap2.cpp ..\webservice\console\envC.cpp ..\webservice\console\cdsC.cpp ..\webservice\console\cdsConsoleDataServiceProxy.cpp ..\webservice\console\obsC.cpp ..\webservice\console\obsConsoleObserverService.cpp ..\webservice\impl\ConsoleObserverServiceImpl.cpp ..\webservice\impl\EntityAdapter.cpp ..\cell_counter\CellCounter3D.cpp CommandManager.cpp landmark_property.ui surface_obj_annotation.ui surfaceobj_geometry_dialog.ui dialog_curve_trace.ui template_matching_cellseg.ui v3d_global_preference.ui import_filelist_dialog.ui import_images_tool.ui dialog_vano_linkerloader.ui dialog_pointcloudatlas_linkerloader.ui dialog_imagecrop_bbox.ui dialog_imageresample.ui dialog_maskroi.ui dialog_keypoint_features.ui dialog_url_entry.ui dialog_update_v3d.ui dialog_update_list.ui dialog_update_options.ui dialog_update_downloading.ui dialog_update_checking.ui ..\3drenderer\setVoxSize.ui    
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\mg_utilities.o release\mg_image_lib.o release\stackutil.o release\v3d_message.o release\basic_surf_objs.o release\basic_4dimage.o release\basic_4dimage_create.o release\v3d_plugin_loader.o release\pluginDialog.o release\dijk.o release\apo_xforms.o release\neuron_xforms.o release\neuron_sim_scores.o release\v_neuronswc.o release\neuron_format_converter.o release\global_feature_compute.o release\dij_bgl.o release\fit_gmm.o release\template_matching_seg.o release\v3dr_mainwindow.o release\v3dr_glwidget.o release\renderer.o release\renderer_tex.o release\renderer_obj.o release\renderer_labelfield.o release\renderer_gl2.o release\glsl_r.o release\GLee2glew.o release\renderer_hit.o release\nstroke.o release\nstroke_tracing.o release\v3dr_surfaceDialog.o release\ItemEditor.o release\v3dr_colormapDialog.o release\gradients.o release\v3d_hoverpoints.o release\barFigureDialog.o release\v3d_imaging.o release\vaa3d_neurontoolbox.o release\v3d_multithreadimageIO.o release\v3d_version_info.o release\v3d_application.o release\main.o release\mainwindow.o release\mainwindow_interface.o release\mapview.o release\v3d_core.o release\v3dimgproc_entry.o release\my4dimage.o release\v3dimg_proc_neuron.o release\colormap.o release\ChannelTable.o release\rotate_image.o release\dialog_rotate.o release\landmark_property_dialog.o release\dialog_keypoint_features.o release\histogramsimple.o release\surfaceobj_geometry_dialog.o release\import_filelistname.o release\import_tiffseries.o release\vano_linker_loader_dialog.o release\atlas_viewer.o release\DownloadManager.o release\v3d_actions.o release\v3d_commandlineparser.o release\pluginfunchandler.o release\vr_vaa3d_call.o release\bdb_minus.o release\mst_prim_c.o release\bfs_1root.o release\spline_cubic.o release\histeq.o release\v3d_custom_toolbar.o release\io_bioformats.o release\asc_to_swc.o release\v3d_nrrd.o release\old_arthurstyle.o release\old_arthurwidgets.o release\stdsoap2.o release\envC.o release\cdsC.o release\cdsConsoleDataServiceProxy.o release\obsC.o
-	-$(DEL_FILE) release\obsConsoleObserverService.o release\ConsoleObserverServiceImpl.o release\EntityAdapter.o release\CellCounter3D.o release\CommandManager.o release\qrc_v3d.o release\qrc_3drenderer.o release\qrc_resources.o release\moc_basic_thread.o release\moc_pluginDialog.o release\moc_v3d_plugin_loader.o release\moc_v3dr_mainwindow.o release\moc_v3dr_glwidget.o release\moc_v3dr_surfaceDialog.o release\moc_ItemEditor.o release\moc_v3dr_colormapDialog.o release\moc_gradients.o release\moc_v3d_hoverpoints.o release\moc_v3d_global_preference_dialog.o release\moc_v3d_version_info.o release\moc_v3d_application.o release\moc_ChannelTable.o release\moc_dialog_rotate.o release\moc_dialog_curve_trace_para.o release\moc_template_matching_cellseg_dialog.o release\moc_landmark_property_dialog.o release\moc_dialog_keypoint_features.o release\moc_surfaceobj_annotation_dialog.o release\moc_surfaceobj_geometry_dialog.o release\moc_import_filelist_dialog.o release\moc_import_images_tool_dialog.o release\moc_vano_linker_loader_dialog.o release\moc_dialog_imagecrop_bbox.o release\moc_dialog_imageresample.o release\moc_dialog_maskroi.o release\moc_atlas_viewer.o release\moc_v3d_core.o release\moc_xformwidget.o release\moc_mainwindow.o release\moc_DownloadManager.o release\moc_v3d_actions.o release\moc_v3d_custom_toolbar.o release\moc_old_arthurwidgets.o release\moc_Fast3DTexture.o release\moc_AngleWidget.o release\moc_ZoomWidget.o release\moc_NeuronQAction.o release\moc_NeuronContextMenu.o release\moc_ConsoleObserverServiceImpl.o
+	-$(DEL_FILE) release\mg_utilities.o release\mg_image_lib.o release\stackutil.o release\v3d_message.o release\basic_surf_objs.o release\basic_4dimage.o release\basic_4dimage_create.o release\v3d_plugin_loader.o release\pluginDialog.o release\dijk.o release\apo_xforms.o release\neuron_xforms.o release\neuron_sim_scores.o release\v_neuronswc.o release\neuron_format_converter.o release\global_feature_compute.o release\dij_bgl.o release\fit_gmm.o release\template_matching_seg.o release\v3dr_mainwindow.o release\mymainwinodw.o release\v3dr_glwidget.o release\renderer.o release\renderer_tex.o release\renderer_obj.o release\renderer_labelfield.o release\renderer_gl2.o release\glsl_r.o release\GLee2glew.o release\renderer_hit.o release\nstroke.o release\nstroke_tracing.o release\v3dr_surfaceDialog.o release\ItemEditor.o release\v3dr_colormapDialog.o release\gradients.o release\v3d_hoverpoints.o release\barFigureDialog.o release\v3d_imaging.o release\vaa3d_neurontoolbox.o release\v3d_multithreadimageIO.o release\v3d_version_info.o release\v3d_application.o release\main.o release\mainwindow.o release\mainwindow_interface.o release\mapview.o release\v3d_core.o release\v3dimgproc_entry.o release\my4dimage.o release\v3dimg_proc_neuron.o release\colormap.o release\ChannelTable.o release\rotate_image.o release\dialog_rotate.o release\landmark_property_dialog.o release\dialog_keypoint_features.o release\histogramsimple.o release\surfaceobj_geometry_dialog.o release\import_filelistname.o release\import_tiffseries.o release\vano_linker_loader_dialog.o release\atlas_viewer.o release\DownloadManager.o release\v3d_actions.o release\v3d_commandlineparser.o release\pluginfunchandler.o release\vr_vaa3d_call.o release\bdb_minus.o release\mst_prim_c.o release\bfs_1root.o release\spline_cubic.o release\histeq.o release\v3d_custom_toolbar.o release\io_bioformats.o release\asc_to_swc.o release\v3d_nrrd.o release\old_arthurstyle.o release\old_arthurwidgets.o release\stdsoap2.o release\envC.o release\cdsC.o release\cdsConsoleDataServiceProxy.o
+	-$(DEL_FILE) release\obsC.o release\obsConsoleObserverService.o release\ConsoleObserverServiceImpl.o release\EntityAdapter.o release\CellCounter3D.o release\CommandManager.o release\qrc_v3d.o release\qrc_3drenderer.o release\qrc_resources.o release\moc_mymainwinodw.o release\moc_basic_thread.o release\moc_pluginDialog.o release\moc_v3d_plugin_loader.o release\moc_v3dr_mainwindow.o release\moc_v3dr_glwidget.o release\moc_v3dr_surfaceDialog.o release\moc_ItemEditor.o release\moc_v3dr_colormapDialog.o release\moc_gradients.o release\moc_v3d_hoverpoints.o release\moc_v3d_global_preference_dialog.o release\moc_v3d_version_info.o release\moc_v3d_application.o release\moc_ChannelTable.o release\moc_dialog_rotate.o release\moc_dialog_curve_trace_para.o release\moc_template_matching_cellseg_dialog.o release\moc_landmark_property_dialog.o release\moc_dialog_keypoint_features.o release\moc_surfaceobj_annotation_dialog.o release\moc_surfaceobj_geometry_dialog.o release\moc_import_filelist_dialog.o release\moc_import_images_tool_dialog.o release\moc_vano_linker_loader_dialog.o release\moc_dialog_imagecrop_bbox.o release\moc_dialog_imageresample.o release\moc_dialog_maskroi.o release\moc_atlas_viewer.o release\moc_v3d_core.o release\moc_xformwidget.o release\moc_mainwindow.o release\moc_DownloadManager.o release\moc_v3d_actions.o release\moc_v3d_custom_toolbar.o release\moc_old_arthurwidgets.o release\moc_Fast3DTexture.o release\moc_AngleWidget.o release\moc_ZoomWidget.o release\moc_NeuronQAction.o release\moc_NeuronContextMenu.o release\moc_ConsoleObserverServiceImpl.o
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -760,9 +766,168 @@ compiler_moc_predefs_clean:
 release/moc_predefs.h: F:/QT6/6.1.0/mingw81_64/mkspecs/features/data/dummy.cpp
 	g++ -fno-keep-inline-dllexport -DTEEM_STATIC -DWITH_NONAMESPACES -DWITH_PURE_VIRTUAL -O2 -std=gnu++1z -w -dM -E -o release\moc_predefs.h F:\QT6\6.1.0\mingw81_64\mkspecs\features\data\dummy.cpp
 
-compiler_moc_header_make_all: release/moc_basic_thread.cpp release/moc_pluginDialog.cpp release/moc_v3d_plugin_loader.cpp release/moc_v3dr_mainwindow.cpp release/moc_v3dr_glwidget.cpp release/moc_v3dr_surfaceDialog.cpp release/moc_ItemEditor.cpp release/moc_v3dr_colormapDialog.cpp release/moc_gradients.cpp release/moc_v3d_hoverpoints.cpp release/moc_v3d_global_preference_dialog.cpp release/moc_v3d_version_info.cpp release/moc_v3d_application.cpp release/moc_ChannelTable.cpp release/moc_dialog_rotate.cpp release/moc_dialog_curve_trace_para.cpp release/moc_template_matching_cellseg_dialog.cpp release/moc_landmark_property_dialog.cpp release/moc_dialog_keypoint_features.cpp release/moc_surfaceobj_annotation_dialog.cpp release/moc_surfaceobj_geometry_dialog.cpp release/moc_import_filelist_dialog.cpp release/moc_import_images_tool_dialog.cpp release/moc_vano_linker_loader_dialog.cpp release/moc_dialog_imagecrop_bbox.cpp release/moc_dialog_imageresample.cpp release/moc_dialog_maskroi.cpp release/moc_atlas_viewer.cpp release/moc_v3d_core.cpp release/moc_xformwidget.cpp release/moc_mainwindow.cpp release/moc_DownloadManager.cpp release/moc_v3d_actions.cpp release/moc_v3d_custom_toolbar.cpp release/moc_old_arthurwidgets.cpp release/moc_Fast3DTexture.cpp release/moc_AngleWidget.cpp release/moc_ZoomWidget.cpp release/moc_NeuronQAction.cpp release/moc_NeuronContextMenu.cpp release/moc_ConsoleObserverServiceImpl.cpp
+compiler_moc_header_make_all: release/moc_mymainwinodw.cpp release/moc_basic_thread.cpp release/moc_pluginDialog.cpp release/moc_v3d_plugin_loader.cpp release/moc_v3dr_mainwindow.cpp release/moc_v3dr_glwidget.cpp release/moc_v3dr_surfaceDialog.cpp release/moc_ItemEditor.cpp release/moc_v3dr_colormapDialog.cpp release/moc_gradients.cpp release/moc_v3d_hoverpoints.cpp release/moc_v3d_global_preference_dialog.cpp release/moc_v3d_version_info.cpp release/moc_v3d_application.cpp release/moc_ChannelTable.cpp release/moc_dialog_rotate.cpp release/moc_dialog_curve_trace_para.cpp release/moc_template_matching_cellseg_dialog.cpp release/moc_landmark_property_dialog.cpp release/moc_dialog_keypoint_features.cpp release/moc_surfaceobj_annotation_dialog.cpp release/moc_surfaceobj_geometry_dialog.cpp release/moc_import_filelist_dialog.cpp release/moc_import_images_tool_dialog.cpp release/moc_vano_linker_loader_dialog.cpp release/moc_dialog_imagecrop_bbox.cpp release/moc_dialog_imageresample.cpp release/moc_dialog_maskroi.cpp release/moc_atlas_viewer.cpp release/moc_v3d_core.cpp release/moc_xformwidget.cpp release/moc_mainwindow.cpp release/moc_DownloadManager.cpp release/moc_v3d_actions.cpp release/moc_v3d_custom_toolbar.cpp release/moc_old_arthurwidgets.cpp release/moc_Fast3DTexture.cpp release/moc_AngleWidget.cpp release/moc_ZoomWidget.cpp release/moc_NeuronQAction.cpp release/moc_NeuronContextMenu.cpp release/moc_ConsoleObserverServiceImpl.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) release\moc_basic_thread.cpp release\moc_pluginDialog.cpp release\moc_v3d_plugin_loader.cpp release\moc_v3dr_mainwindow.cpp release\moc_v3dr_glwidget.cpp release\moc_v3dr_surfaceDialog.cpp release\moc_ItemEditor.cpp release\moc_v3dr_colormapDialog.cpp release\moc_gradients.cpp release\moc_v3d_hoverpoints.cpp release\moc_v3d_global_preference_dialog.cpp release\moc_v3d_version_info.cpp release\moc_v3d_application.cpp release\moc_ChannelTable.cpp release\moc_dialog_rotate.cpp release\moc_dialog_curve_trace_para.cpp release\moc_template_matching_cellseg_dialog.cpp release\moc_landmark_property_dialog.cpp release\moc_dialog_keypoint_features.cpp release\moc_surfaceobj_annotation_dialog.cpp release\moc_surfaceobj_geometry_dialog.cpp release\moc_import_filelist_dialog.cpp release\moc_import_images_tool_dialog.cpp release\moc_vano_linker_loader_dialog.cpp release\moc_dialog_imagecrop_bbox.cpp release\moc_dialog_imageresample.cpp release\moc_dialog_maskroi.cpp release\moc_atlas_viewer.cpp release\moc_v3d_core.cpp release\moc_xformwidget.cpp release\moc_mainwindow.cpp release\moc_DownloadManager.cpp release\moc_v3d_actions.cpp release\moc_v3d_custom_toolbar.cpp release\moc_old_arthurwidgets.cpp release\moc_Fast3DTexture.cpp release\moc_AngleWidget.cpp release\moc_ZoomWidget.cpp release\moc_NeuronQAction.cpp release\moc_NeuronContextMenu.cpp release\moc_ConsoleObserverServiceImpl.cpp
+	-$(DEL_FILE) release\moc_mymainwinodw.cpp release\moc_basic_thread.cpp release\moc_pluginDialog.cpp release\moc_v3d_plugin_loader.cpp release\moc_v3dr_mainwindow.cpp release\moc_v3dr_glwidget.cpp release\moc_v3dr_surfaceDialog.cpp release\moc_ItemEditor.cpp release\moc_v3dr_colormapDialog.cpp release\moc_gradients.cpp release\moc_v3d_hoverpoints.cpp release\moc_v3d_global_preference_dialog.cpp release\moc_v3d_version_info.cpp release\moc_v3d_application.cpp release\moc_ChannelTable.cpp release\moc_dialog_rotate.cpp release\moc_dialog_curve_trace_para.cpp release\moc_template_matching_cellseg_dialog.cpp release\moc_landmark_property_dialog.cpp release\moc_dialog_keypoint_features.cpp release\moc_surfaceobj_annotation_dialog.cpp release\moc_surfaceobj_geometry_dialog.cpp release\moc_import_filelist_dialog.cpp release\moc_import_images_tool_dialog.cpp release\moc_vano_linker_loader_dialog.cpp release\moc_dialog_imagecrop_bbox.cpp release\moc_dialog_imageresample.cpp release\moc_dialog_maskroi.cpp release\moc_atlas_viewer.cpp release\moc_v3d_core.cpp release\moc_xformwidget.cpp release\moc_mainwindow.cpp release\moc_DownloadManager.cpp release\moc_v3d_actions.cpp release\moc_v3d_custom_toolbar.cpp release\moc_old_arthurwidgets.cpp release\moc_Fast3DTexture.cpp release\moc_AngleWidget.cpp release\moc_ZoomWidget.cpp release\moc_NeuronQAction.cpp release\moc_NeuronContextMenu.cpp release\moc_ConsoleObserverServiceImpl.cpp
+release/moc_mymainwinodw.cpp: ../3drenderer/mymainwinodw.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QMainWindow \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qmainwindow.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qtguiglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qconfig-bootstrapped.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qconfig.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qtcore-config.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsystemdetection.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qprocessordetection.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcompilerdetection.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qtypeinfo.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcontainerfwd.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsysinfo.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qlogging.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qflags.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qatomic.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qbasicatomic.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qatomic_bootstrap.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qgenericatomic.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qatomic_cxx11.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qglobalstatic.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmutex.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qnumeric.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qversiontagging.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qtgui-config.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qwidget.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qwindowdefs.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobjectdefs.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qnamespace.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qtmetamacros.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobject.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstring.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qchar.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringview.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qbytearray.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qrefcount.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qarraydata.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qpair.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qarraydatapointer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qarraydataops.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcontainertools_impl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qbytearrayalgorithms.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qbytearrayview.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringliteral.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringalgorithms.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qanystringview.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qutf8stringview.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringtokenizer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringbuilder.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qlist.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qhashfunctions.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qiterator.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qbytearraylist.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringlist.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qalgorithms.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringmatcher.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcoreevent.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qscopedpointer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmetatype.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcompare.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qvarlengtharray.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qdatastream.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qiodevicebase.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qiterable.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmetacontainer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcontainerinfo.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qtaggedpointer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmath.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobject_impl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qproperty.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qshareddata.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qpropertyprivate.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmargins.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpaintdevice.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qrect.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsize.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qpoint.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpalette.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qcolor.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qrgb.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qrgba64.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qbrush.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qimage.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpixelformat.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qtransform.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpolygon.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qregion.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qline.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpixmap.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsharedpointer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qfont.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qfontmetrics.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qfontinfo.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qsizepolicy.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qcursor.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qbitmap.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qkeysequence.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qevent.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qiodevice.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qpointer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qurl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qvariant.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmap.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qshareddata_impl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qhash.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qdebug.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qtextstream.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringconverter.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qset.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcontiguouscache.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qeventpoint.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qvector2d.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qvectornd.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpointingdevice.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qinputdevice.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qscreen.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QList \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QRect \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QSize \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QSizeF \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QTransform \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qtabwidget.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qicon.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/QOpenGLWidget \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/qopenglwidget.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/qtopenglwidgetsglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QWidget \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QSurfaceFormat \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qsurfaceformat.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qopengl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qt_windows.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qopengles2ext.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qopenglext.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLFunctions \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qopenglfunctions.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qopenglcontext.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QScopedPointer \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qopenglcontext_platform.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/QOpenGLShaderProgram \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qopenglshaderprogram.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qtopenglglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qvector3d.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qvector4d.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qmatrix4x4.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qquaternion.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qgenericmatrix.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLExtraFunctions \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qopenglextrafunctions.h \
+		release/moc_predefs.h \
+		F:/QT6/6.1.0/mingw81_64/bin/moc.exe
+	F:\QT6\6.1.0\mingw81_64\bin\moc.exe $(DEFINES) --include F:/v3d_mingw1/v3d_github/v3d_external/v3d_main/v3d/release/moc_predefs.h -IF:/QT6/6.1.0/mingw81_64/mkspecs/win32-g++ -IF:/v3d_mingw1/v3d_github/v3d_external/v3d_main/v3d -IF:/v3d_mingw1/v3d_github/v3d_external/v3d_main/v3d -IF:/v3d_mingw1/v3d_github/v3d_external/v3d_main/common_lib/include -IF:/v3d_mingw1/v3d_github/v3d_external/v3d_main/common_lib/include/SDL -IF:/v3d_mingw1/v3d_github/v3d_external/v3d_main/common_lib/include/glew -IF:/v3d_mingw1/v3d_github/v3d_external/v3d_main/common_lib/include/openvr -IF:/v3d_mingw1/v3d_github/v3d_external/v3d_main/common_lib/include -IF:/QT6/6.1.0/mingw81_64/include -IF:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets -IF:/QT6/6.1.0/mingw81_64/include/QtOpenGL -IF:/QT6/6.1.0/mingw81_64/include/QtSvg -IF:/QT6/6.1.0/mingw81_64/include/QtWidgets -IF:/QT6/6.1.0/mingw81_64/include/QtGui -IF:/QT6/6.1.0/mingw81_64/include/QtNetwork -IF:/QT6/6.1.0/mingw81_64/include/QtXml -IF:/QT6/6.1.0/mingw81_64/include/QtCore -IF:/QT6/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++ -IF:/QT6/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32 -IF:/QT6/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward -IF:/QT6/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include -IF:/QT6/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed -IF:/QT6/Tools/mingw810_64/x86_64-w64-mingw32/include ..\3drenderer\mymainwinodw.h -o release\moc_mymainwinodw.cpp
+
 release/moc_basic_thread.cpp: ../basic_c_fun/basic_thread.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMutex \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmutex.h \
@@ -2736,6 +2901,15 @@ release/moc_v3dr_mainwindow.cpp: ../3drenderer/v3dr_mainwindow.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QMouseEvent \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDial \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QToolTip \
+		../3drenderer/mymainwinodw.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/QOpenGLWidget \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/qopenglwidget.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/qtopenglwidgetsglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLFunctions \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/QOpenGLShaderProgram \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qopenglshaderprogram.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qtopenglglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLExtraFunctions \
 		release/moc_predefs.h \
 		F:/QT6/6.1.0/mingw81_64/bin/moc.exe
 	F:\QT6\6.1.0\mingw81_64\bin\moc.exe $(DEFINES) --include F:/v3d_mingw1/v3d_github/v3d_external/v3d_main/v3d/release/moc_predefs.h -IF:/QT6/6.1.0/mingw81_64/mkspecs/win32-g++ -IF:/v3d_mingw1/v3d_github/v3d_external/v3d_main/v3d -IF:/v3d_mingw1/v3d_github/v3d_external/v3d_main/v3d -IF:/v3d_mingw1/v3d_github/v3d_external/v3d_main/common_lib/include -IF:/v3d_mingw1/v3d_github/v3d_external/v3d_main/common_lib/include/SDL -IF:/v3d_mingw1/v3d_github/v3d_external/v3d_main/common_lib/include/glew -IF:/v3d_mingw1/v3d_github/v3d_external/v3d_main/common_lib/include/openvr -IF:/v3d_mingw1/v3d_github/v3d_external/v3d_main/common_lib/include -IF:/QT6/6.1.0/mingw81_64/include -IF:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets -IF:/QT6/6.1.0/mingw81_64/include/QtOpenGL -IF:/QT6/6.1.0/mingw81_64/include/QtSvg -IF:/QT6/6.1.0/mingw81_64/include/QtWidgets -IF:/QT6/6.1.0/mingw81_64/include/QtGui -IF:/QT6/6.1.0/mingw81_64/include/QtNetwork -IF:/QT6/6.1.0/mingw81_64/include/QtXml -IF:/QT6/6.1.0/mingw81_64/include/QtCore -IF:/QT6/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++ -IF:/QT6/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32 -IF:/QT6/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward -IF:/QT6/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include -IF:/QT6/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed -IF:/QT6/Tools/mingw810_64/x86_64-w64-mingw32/include ..\3drenderer\v3dr_mainwindow.h -o release\moc_v3dr_mainwindow.cpp
@@ -3452,6 +3626,7 @@ release/moc_v3dr_glwidget.cpp: ../3drenderer/v3dr_glwidget.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -4175,6 +4350,7 @@ release/moc_v3dr_surfaceDialog.cpp: ../3drenderer/v3dr_surfaceDialog.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -5386,6 +5562,7 @@ release/moc_v3dr_colormapDialog.cpp: ../3drenderer/v3dr_colormapDialog.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -7490,6 +7667,7 @@ release/moc_v3d_application.cpp: v3d_application.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -16777,6 +16955,7 @@ release/v3d_plugin_loader.o: ../plugin_loader/v3d_plugin_loader.cpp ../3drendere
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -16789,6 +16968,10 @@ release/v3d_plugin_loader.o: ../plugin_loader/v3d_plugin_loader.cpp ../3drendere
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QMouseEvent \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDial \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QToolTip \
+		../3drenderer/mymainwinodw.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/QOpenGLShaderProgram \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qopenglshaderprogram.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLExtraFunctions \
 		../plugin_loader/pluginDialog.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QTreeWidgetItem \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QMessageBox \
@@ -20608,18 +20791,23 @@ release/v3dr_mainwindow.o: ../3drenderer/v3dr_mainwindow.cpp ../3drenderer/v3dr_
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QMouseEvent \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDial \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QToolTip \
-		../3drenderer/v3dr_glwidget.h \
-		../3drenderer/renderer.h \
+		../3drenderer/mymainwinodw.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/QOpenGLWidget \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/qopenglwidget.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/qtopenglwidgetsglobal.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLFunctions \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/QOpenGLShaderProgram \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qopenglshaderprogram.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qtopenglglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLExtraFunctions \
+		../3drenderer/v3dr_glwidget.h \
+		../3drenderer/renderer.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/QOpenGLWindow \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qopenglwindow.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qtopenglglobal.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -20627,10 +20815,10 @@ release/v3dr_mainwindow.o: ../3drenderer/v3dr_mainwindow.cpp ../3drenderer/v3dr_
 		../3drenderer/v3dr_control_signal.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\v3dr_mainwindow.o ..\3drenderer\v3dr_mainwindow.cpp
 
-release/v3dr_glwidget.o: ../3drenderer/v3dr_glwidget.cpp ../3drenderer/GLee2glew.h \
-		../common_lib/include/glew/GL/glew.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtGui/QAction \
-		F:/QT6/6.1.0/mingw81_64/include/QtGui/qaction.h \
+release/mymainwinodw.o: ../3drenderer/mymainwinodw.cpp ../3drenderer/mymainwinodw.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QMainWindow \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qmainwindow.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/qtguiglobal.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qglobal.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qconfig-bootstrapped.h \
@@ -20654,14 +20842,20 @@ release/v3dr_glwidget.o: ../3drenderer/v3dr_glwidget.cpp ../3drenderer/GLee2glew
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qnumeric.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qversiontagging.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/qtgui-config.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtGui/qkeysequence.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qwidget.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qwindowdefs.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobjectdefs.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qnamespace.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qtmetamacros.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobject.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstring.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qchar.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringview.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qbytearray.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qrefcount.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qnamespace.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qtmetamacros.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qarraydata.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qpair.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qarraydatapointer.h \
@@ -20675,31 +20869,13 @@ release/v3dr_glwidget.o: ../3drenderer/v3dr_glwidget.cpp ../3drenderer/GLee2glew
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qutf8stringview.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringtokenizer.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringbuilder.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobjectdefs.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtGui/qicon.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsize.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qhashfunctions.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmargins.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qlist.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qhashfunctions.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qiterator.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qbytearraylist.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringlist.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qalgorithms.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringmatcher.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpixmap.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpaintdevice.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtGui/qwindowdefs.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qrect.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qpoint.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtGui/qcolor.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtGui/qrgb.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtGui/qrgba64.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsharedpointer.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qshareddata.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobject.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcoreevent.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qscopedpointer.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmetatype.h \
@@ -20714,13 +20890,38 @@ release/v3dr_glwidget.o: ../3drenderer/v3dr_glwidget.cpp ../3drenderer/GLee2glew
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmath.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobject_impl.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qproperty.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qshareddata.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qpropertyprivate.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmargins.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpaintdevice.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qrect.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsize.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qpoint.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpalette.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qcolor.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qrgb.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qrgba64.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qbrush.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/qimage.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpixelformat.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/qtransform.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpolygon.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/qregion.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qline.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpixmap.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsharedpointer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qfont.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qfontmetrics.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qfontinfo.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qsizepolicy.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qcursor.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qbitmap.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qkeysequence.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qevent.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qiodevice.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qpointer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qurl.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qvariant.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmap.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qshareddata_impl.h \
@@ -20729,6 +20930,154 @@ release/v3dr_glwidget.o: ../3drenderer/v3dr_glwidget.cpp ../3drenderer/GLee2glew
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qtextstream.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringconverter.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qset.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcontiguouscache.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qeventpoint.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qvector2d.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qvectornd.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpointingdevice.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qinputdevice.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qscreen.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QList \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QRect \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QSize \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QSizeF \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QTransform \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qtabwidget.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qicon.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/QOpenGLWidget \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/qopenglwidget.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/qtopenglwidgetsglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QWidget \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QSurfaceFormat \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qsurfaceformat.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qopengl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qt_windows.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qopengles2ext.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qopenglext.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLFunctions \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qopenglfunctions.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qopenglcontext.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/QScopedPointer \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qopenglcontext_platform.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/QOpenGLShaderProgram \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qopenglshaderprogram.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qtopenglglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qvector3d.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qvector4d.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qmatrix4x4.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qquaternion.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qgenericmatrix.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLExtraFunctions \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qopenglextrafunctions.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mymainwinodw.o ..\3drenderer\mymainwinodw.cpp
+
+release/v3dr_glwidget.o: ../3drenderer/v3dr_glwidget.cpp F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qgraphicssceneevent.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qtguiglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qconfig-bootstrapped.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qconfig.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qtcore-config.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsystemdetection.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qprocessordetection.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcompilerdetection.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qtypeinfo.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcontainerfwd.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsysinfo.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qlogging.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qflags.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qatomic.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qbasicatomic.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qatomic_bootstrap.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qgenericatomic.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qatomic_cxx11.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qglobalstatic.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmutex.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qnumeric.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qversiontagging.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qtgui-config.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcoreevent.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qnamespace.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qtmetamacros.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qbytearray.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qrefcount.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qarraydata.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qpair.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qarraydatapointer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qarraydataops.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcontainertools_impl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qbytearrayalgorithms.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qbytearrayview.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobjectdefs.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobjectdefs_impl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qpoint.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qscopedpointer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qrect.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qhashfunctions.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstring.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qchar.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringview.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringliteral.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringalgorithms.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qanystringview.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qutf8stringview.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringtokenizer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringbuilder.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmargins.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsize.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpolygon.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qlist.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qiterator.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qbytearraylist.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringlist.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qalgorithms.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringmatcher.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qset.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qhash.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmath.h \
+		../3drenderer/GLee2glew.h \
+		../common_lib/include/glew/GL/glew.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QAction \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qaction.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qkeysequence.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qicon.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpixmap.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpaintdevice.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qwindowdefs.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qwindowdefs_win.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qcolor.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qrgb.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qrgba64.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsharedpointer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qshareddata.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qsharedpointer_impl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobject.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmetatype.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcompare.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qvarlengtharray.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qdatastream.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qiodevicebase.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qiterable.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmetacontainer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcontainerinfo.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qtaggedpointer.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qobject_impl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qproperty.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qpropertyprivate.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qimage.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qpixelformat.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qtransform.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/qregion.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qline.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qvariant.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qmap.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qshareddata_impl.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qdebug.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qtextstream.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtCore/qstringconverter.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qcontiguouscache.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QTimer \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/qtimer.h \
@@ -20967,8 +21316,6 @@ release/v3dr_glwidget.o: ../3drenderer/v3dr_glwidget.cpp ../3drenderer/GLee2glew
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/qundostack.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/qvalidator.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/qtguiversion.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qtwidgetsglobal.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qtwidgets-config.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qabstractbutton.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qwidget.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qsizepolicy.h \
@@ -21034,7 +21381,6 @@ release/v3dr_glwidget.o: ../3drenderer/v3dr_glwidget.cpp ../3drenderer/GLee2glew
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qgraphicsproxywidget.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qgraphicswidget.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qgraphicsscene.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qgraphicssceneevent.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/qgraphicstransform.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QVector3D \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QMatrix4x4 \
@@ -21360,6 +21706,10 @@ release/v3dr_glwidget.o: ../3drenderer/v3dr_glwidget.cpp ../3drenderer/GLee2glew
 		../3drenderer/v3d_hoverpoints.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QRadioButton \
 		../3drenderer/v3dr_mainwindow.h \
+		../3drenderer/mymainwinodw.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/QOpenGLShaderProgram \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qopenglshaderprogram.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLExtraFunctions \
 		vr_vaa3d_call.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QCloseEvent \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QMessageBox \
@@ -22163,6 +22513,7 @@ release/renderer.o: ../3drenderer/renderer.cpp ../3drenderer/GLee2glew.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -22883,6 +23234,7 @@ release/renderer_tex.o: ../3drenderer/renderer_tex.cpp ../3drenderer/GLee2glew.h
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -23603,6 +23955,7 @@ release/renderer_obj.o: ../3drenderer/renderer_obj.cpp ../3drenderer/GLee2glew.h
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -25750,6 +26103,7 @@ release/renderer_hit.o: ../3drenderer/renderer_hit.cpp ../3drenderer/GLee2glew.h
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -26797,6 +27151,7 @@ release/nstroke.o: ../3drenderer/nstroke.cpp ../3drenderer/renderer_gl1.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -27844,6 +28199,7 @@ release/nstroke_tracing.o: ../3drenderer/nstroke_tracing.cpp ../3drenderer/rende
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -29275,6 +29631,7 @@ release/v3dr_surfaceDialog.o: ../3drenderer/v3dr_surfaceDialog.cpp ../3drenderer
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -30711,6 +31068,7 @@ release/v3dr_colormapDialog.o: ../3drenderer/v3dr_colormapDialog.cpp ../3drender
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -35178,6 +35536,7 @@ release/v3d_application.o: v3d_application.cpp v3d_application.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -36211,6 +36570,7 @@ release/main.o: main.cpp ../3drenderer/v3dr_common.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -37254,6 +37614,7 @@ release/mainwindow.o: mainwindow.cpp ../3drenderer/v3dr_common.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -37580,6 +37941,10 @@ release/mainwindow.o: mainwindow.cpp ../3drenderer/v3dr_common.h \
 		../3drenderer/qtr_widget.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QTabBar \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QToolTip \
+		../3drenderer/mymainwinodw.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/QOpenGLShaderProgram \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qopenglshaderprogram.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLExtraFunctions \
 		import_filelist_dialog.h \
 		ui_import_filelist_dialog.h \
 		import_images_tool_dialog.h \
@@ -38319,18 +38684,23 @@ release/mainwindow_interface.o: mainwindow_interface.cpp ../3drenderer/v3dr_comm
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QMouseEvent \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDial \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QToolTip \
-		../3drenderer/v3dr_glwidget.h \
-		../3drenderer/renderer.h \
+		../3drenderer/mymainwinodw.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/QOpenGLWidget \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/qopenglwidget.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/qtopenglwidgetsglobal.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLFunctions \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/QOpenGLShaderProgram \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qopenglshaderprogram.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qtopenglglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLExtraFunctions \
+		../3drenderer/v3dr_glwidget.h \
+		../3drenderer/renderer.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/QOpenGLWindow \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qopenglwindow.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qtopenglglobal.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -39119,18 +39489,23 @@ release/v3d_core.o: v3d_core.cpp ../3drenderer/v3dr_common.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QMouseEvent \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDial \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QToolTip \
-		../3drenderer/v3dr_glwidget.h \
-		../3drenderer/renderer.h \
+		../3drenderer/mymainwinodw.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/QOpenGLWidget \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/qopenglwidget.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGLWidgets/qtopenglwidgetsglobal.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLFunctions \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/QOpenGLShaderProgram \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qopenglshaderprogram.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qtopenglglobal.h \
+		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLExtraFunctions \
+		../3drenderer/v3dr_glwidget.h \
+		../3drenderer/renderer.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/QOpenGLWindow \
 		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qopenglwindow.h \
-		F:/QT6/6.1.0/mingw81_64/include/QtOpenGL/qtopenglglobal.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		../3drenderer/renderer_gl1.h \
 		../3drenderer/marchingcubes.h \
@@ -40918,6 +41293,7 @@ release/my4dimage.o: my4dimage.cpp F:/QT6/6.1.0/mingw81_64/include/QtCore/qDebug
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QFrame \
@@ -41953,6 +42329,7 @@ release/v3dimg_proc_neuron.o: v3dimg_proc_neuron.cpp ../3drenderer/v3dr_common.h
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QSpacerItem \
@@ -45027,6 +45404,7 @@ release/surfaceobj_geometry_dialog.o: surfaceobj_geometry_dialog.cpp surfaceobj_
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QOpenGLContext \
 		F:/QT6/6.1.0/mingw81_64/include/QtGui/QImage \
 		F:/QT6/6.1.0/mingw81_64/include/QtCore/QMetaObject \
+		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QGraphicsSceneWheelEvent \
 		ui_setVoxSize.h \
 		F:/QT6/6.1.0/mingw81_64/include/QtWidgets/QDialogButtonBox \
 		../neuron_editing/neuron_xforms.h \
@@ -52890,6 +53268,9 @@ release/qrc_3drenderer.o: release/qrc_3drenderer.cpp
 
 release/qrc_resources.o: release/qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\qrc_resources.o release\qrc_resources.cpp
+
+release/moc_mymainwinodw.o: release/moc_mymainwinodw.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_mymainwinodw.o release\moc_mymainwinodw.cpp
 
 release/moc_basic_thread.o: release/moc_basic_thread.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_basic_thread.o release\moc_basic_thread.cpp

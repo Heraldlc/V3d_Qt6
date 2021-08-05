@@ -3084,15 +3084,6 @@ void XFormWidget::initialize()
 
     //landmarkLabelDispCheckBox = NULL;
 
-
-
-
-    //自己加的
-    btn = NULL;
-
-
-
-
     resetButton = NULL;
     openFileNameButton = NULL;
     imgProcessButton = NULL;
@@ -3933,6 +3924,9 @@ void XFormWidget::createGUI()
     zx_view->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
      zx_view->setFocusPolicy(Qt::ClickFocus);
 
+    //    viewGroup->setFixedWidth(xy_view->frameGeometry().width()+yz_view->frameGeometry().width());
+
+     // information group
 
      infoGroup = new QGroupBox(dataGroup);
      infoGroup->setTitle("Information of your selections");
@@ -3940,6 +3934,16 @@ void XFormWidget::createGUI()
      focusPointFeatureWidget = new MyTextBrowser(infoGroup);
     //	focusPointFeatureWidget->setFixedWidth(qMax(200, xy_view->width()+yz_view->width()));
     focusPointFeatureWidget->setFixedWidth(qMax(200, xy_view->get_disp_width()+yz_view->get_disp_width()));
+    //focusPointFeatureWidget->setFixedHeight(50);
+    //focusPointFeatureWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+
+     //viewGroup->setFixedWidth(xy_view->width()+yz_view->width()+10);
+    //    viewGroup->setMinimumSize(xy_view->width()+yz_view->width(), xy_view->height()+zx_view->height()+50);
+    //    viewGroup->setFixedWidth(xy_view->width()+yz_view->width()+10);
+
+    //    dataGroup->setFixedWidth(xy_view->frameGeometry().width()+yz_view->frameGeometry().width()+10);
+
+    // setup the control panel
 
     mainGroup = new QGroupBox(self);
     mainGroup->setFixedWidth(300);
@@ -4020,13 +4024,8 @@ void XFormWidget::createGUI()
 
     resetButton = new QPushButton(scaleGroup);
     resetButton->setText("Reset");
-
-
-    //自己加的
-    btn = new QPushButton(scaleGroup);
-    btn->setText("自己的三角形");
-
-
+btn = new QPushButton(scaleGroup);
+btn->setText("SJX");
     zoomWholeViewButton = new QPushButton();
     zoomWholeViewButton->setText("TriView zoom=1. Click to set.");
 
@@ -4069,6 +4068,13 @@ void XFormWidget::createGUI()
 
     whatsThisButton = new QPushButton(mainGroup);
     whatsThisButton->setText("Help ... ");
+    //whatsThisButton->setCheckable(true);
+
+    // All layouts
+
+//    allLayout = new QHBoxLayout(this);
+//    allLayout->addWidget(dataGroup);
+//    allLayout->addWidget(mainGroup);
 
     xyzViewLayout = new QGridLayout(viewGroup);
     xyzViewLayout->addWidget(xy_view, 0, 0, 1, 1, Qt::AlignRight | Qt::AlignBottom);
@@ -4110,6 +4116,11 @@ void XFormWidget::createGUI()
     coordGroupLayout->addWidget(ySlider, 2, 1, 1, 13);
     coordGroupLayout->addWidget(yValueSpinBox, 2, 14, 1, 6);
 
+//  coordGroupLayout->addWidget(linkFocusCheckBox, 3, 0, 1, 14);
+//	coordGroupLayout->addWidget(displayFocusCrossCheckBox, 4, 0, 1, 14);
+//	coordGroupLayout->addWidget(cBox_bSendSignalToExternal, 5, 0, 1, 6);
+//	coordGroupLayout->addWidget(cBox_bAcceptSignalFromExternal, 5, 7, 1, 7);
+
     coordGroupLayout->addWidget(displayFocusCrossCheckBox, 		3, 0, 1, 8);
     coordGroupLayout->addWidget(cBox_bSendSignalToExternal,     3, 8, 1, 6);
     coordGroupLayout->addWidget(cBox_bAcceptSignalFromExternal, 3, 8+6, 1, 6);
@@ -4125,13 +4136,10 @@ void XFormWidget::createGUI()
 
     scaleGroupLayout->addWidget(yScaleSlider, 2, 0, 1, 13);
     scaleGroupLayout->addWidget(yScaleSliderLabel, 2, 14, 1, 6);
-//本来是3，0，1，13的
-    scaleGroupLayout->addWidget(lookingGlassCheckBox, 3, 0, 1, 10);
-//自己加的三角形按钮
-    scaleGroupLayout->addWidget(btn,3,11,1,2);
+
+    scaleGroupLayout->addWidget(lookingGlassCheckBox, 3, 0, 1, 9);
     scaleGroupLayout->addWidget(resetButton, 3, 14, 1, 6);
-
-
+    scaleGroupLayout->addWidget(btn,3,10,1,3);
 
     scaleGroupLayout->addWidget(zoomWholeViewButton, 4, 0, 1, 20);
 
@@ -4196,7 +4204,6 @@ void XFormWidget::createGUI()
     setWidget( self );
 
 
-
     //QTimer::singleShot(500, this, SLOT(Focus()));
 }
 
@@ -4230,6 +4237,7 @@ void XFormWidget::hideDisplayInfo()
 
 void XFormWidget::updateDataRelatedGUI()
 {
+    qDebug()<<"jazz debug in v3d_core.cpp------------------------------9";
     if (imgData)
     {
         // the data of tri-view planes
@@ -4496,10 +4504,15 @@ bool XFormWidget::loadFile(QString filename)
 
 bool XFormWidget::loadData()
 {
+    qDebug()<<"jazz debug in v3d_core.cpp------------------------------1";
     //try to get a rough estimation of available amount of memory
-    V3DLONG nbytes = estimateRoughAmountUsedMemory();
+    //下面函数的问题gg，在里面出不来了,注释掉就好
+    //V3DLONG nbytes = estimateRoughAmountUsedMemory();
+    V3DLONG nbytes = 0;
+     qDebug()<<"jazz debug in v3d_core.cpp------------------------------1A";
     if (nbytes>(unsigned V3DLONG)((double(1024)*1024*1024*TH_USE_MEMORY)))
     {
+        qDebug()<<"jazz debug in v3d_core.cpp------------------------------2";
         printf("machine info: double upper limit =%5.4f V3DLONG upper limit=%ld\n long_n_bytes=%zd",
                (double(1024)*1024*1024*TH_USE_MEMORY), (V3DLONG)(double(1024)*1024*1024*TH_USE_MEMORY), sizeof(V3DLONG));
         v3d_msg(QString("You already used about %1 bytes of memory, which is more than %2 G bytes for your images. "
@@ -4510,6 +4523,7 @@ bool XFormWidget::loadData()
     // trying to load image using multithreaded method, by YuY, added 20101216
     if(bUsingMultithreadedImageIO)
     {
+        qDebug()<<"jazz debug in v3d_core.cpp------------------------------2A";
         //set up parameters
         v3d_multithreadimageio_paras myimgiop;
         myimgiop.qOperation = "HIDDEN-MTIMGIO";
@@ -4531,13 +4545,17 @@ bool XFormWidget::loadData()
 
     if (imgData)
     {
+        qDebug()<<"jazz debug in v3d_core.cpp------------------------------3";
         cleanData();
     }
 
     imgData = new My4DImage;
-    if (!imgData)
+    if (!imgData){
+        qDebug()<<"jazz debug in v3d_core.cpp------------------------------4";
         return false;
+    }
     else {
+        qDebug()<<"jazz debug in v3d_core.cpp------------------------------5";
         imgData->setMainWidget((XFormWidget *)this); //by PHC, added 100904 to ensure imgData can access global setting
     }
 
@@ -4548,14 +4566,20 @@ bool XFormWidget::loadData()
     const char* filename = ba.constData();
     const char * curFileSurfix = getSuffix(filename);
 
-    if ( curFileSurfix && strcasecmp(curFileSurfix, "mp4") == 0 )
+    if ( curFileSurfix && strcasecmp(curFileSurfix, "mp4") == 0 ){
+        qDebug()<<"jazz debug in v3d_core.cpp------------------------------5A";
         loadH264Image( filename );
-    else if ( curFileSurfix && strcasecmp(curFileSurfix, "h5j") == 0 )
-        loadHDF5( filename );
-    else
+    }
+    else if ( curFileSurfix && strcasecmp(curFileSurfix, "h5j") == 0 ){
+        qDebug()<<"jazz debug in v3d_core.cpp------------------------------5B";
+        loadHDF5( filename );}
+    else{
+        qDebug()<<"jazz debug in v3d_core.cpp------------------------------6";
         imgData->loadImage(filename);  // imgData->loadImage("/Users/hanchuanpeng/work/v3d/test1.raw");
+    }
     if (imgData->isEmpty())
     {
+        qDebug()<<"jazz debug in v3d_core.cpp------------------------------7";
         delete imgData; imgData = 0;
         v3d_msg("File open error : Fail to open the image file you specified. This could be due to \n(1) The file does not exist. \n(2) The file format is not supported (V3D only supports TIFF stacks, most Zeiss LSM files, and Hanchuan Peng's RAW files. TIFF stacks are widely used and can be easily generated using other tools such as ImageJ or Hanchuan Peng's Matlab image fileio toolbox). \n(3) Your image file is too big. Since on 32-bit machines, an image is at most 2G bytes, and opening tiff files need extra-space for temporary buffer, thus currently V3D has a limitaton on the size of images: TIFF and LSM files < 900M Bytes, and V3D's RAW file < 1.5G bytes. You can contact Hanchuan Peng to get a special version of V3D to handle very big image files.\n", 0);
         v3d_msg("Fail to open the image file you specified. This could be due to <br><br>"
@@ -5074,13 +5098,19 @@ void XFormWidget::connectEventSignals()
     connect(landmarkSaveButton, SIGNAL(clicked()), this, SLOT(saveLandmarkToFile()));
     connect(landmarkManagerButton, SIGNAL(clicked()), this, SLOT(openLandmarkManager()));
 
-    //三角形连接信号
-    connect(btn,&QPushButton::clicked,[=](){
-        v3d_msg("这这里实现三角形的窗口");
+    connect(resetButton, SIGNAL(clicked()), this, SLOT(reset()));
 
+
+
+
+
+    connect(btn,&QPushButton::clicked,this,[=](){
+        QWidget *win = new QWidget();
+        win->show();
     });
 
-    connect(resetButton, SIGNAL(clicked()), this, SLOT(reset()));
+
+
     //connect(openFileNameButton, SIGNAL(clicked()), this, SLOT(setOpenFileName())); //	remove this button on 080402
 
     //connect(landmarkLabelDispCheckBox, SIGNAL(clicked()), this, SLOT(toggleLandmarkLabelDisp()));

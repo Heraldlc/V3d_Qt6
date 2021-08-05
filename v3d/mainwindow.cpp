@@ -546,7 +546,7 @@ void MainWindow::dropEvent(QDropEvent *event)
         qDebug() <<tr("  drop Text data: ")+(mimeData->text());
         fileName = mimeData->text().trimmed();
 #ifdef Q_OS_LINUX
-        fileName.remove(0,7); // remove the first 'file://' of the name string, 09012581102
+        fileName.remove(0,7);
 #endif
         qDebug("the file to open=[%s]",qPrintable(fileName));
     }
@@ -778,22 +778,21 @@ V3dR_MainWindow * MainWindow::find3DViewer(QString fileName)
 }
 void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool b_forceopen3dviewer)
 {
+
     if (!fileName.isEmpty())
     {
+        qDebug()<<"jazz debug in mainwindow.cpp----------------------------------------------1";
         XFormWidget *existing_imgwin = findMdiChild(fileName);
         if (existing_imgwin)
         {
-
-#if defined(USE_Qt5)
+             qDebug()<<"jazz debug in mainwindow.cpp----------------------------------------------3";
             workspace->setActiveSubWindow(existing_imgwin);
-#else
-            workspace->setActiveSubWindow(existing_imgwin);
-#endif
             return;
         }
         V3dR_MainWindow *existing_3dviewer = find3DViewer(fileName);
         if (existing_3dviewer)
         {
+            qDebug()<<"jazz debug in mainwindow.cpp----------------------------------------------4";
             existing_3dviewer->activateWindow();
             return;
         }
@@ -1093,15 +1092,17 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
         {
             try
             {
+                qDebug()<<"jazz debug in mainwindow.cpp----------------------------------------------5";
                 size_t start_t = clock();
                 XFormWidget *child = createMdiChild();
 
                 v3d_msg(QString("Trying to load an image file [%1]").arg(fileName), 0);
                 qDebug()<<"jazz debug in mainwindow.cpp cur_suffix==V3DRAW  ";
 
+                   //就是这里出了问题，loadFile函数的问题使得 下面的没有执行
                 if (child->loadFile(fileName))
                 {
-                    qDebug()<<"jazz debug in mainwindow.cpp child->loadFile(fileName)";
+                    qDebug()<<"jazz debug in mainwindow.cpp----------------------------------------------7";
                     statusBar()->showMessage(QString("File [%1] loaded").arg(fileName), 2000);
                     if (global_setting.b_autoConvert2_8bit)
                     {
@@ -1128,11 +1129,11 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                     child->show();
                     qDebug()<<"jazz debug in mainwindow.cpp child->show()之后";
                     workspace->cascadeSubWindows(); //080821 //110805, by PHC, since RZC claims the resize MDI works now, so this should not be needed.
-
+                     /*注释了 不然会默认打开
                     if (b_forceopen3dviewer || (global_setting.b_autoOpenImg3DViewer))
                     {
                         child->doImage3DView();
-                    }
+                    }*/
                     size_t end_t = clock();
                     qDebug()<<"time consume ..."<<end_t-start_t;
                 }
@@ -2694,28 +2695,17 @@ XFormWidget *MainWindow::createMdiChild()
 {
     //我自己改的
    // XFormWidget *child = new XFormWidget((QWidget *)0);
+    qDebug()<<"jazz debug in mainwindow.cpp----------------------------------------------6";
     XFormWidget *child = new XFormWidget((QMdiSubWindow *)0);
+    workspace->addSubWindow(child);  //child is wrapped in his parentWidget()
 
-#if defined(USE_Qt5)
-    workspace->addSubWindow(child);  //child is wrapped in his parentWidget()
-#else
-    workspace->addSubWindow(child);  //child is wrapped in his parentWidget()
-#endif
     //for (int j=1; j<1000; j++) QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents); //100811 RZC: no help to update the workspace->windowList()
-
-#if defined(USE_Qt5)
     qDebug()<<"MainWindow::createMdiChild *** workspace->windowList:" << workspace->subWindowList() <<"+="<< child; //STRANGE: child isn't in windowList here ???
     connect(workspace, SIGNAL(subWindowActivated(QMdiSubWindow *)),  child, SLOT(onActivated(QMdiSubWindow *))); //110802 RZC
-#else
-    qDebug()<<"MainWindow::createMdiChild *** workspace->windowList:" << workspace->subWindowList() <<"+="<< child; //STRANGE: child isn't in windowList here ???
-    connect(workspace, SIGNAL(subWindowActivated(QMdiSubWindow *)),  child, SLOT(onActivated(QMdiSubWindow *))); //110802 RZC
-#endif
-    //workspace->setActiveWindow(child);
 
-    //下面的一行我自己加的
+
+    //这行自己加的
    // workspace->setActiveSubWindow(child);
-
-
 
     //to enable coomunication of child windows
     child->setMainControlWindow(this);
@@ -2727,7 +2717,7 @@ XFormWidget *MainWindow::createMdiChild()
 }
 XFormWidget *MainWindow::activeMdiChild()
 {
-
+   // qDebug()<<"jazz debug in mainwindow.cpp--------------------------a";
 #if defined(USE_Qt5)
     return qobject_cast<XFormWidget *>(workspace->activeSubWindow());
 #else
@@ -2736,15 +2726,14 @@ XFormWidget *MainWindow::activeMdiChild()
 }
 XFormWidget *MainWindow::findMdiChild(const QString &fileName)
 {
+    qDebug()<<"jazz debug in mainwindow.cpp----------------------------------------------2";
     int numfind = 0; //20110427 YuY
     QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
     if (canonicalFilePath.size()==0) canonicalFilePath = fileName; //090818 RZC 20110427 YuY
     XFormWidget *mdiChildFind;
-#if defined(USE_Qt5)
+
     foreach (QMdiSubWindow *window, workspace->subWindowList()) {
-#else
-     foreach (QMdiSubWindow *window, workspace->subWindowList()) {
-#endif
+
         XFormWidget *mdiChild = qobject_cast<XFormWidget *>(window);
         QString mdiChildPath = // CMB Oct-14-2010
                 QFileInfo(mdiChild->userFriendlyCurrentFile()).canonicalFilePath();
@@ -2762,11 +2751,9 @@ XFormWidget *MainWindow::findMdiChild(const QString &fileName)
     {
         // try find image name contains the input string from the end
 
-#if defined(USE_Qt5)
+
         foreach (QMdiSubWindow *window, workspace->subWindowList()) {
-#else
-        foreach (QMdiSubWindow *window, workspace->subWindowList()) {
-#endif
+
             XFormWidget *mdiChild = qobject_cast<XFormWidget *>(window);
             QString mdiChildPath = // CMB Oct-14-2010
                     QFileInfo(mdiChild->userFriendlyCurrentFile()).canonicalFilePath();
@@ -2959,10 +2946,10 @@ void MainWindow::func_procModeNeuronAnnotator()
 //    V3dApplication::activateNaMainWindow();
 }
 void MainWindow::setV3DDefaultModeCheck(bool checkState) {
-    procModeDefault->setChecked(checkState);
+   // procModeDefault->setChecked(checkState);
 }
 void MainWindow::setNeuronAnnotatorModeCheck(bool checkState) {
-    procModeNeuronAnnotator->setChecked(checkState);
+   // procModeNeuronAnnotator->setChecked(checkState);
 }
 #endif
 

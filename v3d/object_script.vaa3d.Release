@@ -18,6 +18,7 @@ release/dij_bgl.o
 release/fit_gmm.o
 release/template_matching_seg.o
 release/v3dr_mainwindow.o
+release/mymainwinodw.o
 release/v3dr_glwidget.o
 release/renderer.o
 release/renderer_tex.o
@@ -89,6 +90,7 @@ release/CommandManager.o
 release/qrc_v3d.o
 release/qrc_3drenderer.o
 release/qrc_resources.o
+release/moc_mymainwinodw.o
 release/moc_basic_thread.o
 release/moc_pluginDialog.o
 release/moc_v3d_plugin_loader.o

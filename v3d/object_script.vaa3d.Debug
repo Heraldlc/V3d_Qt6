@@ -18,6 +18,7 @@ debug/dij_bgl.o
 debug/fit_gmm.o
 debug/template_matching_seg.o
 debug/v3dr_mainwindow.o
+debug/mymainwinodw.o
 debug/v3dr_glwidget.o
 debug/renderer.o
 debug/renderer_tex.o
@@ -89,6 +90,7 @@ debug/CommandManager.o
 debug/qrc_v3d.o
 debug/qrc_3drenderer.o
 debug/qrc_resources.o
+debug/moc_mymainwinodw.o
 debug/moc_basic_thread.o
 debug/moc_pluginDialog.o
 debug/moc_v3d_plugin_loader.o

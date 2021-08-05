@@ -308,12 +308,6 @@ private:
 #ifdef _ALLOW_WORKMODE_MENU_
     QMenu *modeMenu;
 #endif
-
-
-
-
-
-
     QMenu *helpMenu;
     QMenu *basicProcMenu, *advancedProcMenu, *pipelineProcMenu, *visualizeProcMenu;
     QMenu *proc_export_menu;
@@ -454,7 +448,7 @@ private:
     QAction * procCellSeg_Gaussian_fit_1_spot_1_Gauss;
     QAction * procCellSeg_Gaussian_fit_1_spot_N_Gauss;
     QAction * procCellSeg_Gaussian_partition;
-        QAction * procCellSeg_manualCorrect;
+    QAction * procCellSeg_manualCorrect;
 #ifdef _ALLOW_WORKMODE_MENU_
     // Mode
     QAction * procModeDefault;

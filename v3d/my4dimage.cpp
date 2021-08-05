@@ -489,6 +489,7 @@ double My4DImage::at(int x, int y, int z, int c) const //return a double number 
 
 void My4DImage::loadImage(const char* filename)
 {
+    qDebug()<<"jazz debug in my4dimage.cpp ---------------------------------1";
 	cleanExistData();
 
 	bool b_useMylib=false;
