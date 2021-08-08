@@ -75,7 +75,7 @@ class XFormWidget;
 class V3dR_MainWindow;
 class Vaa3DPluginMenu;
 //dlcswcwidget
-class dlcSWCWidget;
+class dlcSWCWindow;
 
 //class QList <V3dR_MainWindow *>;
 //struct LocationSimple; //080107

@@ -68,7 +68,7 @@ using QOpenGLWidget_proxy = QOpenGLWidget;
 //#include "../vrrenderer/V3dR_Communicator.h"
 #endif
 
-#include "ui_setVoxSize.h"
+#include "ui_setVoxSize.h" //ui design
 
 class V3dr_colormapDialog;
 class V3dr_surfaceDialog;

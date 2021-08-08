@@ -53,7 +53,7 @@ Sept 30, 2008: disable  open in the same window function, also add flip image fu
 #include "../plugin_loader/v3d_plugin_loader.h"
 #include "v3d_core.h"
 #include "../3drenderer/v3dr_mainwindow.h"
-#include "../3drenderer/dlcswcwidget.h"
+#include "../3drenderer/dlcswcwindow.h"
 #include "import_filelist_dialog.h"
 #include "import_images_tool_dialog.h"
 #include "DownloadManager.h" // CMB 08-Oct-2010
@@ -1034,7 +1034,7 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
 
             // 这里是用vedr_mainwindow检测到是swc数据，直接显示3dview窗口,我定义了我的窗口部件类dlcSWCWidget用于测试qt6新特性
             V3dR_MainWindow *my3dwin = 0;
-            dlcSWCWidget *dlc3dwin = 0;
+            dlcSWCWindow *dlc3dwin = 0;
             try
             {
                 my3dwin = new V3dR_MainWindow(mypara_3Dview);
@@ -1043,9 +1043,9 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                 my3dwin->show();
                 mypara_3Dview->window3D = my3dwin;
 
-                dlc3dwin = new dlcSWCWidget(mypara_3Dview);
+                dlc3dwin = new dlcSWCWindow(mypara_3Dview);
                 dlc3dwin->setParent(0);
-                dlc3dwin->setWindowTitle(tr("DLC modify window"));
+                dlc3dwin->setWindowTitle(tr("DLC Window"));
                 dlc3dwin->show();
             }
             catch (...)

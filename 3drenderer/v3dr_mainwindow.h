@@ -63,8 +63,6 @@ public:
 	QString getDataTitle() {return data_title;}
 	V3dR_GLWidget * getGLWidget() {return glWidget;}
 
-    //DLC显示三角形
-    //showTriangle *myWin;
 
 protected:
     virtual void closeEvent(QCloseEvent* e);
@@ -121,8 +119,7 @@ public slots:
 //    void setYRotStep(int t);
 //    void setZRotStep(int t);
 //    void setNSteps(int t);
-    //DLC槽函数
-    //void onShowBtnClicked();
+
 
 public:
 	iDrawExternalParameter null_idep; //090918: for editing swc
