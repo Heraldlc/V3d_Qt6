@@ -509,7 +509,10 @@ void V3dR_MainWindow::createControlWidgets()
     glWidgetArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     glWidgetArea->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding); //QSizePolicy::Ignored, QSizePolicy::Ignored);
     glWidgetArea->setMinimumSize(MINVIEW_SIZEX, MINVIEW_SIZEY);
-   if (glWidget)  	glWidgetArea->setWidget(glWidget);
+    if(glWidget)  	glWidgetArea->setWidget(glWidget);
+
+
+
 
     timeSlider = new QScrollBar(Qt::Horizontal);
     timeSlider->setRange(0,0);

@@ -157,17 +157,17 @@ V3dR_MainWindow::~V3dR_MainWindow()
 }
 
 ////////DLC add/////////////////////////////////
-void V3dR_MainWindow::onShowBtnClicked()
-{
-    //点击后即可弹出一个新窗口，显示opengl渲染结果
-        qDebug()<<"槽函数被调用了";
-        //QMainWindow *newQMain = new QMainWindow(this);
-        showTriangle* myWin = new showTriangle(this);
-        myWin->resize(500, 500);
-        qDebug()<<"show之前";
-        myWin->show();
-        qDebug()<<"show之后";
-}
+//void V3dR_MainWindow::onShowBtnClicked()
+//{
+//    //点击后即可弹出一个新窗口，显示opengl渲染结果
+//        qDebug()<<"槽函数被调用了";
+//        //QMainWindow *newQMain = new QMainWindow(this);
+//        showTriangle* myWin = new showTriangle(this);
+//        myWin->resize(500, 500);
+//        qDebug()<<"show之前";
+//        myWin->show();
+//        qDebug()<<"show之后";
+//}
 //////////////////////////////////////////
 
 V3dR_MainWindow::V3dR_MainWindow(iDrawExternalParameter* idep)
@@ -236,9 +236,7 @@ V3dR_MainWindow::V3dR_MainWindow(iDrawExternalParameter* idep)
 
     //DLC 以上暂时屏蔽用作三角形刷新测试
     //onShowBtnClicked();
-    showTriangle *dlcWin = new showTriangle(glWidget);
-    dlcWin->resize(300,300);
-    dlcWin->show();
+
 
     //创建控制信号
     qDebug("V3dR_MainWindow::createControlWidgets");

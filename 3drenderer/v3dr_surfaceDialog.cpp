@@ -468,20 +468,20 @@ void V3dr_surfaceDialog::createMenuOfDisplayMode()
     mesh_menu->addAction(mesh9);
 }
 
-/*void V3dr_surfaceDialog::setMeshDensity(int newMeshDensity)
-{
-	//cout << newMeshDensity << endl;
-	Renderer_gl1* r = renderer;
-	r->cleanObj();
-	this->meshDensity = newMeshDensity;
-	iDrawExternalParameter* idep = (iDrawExternalParameter*) r->_idep;
-	//qDebug() << idep->swc_file_list;
-	QString swcFileName = idep->swc_file_list[0];
+//void V3dr_surfaceDialog::setMeshDensity(int newMeshDensity)
+//{
+//    //cout << newMeshDensity << endl;
+//    Renderer_gl1* r = renderer;
+//    r->cleanObj();
+//    this->meshDensity = newMeshDensity;
+//    iDrawExternalParameter* idep = (iDrawExternalParameter*) r->_idep;
+//    //qDebug() << idep->swc_file_list;
+//    QString swcFileName = idep->swc_file_list[0];
 	
-	r->loadObj_meshChange(newMeshDensity);
-	r->loadObjectFilename(swcFileName);
-	return;
-}*/
+//    r->loadObj_meshChange(newMeshDensity);
+//    r->loadObjectFilename(swcFileName);
+//    return;
+//}
 
 void V3dr_surfaceDialog::doMenuOfDisplayMode()
 {

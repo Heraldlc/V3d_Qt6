@@ -53,6 +53,7 @@ Sept 30, 2008: disable  open in the same window function, also add flip image fu
 #include "../plugin_loader/v3d_plugin_loader.h"
 #include "v3d_core.h"
 #include "../3drenderer/v3dr_mainwindow.h"
+#include "../3drenderer/dlcswcwidget.h"
 #include "import_filelist_dialog.h"
 #include "import_images_tool_dialog.h"
 #include "DownloadManager.h" // CMB 08-Oct-2010
@@ -1010,6 +1011,7 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
             mypara_3Dview->xwidget = 0;
             mypara_3Dview->V3Dmainwindow = this; //added on 090503
 
+
             //set up data
             if (cur_suffix=="APO")
                 mypara_3Dview->pointcloud_file_list.append(fileName);
@@ -1030,8 +1032,9 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                 delete mypara_3Dview; mypara_3Dview=0; return;
             }
 
-            //
+            // 这里是用vedr_mainwindow检测到是swc数据，直接显示3dview窗口,我定义了我的窗口部件类dlcSWCWidget用于测试qt6新特性
             V3dR_MainWindow *my3dwin = 0;
+            dlcSWCWidget *dlc3dwin = 0;
             try
             {
                 my3dwin = new V3dR_MainWindow(mypara_3Dview);
@@ -1039,6 +1042,11 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                 my3dwin->setDataTitle(fileName);
                 my3dwin->show();
                 mypara_3Dview->window3D = my3dwin;
+
+                dlc3dwin = new dlcSWCWidget(mypara_3Dview);
+                dlc3dwin->setParent(0);
+                dlc3dwin->setWindowTitle(tr("DLC modify window"));
+                dlc3dwin->show();
             }
             catch (...)
             {

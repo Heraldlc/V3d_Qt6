@@ -56,6 +56,8 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) Automatic reconstruction 
 #include <map>
 #include <set>
 
+
+
 enum v3dr_DataClass { dcDataNone=0,
                 dcVolume=1,
                 dcSurface=2

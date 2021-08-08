@@ -78,7 +78,7 @@ Since the actual OpenGL code makes no references to Qt, then it doesn't have to 
 ////#define glBindBufferARB		glBindBuffer
 ////#define glDeleteBuffersARB	glDeleteBuffers
 ////#define glMapBufferARB		glMapBuffer
-////#define glUnmapBufferARB		glUnmapBuffer
+////#define glUnmapBufferARB	glUnmapBuffer
 ////#define glBufferDataARB		glBufferData
 //#endif
 //

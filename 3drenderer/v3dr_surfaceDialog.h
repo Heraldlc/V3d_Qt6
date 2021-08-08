@@ -122,7 +122,7 @@ public slots:
     void setSWCDisplayUsingGlobalSettings() {setSWCDisplayMode(-1);}
     void setSWCDisplayUsingLine() {setSWCDisplayMode(1);}
     void setSWCDisplayUsingTube() {setSWCDisplayMode(0);}
-    //这里可能其他的cpp用到了 先注释
+//注释了
 //    void setMeshDensity(int newMeshDensity);
 //    void setMeshDensity27() {setMeshDensity(27);}
 //    void setMeshDensity18() {setMeshDensity(18);}

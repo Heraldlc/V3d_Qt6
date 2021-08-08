@@ -150,7 +150,7 @@ V3dR_GLWidget::V3dR_GLWidget(iDrawExternalParameter* idep, QWidget* mainWindow, 
 
     //setFormat(QGLFormat(0));
     qDebug()<<"init_members 之后";
-    //这个位置出错了
+
 
     makeCurrent(); //090729: this make sure created GL context
 
@@ -185,7 +185,7 @@ V3dR_GLWidget::V3dR_GLWidget(iDrawExternalParameter* idep, QWidget* mainWindow, 
 
 
     //setFocusPolicy(Qt::WheelFocus); // accept KeyPressEvent when mouse wheel move, by RZC 080831
-   setFocusPolicy(Qt::StrongFocus); // accept KeyPressEvent when mouse click, by RZC 081028
+    setFocusPolicy(Qt::StrongFocus); // accept KeyPressEvent when mouse click, by RZC 081028
     //setFocusProxy(mainWindow);
 
     qDebug("V3dR_GLWidget::V3dR_GLWidget ----- end    in v3dr_glwidget.cpp");
@@ -341,9 +341,9 @@ void V3dR_GLWidget::preparingRenderer() // renderer->setupData & init, 100719 ex
 void V3dR_GLWidget::initializeGL()
 {
     qDebug("V3dR_GLWidget::initializeGL");
-
     // Qt OpenGL context format detection
-    initializeOpenGLFunctions();
+    this->initializeOpenGLFunctions();
+    makeCurrent();
 
     QSurfaceFormat format;
     format.setDepthBufferSize(24);
@@ -363,12 +363,14 @@ void V3dR_GLWidget::initializeGL()
 void V3dR_GLWidget::resizeGL(int width, int height)
 {
     //qDebug(" renderer->setupView( %d, %d )", width, height);
+    makeCurrent();
     viewW = width; viewH = height;
     if (renderer) renderer->setupView(width,height);
 }
 
 void V3dR_GLWidget::paintGL()
 {
+    makeCurrent();
     if (renderer && renderer->hasError())  POST_CLOSE(this);
 
     //QTime qtime; qtime.start();
@@ -404,7 +406,7 @@ void V3dR_GLWidget::paintGL()
     glPopMatrix();
 
     //SET translation
-    {
+
         //absolute translation
         XYZ T(_xShift, _yShift, _zShift);  				//qDebug("T= %f %f %f", T.x, T.y, T.z);
         //XYZ T(_xShift, _yShift, 0); // force zShift=0
@@ -436,7 +438,7 @@ void V3dR_GLWidget::paintGL()
 //		}
 
         glTranslated( T.x, T.y, T.z );
-    }
+
 
     //SET current absolute rotation pose at alternate rotation center
     if (alt_rotation)	glTranslated( mAltC[0]*flip_X, mAltC[1]*flip_Y, mAltC[2]*flip_Z );

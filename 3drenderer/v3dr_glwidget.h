@@ -55,7 +55,7 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) Automatic reconstruction 
 #include<QOpenGLWidget>
 //using QOpenGLWidget_proxy = QGLWidget;
 using QOpenGLWidget_proxy = QOpenGLWidget;
-#include <QOpenGLFunctions_1_1>
+
 
 #include <QOpenGLWindow>
 
@@ -397,7 +397,7 @@ public slots:
     virtual int getLocalEndPosY();
     virtual int getLocalEndPosZ();
 
-//    //
+//
 
     virtual void toggleNStrokeCurveDrawing(); // For n-right-strokes curve shortcut ZJL 110920
     virtual void callCurveLineDetector(int option); // for quick curve line structure detection, by PHC, 20170531

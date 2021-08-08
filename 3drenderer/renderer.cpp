@@ -151,9 +151,9 @@ void Renderer::setupView(int width, int height)
     // here please make object space fit in [-1, +1]^3
 }
 
-void Renderer::setProjection()
+void Renderer::setProjection() // clipped space and projection matrix
 {
-    double aspect = double(screenW)/MAX(screenH,1);
+    double aspect = double(screenW)/MAX(screenH,1); // width/height = aspect ratio
 
     if (bOrthoView)
     {
@@ -290,6 +290,7 @@ void Renderer::initialize(int version)
 
     ////////////////////////////////////////////////
     GLeeInit();
+    makeCurrent();
 
     if (GLEE_ARB_multisample)
     {
@@ -326,7 +327,7 @@ void Renderer::initialize(int version)
 void Renderer::paint()
 {
     // normalized space of [-1,+1]^3;
-
+    makeCurrent();
     //glClearColor(0.f, 0.f, 0.5f, 1.0f);
     glClearColor(color_background.r, color_background.g, color_background.b, color_background.a);
     glDepthFunc(GL_LESS);
@@ -336,8 +337,7 @@ void Renderer::paint()
     if (polygonMode==1)	      glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     else if (polygonMode==2)  glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
     else                      glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-    {
+    //{
         glPushMatrix();
 
         glEnable(GL_LIGHT0);
@@ -348,7 +348,7 @@ void Renderer::paint()
 
         enableClipBoundingBox(surfBoundingBox, true, 0.001);
         //drawObj();
-        {
+        //{
             GLUquadric* Q = gluNewQuadric();
             gluQuadricOrientation( Q, GLU_OUTSIDE);
             gluQuadricNormals(Q, GLU_SMOOTH);
@@ -359,13 +359,13 @@ void Renderer::paint()
             glPopName();
 
             gluDeleteQuadric(Q);
-        }
+       // }
         disableClipBoundingBox();
 
         glDisable(GL_LIGHTING);
 
         glPopMatrix();
-    }
+    //}
 
     if (!b_selecting) if (bShowBoundingBox || bShowAxes || bShowXYTranslateArrows)// a frame box [-1,+1]^3
     {

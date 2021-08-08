@@ -99,7 +99,7 @@ public:
     RGBA8 colormap[FILL_CHANNEL][256];      // [n-channel][256-intensity]
 
 ////////////////////////////////////
-//protected:更改了
+//注释 protected:
 
     cwc::glShaderManager SMgr;
     cwc::glShader *shader, *shaderTex2D, *shaderTex3D, *shaderObj;

@@ -45,6 +45,7 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) “Automatic reconstructi
 
 #include "GLee2glew.h" ////2020-2-10
 
+
 #include "renderer_gl1.h"
 #include "v3dr_glwidget.h"
 
@@ -368,6 +369,7 @@ void Renderer_gl1::cleanData()
 
 void Renderer_gl1::initialize(int version)
 {
+    makeCurrent();
     qDebug("  Renderer_gl1::initialize (%d)", version);
     if (b_error) return; //080924 try to catch the memory error
 
@@ -432,7 +434,7 @@ void Renderer_gl1::setRenderTextureLast(bool renderTextureLast) {
 void Renderer_gl1::paint()
 {
     qDebug("jazz brain debug in renderer_tex  Renderer_gl1::paint(renderMode=%i)", renderMode);
-
+    makeCurrent();
     if (b_error) return; //080924 try to catch the memory error
 
     glClearColor(color_background.r, color_background.g, color_background.b, 0);
@@ -444,11 +446,9 @@ void Renderer_gl1::paint()
     // steps except drawing the track while the track is being displayed.
     if (!sShowTrack || highlightedEndNodeChanged)
     {
-        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
-        glClearStencil(0);
+        glClearStencil(0);        
         glClearDepth(1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
         // clearing framebuffer; reset the drawn flag on all the markers
         for (int marker = 0; marker < listMarkerPos.size(); marker++)
         {
@@ -456,7 +456,6 @@ void Renderer_gl1::paint()
         }
     }
 
-    qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -476,8 +475,6 @@ void Renderer_gl1::paint()
 
     bShowCSline = bShowAxes;
     bShowFSline = bShowBoundingBox;
-
-    qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
 
     prepareVol();
 
@@ -623,7 +620,7 @@ void Renderer_gl1::paint()
             //blendRubberNeuron();
 
 #ifndef test_main_cpp //140211
-            //注释blendDraggedNeuron();
+            blendDraggedNeuron();
 #endif
 
             glPopMatrix();
@@ -642,15 +639,10 @@ void Renderer_gl1::paint()
 
     if (1)
     {
-        //draw in the center of the display, - disabled for now as it might be disturbing for viewing. PHC 20151117
-//        float D = (BB.Dmax());
-//        XYZ A0 = BB.Vabsmin();
-//        glColor3f(0.7, 0.7, 0.7);
-        //drawString(A0.x+BB.Dx()/2, A0.y+BB.Dy()/2, A0.z+BB.Dz()/2, "vaa3d.org", 0, 50);
 
         //draw at the corner
         qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
-        glPushMatrix(); //============================================== {
+        glPushMatrix();
 
         drawVaa3DInfo(16);
         drawEditInfo();
@@ -663,7 +655,7 @@ void Renderer_gl1::paint()
         }
 #endif
 
-        //drawSegInfo();
+        drawSegInfo();
 
         glPopMatrix(); //========================================================= }
     }
@@ -680,23 +672,22 @@ void Renderer_gl1::prepareVol()
     if (has_image() && b_renderTextureLast)
     {
         glPushMatrix(); //===================================================== Volume {
-
+        qDebug()<<__FUNCTION__<<__LINE__;
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
         if (renderMode==rmAlphaBlendingProjection || renderMode==rmMaxIntensityProjection || renderMode==rmMinIntensityProjection) // not for rmCrossSection
             enableViewClipPlane(); //front-cut-plane
 
         // unit image space ==>fit in [-1,+1]^3
-        qDebug()<<"dlc"<<__LINE__;
+
         setUnitVolumeSpace();
-        qDebug()<<"dlc"<<__LINE__;
+
 
         if (renderMode==rmMaxIntensityProjection) {
             glColor3f(0.0f, 0.0f, 0.0f);
             drawBackFillVolCube(); // clear the project region to zero for MIP
         }
 
-        qDebug()<<"dlc"<<__LINE__;
 
         if (renderMode==rmMinIntensityProjection) {
             glColor3f(0.8f, 0.8f, 0.8f);
@@ -711,7 +702,7 @@ void Renderer_gl1::renderVol()
 {
     if (has_image())
     {
-        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+
             glPushMatrix(); //===================================================== Volume {
 
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -722,9 +713,9 @@ void Renderer_gl1::renderVol()
             // unit image space ==>fit in [-1,+1]^3
             setUnitVolumeSpace();
             glPushName(dcVolume);
-            qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+
                     drawVol();
-                    qDebug()<<"dlc "<<__LINE__<<" in "<<__FUNCTION__;
+
             glPopName();
 
             if (! b_selecting) if (bShowCSline && renderMode==rmCrossSection)
@@ -861,7 +852,7 @@ void Renderer_gl1::drawVol()
         volTimeOffset = 0;
         subloadTex(volTimePoint, false);
     }
-    qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+
 
     //---------------------------------------
     if (CSbeta >=1) return; // 081202, avoid be hit when invisible
@@ -882,14 +873,13 @@ void Renderer_gl1::drawVol()
     case rmMaxIntensityProjection:
         qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
         if (has_image() && !b_renderTextureLast) // if rendering texture first, we can clear - otherwise this is done in prepareVol()
-        {
-            qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
-            glColor3f(0.0f, 0.0f, 0.0f);
+        {           
+            glColor3f(0.0f, 0.0f, 0.0f);           
             drawBackFillVolCube(); // clear the project region to zero for MIP
         }
         glEnable(GL_BLEND);      equMaxIntensityProjection();
         glEnable(GL_ALPHA_TEST); glAlphaFunc(GL_GEQUAL, alpha_threshold); // >= threshold Alpha, 080930
-        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+        qDebug()<<__FUNCTION__<<__LINE__;
         break;
 
     case rmMinIntensityProjection:
@@ -937,24 +927,20 @@ void Renderer_gl1::drawVol()
         glEnable(GL_TEXTURE_2D); //glBindTexture(GL_TEXTURE_2D, 0);
 
         glPushName(renderMode);  //100729 make nameLength>2 to skip the Intel GL ICD bug
-        {
-            qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+        {            
             drawUnitVolume(); //100729 select name in drawStackX/Y/Z
-
             glPushName(vsFslice);  //100729 add select name of vsFslice
                 drawUnitFrontSlice(0); // F-Slice
             glPopName();
             qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
         }
-        glPopName();
-        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+        glPopName();        
 
         glDisable(GL_TEXTURE_3D);
         glDisable(GL_TEXTURE_2D);
 
     }
     glShadeModel(GL_SMOOTH);
-    qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
 
     glDisable(GL_BLEND); //090429 RZC: no effect to glBlendEquationEXT(GL_MAX_EXT), must set to GL_FUNC_ADD_EXT
     glBlendEquationEXT(GL_FUNC_ADD_EXT);
@@ -1772,6 +1758,7 @@ void Renderer_gl1::setUnitVolumeSpace()
 
     // form unit volume space ==> fit in [-1, +1]^3
     glScaled(s[0], s[1], s[2]);
+    qDebug()<<__FUNCTION__<<__LINE__;
     //qDebug("Scale from [0,1]: x=%f, y=%f, z=%f", s[0],s[1],s[2]);
     glTranslated(-.5, -.5, -.5);
 }
@@ -1807,7 +1794,6 @@ void Renderer_gl1::drawUnitVolume()
     fillX = _getTexFillSize(realX);
     fillY = _getTexFillSize(realY);
     fillZ = _getTexFillSize(realZ);
-    qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
 
     //qDebug("	drawUnitVolume:   real = %dx%dx%d   fill = %dx%dx%d,  stream = %d",  realX, realY, realZ,  fillX, fillY, fillZ, b_stream);
     if (realX<=0 || realY<=0 || realZ<=0) return; //081026 to prevent drawing before subloadTex
@@ -1816,7 +1802,7 @@ void Renderer_gl1::drawUnitVolume()
     double mm[4][4];
     //glGetDoublev(GL_MODELVIEW_MATRIX, &mm[0][0]); //have scale & shift when here, cannot treat as pure rotation
     MAT16_TO_MAT4x4( volumeViewMatrix, mm );
-    qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+
 
     //mm = [u,v,w,t], a = [w-t](4d->3d)   object z-direction vector in View space
     double ax, ay, az;
@@ -1829,7 +1815,6 @@ void Renderer_gl1::drawUnitVolume()
     glLoadIdentity();
     glMatrixMode(GL_MODELVIEW);
 
-    qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
 
     if (b_stream || !b_tex3d)
     {
