@@ -44,7 +44,9 @@ Last update: 080814: move iDrawExternalParameter to v3d_core.h
 #include "v3dr_common.h"
 
 #include "qtr_widget.h"
-#include "v3dr_glwidget.h"
+
+//DLC
+//#include "showtriangle.h"
 
 class V3dR_GLWidget;
 
@@ -60,6 +62,7 @@ public:
 	QString getTitlePrefix() {return title_prefix;}
 	QString getDataTitle() {return data_title;}
 	V3dR_GLWidget * getGLWidget() {return glWidget;}
+
 
 protected:
     virtual void closeEvent(QCloseEvent* e);
@@ -108,13 +111,15 @@ public slots:
 
     // @ADDED by Alessandro on 2015-05-07 : hide/display controls.
     void hideDisplayControls();
-
-//    void about();
+    //注释
+  //  void about();
     //for movie control
+
 //    void setXRotStep(int t);
 //    void setYRotStep(int t);
 //    void setZRotStep(int t);
 //    void setNSteps(int t);
+
 
 public:
 	iDrawExternalParameter null_idep; //090918: for editing swc
@@ -188,6 +193,9 @@ public:
     QScrollArea *glWidgetArea, *pixmapLabelArea;
     QScrollBar* timeSlider;
 
+    //DLC Widget
+    //showTriangle *dlcWidget;
+
     // volume display control
 	QRadioButton *dispType_maxip, *dispType_minip, *dispType_alpha, *dispType_cs3d;
 	QLabel *thicknessSlider_Label, *transparentSlider_Label; //for disable, by RZC 080822
@@ -250,6 +258,7 @@ public:
 
 	void init_members() // more clear putting them here, by RZC 080828
 	{
+        qDebug()<<"jazzbrain debug init_members in v3dr_mainwindow.h";
 		default_animate_para();
 	    sAnimate = 0;
 		bAnimating = false;

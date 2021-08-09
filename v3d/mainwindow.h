@@ -74,6 +74,8 @@ class QSignalMapper;
 class XFormWidget;
 class V3dR_MainWindow;
 class Vaa3DPluginMenu;
+//dlcswcwidget
+class dlcSWCWindow;
 
 //class QList <V3dR_MainWindow *>;
 //struct LocationSimple; //080107
@@ -296,7 +298,7 @@ private:
 #if defined(USE_Qt5)
     QMdiArea *workspace;
 #else
-    QWorkspace *workspace;
+    QMdiArea *workspace;
 #endif
 #endif
     QSignalMapper *windowMapper;
@@ -446,7 +448,7 @@ private:
     QAction * procCellSeg_Gaussian_fit_1_spot_1_Gauss;
     QAction * procCellSeg_Gaussian_fit_1_spot_N_Gauss;
     QAction * procCellSeg_Gaussian_partition;
-        QAction * procCellSeg_manualCorrect;
+    QAction * procCellSeg_manualCorrect;
 #ifdef _ALLOW_WORKMODE_MENU_
     // Mode
     QAction * procModeDefault;

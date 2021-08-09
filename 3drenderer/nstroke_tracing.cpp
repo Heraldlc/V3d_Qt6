@@ -61,7 +61,7 @@
 #include "v3d_application.h"
 
 #ifndef test_main_cpp
-
+#include <QElapsedTimer>
 #include "../v3d/v3d_compile_constraints.h"
 #include "../v3d/landmark_property_dialog.h"
 #include "../v3d/surfaceobj_annotation_dialog.h"
@@ -81,7 +81,7 @@
 //#include <boost/thread/thread.hpp>
 
 #ifndef Q_OS_MAC
-//    #include <omp.h>
+    //注释#include <omp.h>
 #endif
 
 #include <boost/algorithm/string.hpp>
@@ -1962,14 +1962,15 @@ if (0)
 	{
 		if (listNeuronTree.size()>0 && curEditingNeuron>0 && curEditingNeuron<=listNeuronTree.size())
 		{
+
 			NeuronTree *p_tree = (NeuronTree *)(&(listNeuronTree.at(curEditingNeuron-1)));
 
             bool b_startnodeisspecialmarker=false;
 
             float ratio = getZoomRatio();
-//            int resindex = tf::PluginInterface::getRes();
+            //int resindex = tf::PluginInterface::getRes();
 
-//            double th_times = (7-resindex); //adaptive th_times, by XZ, 20190721
+           // double th_times = (7-resindex); //adaptive th_times, by XZ, 20190721
 
             My4DImage* image4d = v3dr_getImage4d(_idep);
             if(image4d)
@@ -3352,7 +3353,7 @@ void Renderer_gl1::selectMultiMarkersByStroke()
 
     // inform TeraFly (SAFE)
     // this does nothing except when TeraFly is active
-   // tf::TeraFly::doaction("marker multiselect");
+   //注释 tf::TeraFly::doaction("marker multiselect");
 }
 
 // @ADDED by Alessandro on 2015-05-07.
@@ -4645,7 +4646,7 @@ void Renderer_gl1::loopDetection()
 		}
 	}
 
-	w->progressBarPtr = new QProgressBar;
+    w->progressBarPtr = new QProgressBar;
 	w->progressBarPtr->show();
 	w->progressBarPtr->move(w->x() + w->width() - w->progressBarPtr->width() / 2, w->y() + w->height() - w->progressBarPtr->height() / 2);
 	w->progressBarPtr->setTextVisible(true);

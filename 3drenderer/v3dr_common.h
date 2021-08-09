@@ -58,8 +58,8 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) ?�Automatic reconstruct
 //#include "GLee2glew.h" //// change place to head of every *.cpp using GL extensions
 #include "GLee2glew.h"  //@ADD 2020-2-14 RZC
 
- //#include <QtOpenGL>
- //#include <QtTest>
+// #include <QtOpenGL>
+// #include <QtTest>
 
 
   #include <QtWidgets>
@@ -147,7 +147,7 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) ?�Automatic reconstruct
 #define POST_CLOSE(pQ)	POST_EVENT(pQ, QEvent::Close)
 #define ACTIVATE(w)	  { if(w) {QWidget* pQ=(QWidget*)w; pQ->raise(); POST_EVENT(pQ, QEvent::MouseButtonPress);} }
 
-#define SLEEP(t)  { QElapsedTimer qtime;  qtime.start();  while( qtime.elapsed() < t); }
+#define SLEEP(t)  { QTime qtime;  qtime.start();  while( qtime.elapsed() < t); }
 
 #define DELETE_AND_ZERO(p)	{ if ((p)!=NULL) delete (p); (p) = NULL; }
 #define Q_CSTR(qs)  ( (qs).toStdString().c_str() )

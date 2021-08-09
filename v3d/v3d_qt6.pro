@@ -27,6 +27,10 @@ RESOURCES += ../neuron_annotator/resources.qrc
 
 # Input
 HEADERS += \
+    ../3drenderer/camera.h \
+    ../3drenderer/dlcswcglwidget.h \
+    ../3drenderer/dlcswcwindow.h \
+    ../3drenderer/showtriangle.h \
     ../neuron_annotator/animation/AnimationFrame.h \
     ../neuron_annotator/animation/interpolate.h \
     ../neuron_annotator/animation/KeyFrame.h \
@@ -142,7 +146,8 @@ HEADERS += \
     ../webservice/impl/ConsoleObserverServiceImpl.h \
     ../webservice/impl/EntityAdapter.h \
     ../cell_counter/CellCounter3D.h \
-    CommandManager.h 
+    CommandManager.h  \
+    myopenglwidget.h
 
 
 SOURCES += \
@@ -247,6 +252,10 @@ SOURCES += \
 #    ../neuron_annotator/analysis/AnalysisTools.cpp \
 #    ../neuron_annotator/analysis/MaskChan.cpp \
 #    ../neuron_annotator/analysis/DilationErosion.cpp \
+    ../3drenderer/camera.cpp \
+    ../3drenderer/dlcswcglwidget.cpp \
+    ../3drenderer/dlcswcwindow.cpp \
+    ../3drenderer/showtriangle.cpp \
     ../webservice/gsoap2/stdsoap2.cpp \
     ../webservice/console/envC.cpp \
     ../webservice/console/cdsC.cpp \
@@ -256,7 +265,8 @@ SOURCES += \
     ../webservice/impl/ConsoleObserverServiceImpl.cpp \
     ../webservice/impl/EntityAdapter.cpp \
     ../cell_counter/CellCounter3D.cpp \
-    CommandManager.cpp
+    CommandManager.cpp \
+    myopenglwidget.cpp
 
 #FORMS += \
 #    ../neuron_annotator/gui/NaMainWindow.ui \
