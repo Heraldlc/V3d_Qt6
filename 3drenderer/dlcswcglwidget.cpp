@@ -1,33 +1,61 @@
 #include "dlcswcglwidget.h"
 #include <QDebug>
 #include <QFile>
+#include <QTimer>
+#include <QKeyEvent>
+#include <QDateTime>
 
-static GLuint VBO, VAO, EBO;
+static QVector3D cubePositions[] = {
+  QVector3D( 0.0f,  0.0f,  0.0f),
+  QVector3D( 2.0f,  5.0f, -15.0f),
+  QVector3D(-1.5f, -2.2f, -2.5f),
+  QVector3D(-3.8f, -2.0f, -12.3f),
+  QVector3D( 2.4f, -0.4f, -3.5f),
+  QVector3D(-1.7f,  3.0f, -7.5f),
+  QVector3D( 1.3f, -2.0f, -2.5f),
+  QVector3D( 1.5f,  2.0f, -2.5f),
+  QVector3D( 1.5f,  0.2f, -1.5f),
+  QVector3D(-1.3f,  1.0f, -1.5f)
+};
 
 dlcSwcGLWidget::dlcSwcGLWidget(QWidget *parent)
     :QOpenGLWidget(parent)
 {
+    camera = std::make_unique<Camera>(QVector3D(5.0f, 0.0f, 10.0f));
+    m_bLeftPressed = false;
 
+    m_pTimer = new QTimer(this);
+    connect(m_pTimer, &QTimer::timeout, this, [=]{
+        m_nTimeValue += 1;
+        update();
+    });
+    m_pTimer->start(40);
 }
 
 dlcSwcGLWidget::~dlcSwcGLWidget()
 {
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    //    glDeleteBuffers(1, &EBO);
+   makeCurrent();
+
+   vbo.destroy();
+   vao.destroy();
+
+   delete texture1;
+   delete texture2;
+
+   doneCurrent();
 }
 
 void dlcSwcGLWidget::initializeGL()
 {
     this->initializeOpenGLFunctions();
 
-    bool success = shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, "triangle.vert");
+    bool success = shaderProgram.addShaderFromSourceFile(QOpenGLShader::Vertex, "./shader/camera.vert");
     if (!success) {
         qDebug() << "shaderProgram addShaderFromSourceFile failed!" << shaderProgram.log();
         return;
     }
 
-    success = shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, "triangle.frag");
+    success = shaderProgram.addShaderFromSourceFile(QOpenGLShader::Fragment, "./shader/camera.frag");
     if (!success) {
         qDebug() << "shaderProgram addShaderFromSourceFile failed!" << shaderProgram.log();
         return;
@@ -38,44 +66,103 @@ void dlcSwcGLWidget::initializeGL()
         qDebug() << "shaderProgram link failed!" << shaderProgram.log();
     }
 
-    //VAO，VBO数据部分
+    //VAO，VBO data
     float vertices[] = {
-        0.5f,  0.5f, 0.0f,  // top right
-        0.5f, -0.5f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f,  // bottom left
-        -0.5f,  0.5f, 0.0f   // top left
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
     };
-    unsigned int indices[] = {  // note that we start from 0!
-                                0, 1, 3,  // first Triangle
-                                1, 2, 3   // second Triangle
-                             };
 
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-    glBindVertexArray(VAO);
+    QOpenGLVertexArrayObject::Binder vaoBind(&vao);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);  //顶点数据复制到缓冲
+    vbo.create();
+    vbo.bind();
+    vbo.allocate(vertices, sizeof(vertices));
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    // configure global opengl state
+    // -----------------------------
+    glEnable(GL_DEPTH_TEST);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void*)0);//告诉程序如何解析顶点数据
-    glEnableVertexAttribArray(0);
+    // position attribute
+    int attr = -1;
+    attr = shaderProgram.attributeLocation("aPos");
+    shaderProgram.setAttributeBuffer(attr, GL_FLOAT, 0, 3, sizeof(GLfloat) * 5);
+    shaderProgram.enableAttributeArray(attr);
+    // texture coord attribute
+    attr = shaderProgram.attributeLocation("aTexCoord");
+    shaderProgram.setAttributeBuffer(attr, GL_FLOAT, sizeof(GLfloat) * 3, 2, sizeof(GLfloat) * 5);
+    shaderProgram.enableAttributeArray(attr);
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);//取消VBO的绑定, glVertexAttribPointer已经把顶点属性关联到顶点缓冲对象了
+    // texture 1
+    // ---------
+    texture1 = new QOpenGLTexture(QImage("container.jpg"), QOpenGLTexture::GenerateMipMaps);
+    if(!texture1->isCreated()){
+        qDebug() << "Failed to load texture";
+    }
+    // set the texture wrapping parameters
+    texture1->setWrapMode(QOpenGLTexture::DirectionS, QOpenGLTexture::Repeat);
+    texture1->setWrapMode(QOpenGLTexture::DirectionT, QOpenGLTexture::Repeat);
+    // set texture filtering parameters
+    texture1->setMinificationFilter(QOpenGLTexture::Linear);
+    texture1->setMagnificationFilter(QOpenGLTexture::Linear);
 
-    //    remember: do NOT unbind the EBO while a VAO is active as the bound element buffer object IS stored in the VAO; keep the EBO bound.
-    //    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    // texture 2
+    // ---------
+    texture2 = new QOpenGLTexture(QImage("awesomeface.png").mirrored(true, true), QOpenGLTexture::GenerateMipMaps);
+    if(!texture2->isCreated()){
+        qDebug() << "Failed to load texture";
+    }
+    // set the texture wrapping parameters
+    texture2->setWrapMode(QOpenGLTexture::DirectionS, QOpenGLTexture::Repeat);
+    texture2->setWrapMode(QOpenGLTexture::DirectionT, QOpenGLTexture::Repeat);
+    // set texture filtering parameters
+    texture2->setMinificationFilter(QOpenGLTexture::Linear);
+    texture1->setMagnificationFilter(QOpenGLTexture::Linear);
 
-    //    You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
-    //    VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-    glBindVertexArray(0);   //取消VAO绑定
+    // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
+    shaderProgram.bind();   // don't forget to activate/use the shader before setting uniforms!
+    shaderProgram.setUniformValue("texture1", 0);
+    shaderProgram.setUniformValue("texture2", 1);
 
-    //线框模式，QOpenGLExtraFunctions没这函数, 3_3_Core有
-    //    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    vbo.release();
 }
 
 void dlcSwcGLWidget::resizeGL(int w, int h)
@@ -83,15 +170,92 @@ void dlcSwcGLWidget::resizeGL(int w, int h)
     glViewport(0, 0, w, h);
 }
 
+
 void dlcSwcGLWidget::paintGL()
 {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
+
+    camera->processInput(1.0f);
+
+    // bind textures on corresponding texture units
+    glActiveTexture(GL_TEXTURE0);
+    texture1->bind();
+    glActiveTexture(GL_TEXTURE1);
+    texture2->bind();
 
     shaderProgram.bind();
-    glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-    //    glDrawArrays(GL_TRIANGLES, 0, 6);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
+    QMatrix4x4 projection;
+    projection.perspective(camera->zoom, 1.0f * width() / height(), 0.1f, 100.f);
+    shaderProgram.setUniformValue("projection", projection);
+
+    // camera/view transformation
+    shaderProgram.setUniformValue("view", camera->getViewMatrix());
+
+    {// render box
+        QOpenGLVertexArrayObject::Binder vaoBind(&vao);
+
+        for (unsigned int i = 0; i < 10; i++) {
+           // calculate the model matrix for each object and pass it to shader before drawing
+           QMatrix4x4 model;
+           model.translate(cubePositions[i]);
+           float angle = (i + 1.0f) * m_nTimeValue;
+           model.rotate(angle, QVector3D(1.0f, 0.3f, 0.5f));
+           shaderProgram.setUniformValue("model", model);
+           glDrawArrays(GL_TRIANGLES, 0, 36);
+        }
+    }
+
+    texture1->release();
+    texture2->release();
     shaderProgram.release();
+}
+
+void dlcSwcGLWidget::keyPressEvent(QKeyEvent *event)
+{
+    int key = event->key();
+    if (key >= 0 && key < 1024)
+        camera->keys[key] = true;
+}
+
+void dlcSwcGLWidget::keyReleaseEvent(QKeyEvent *event)
+{
+    int key = event->key();
+    if (key >= 0 && key < 1024)
+        camera->keys[key] = false;
+}
+
+void dlcSwcGLWidget::mousePressEvent(QMouseEvent *event)
+{
+    if(event->button() == Qt::LeftButton){
+        m_bLeftPressed = true;
+        m_lastPos = event->pos();
+    }
+}
+
+void dlcSwcGLWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event);
+    m_bLeftPressed = false;
+
+}
+
+void dlcSwcGLWidget::mouseMoveEvent(QMouseEvent *event)
+{
+    if (m_bLeftPressed) {
+        int xpos = event->pos().x();
+        int ypos = event->pos().y();
+
+        int xoffset = xpos - m_lastPos.x();
+        int yoffset = m_lastPos.y() - ypos;
+        m_lastPos = event->pos();
+        camera->processMouseMovement(xoffset, yoffset);
+    }
+}
+
+void dlcSwcGLWidget::wheelEvent(QWheelEvent *event)
+{
+    QPoint offset = event->angleDelta();
+    camera->processMouseScroll(offset.y()/20.0f);
 }

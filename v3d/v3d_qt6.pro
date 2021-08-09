@@ -27,6 +27,7 @@ RESOURCES += ../neuron_annotator/resources.qrc
 
 # Input
 HEADERS += \
+    ../3drenderer/camera.h \
     ../3drenderer/dlcswcglwidget.h \
     ../3drenderer/dlcswcwindow.h \
     ../3drenderer/showtriangle.h \
@@ -251,6 +252,7 @@ SOURCES += \
 #    ../neuron_annotator/analysis/AnalysisTools.cpp \
 #    ../neuron_annotator/analysis/MaskChan.cpp \
 #    ../neuron_annotator/analysis/DilationErosion.cpp \
+    ../3drenderer/camera.cpp \
     ../3drenderer/dlcswcglwidget.cpp \
     ../3drenderer/dlcswcwindow.cpp \
     ../3drenderer/showtriangle.cpp \

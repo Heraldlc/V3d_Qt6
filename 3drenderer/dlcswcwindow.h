@@ -8,8 +8,6 @@
 #include <QWidget>
 #include <QMainWindow>
 
-
-
 #include "xformwidget.h"
 #include "dlcswcglwidget.h"
 

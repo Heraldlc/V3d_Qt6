@@ -133,7 +133,7 @@ void Renderer_gl1::setupData(void* idep)
 
     this->_idep = idep;
 
-     b_limitedsize = (tryTexStream==0); //091022, 100720: down-sampling only if tryTexStream==0
+    b_limitedsize = (tryTexStream==0); //091022, 100720: down-sampling only if tryTexStream==0
 
      // // using saved data. ZJL 111020
      // if(((iDrawExternalParameter*)_idep)->bSavedDataFor3DViewer && b_limitedsize)
