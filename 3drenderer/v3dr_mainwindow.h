@@ -45,8 +45,7 @@ Last update: 080814: move iDrawExternalParameter to v3d_core.h
 
 #include "qtr_widget.h"
 
-//DLC
-//#include "showtriangle.h"
+
 
 class V3dR_GLWidget;
 

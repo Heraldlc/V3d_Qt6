@@ -1,6 +1,6 @@
 #-----------From v3d.pro-------------------------
 #include(v3d_essential.pro)
-#include(../terafly/terafly.pro)
+include(../terafly/terafly.pro)
 
 ## mozak module
 #include(../mozak/m_terafly/m_teramanager.pro)
@@ -27,10 +27,6 @@ RESOURCES += ../neuron_annotator/resources.qrc
 
 # Input
 HEADERS += \
-    ../3drenderer/camera.h \
-    ../3drenderer/dlcswcglwidget.h \
-    ../3drenderer/dlcswcwindow.h \
-    ../3drenderer/showtriangle.h \
     ../neuron_annotator/animation/AnimationFrame.h \
     ../neuron_annotator/animation/interpolate.h \
     ../neuron_annotator/animation/KeyFrame.h \
@@ -252,10 +248,6 @@ SOURCES += \
 #    ../neuron_annotator/analysis/AnalysisTools.cpp \
 #    ../neuron_annotator/analysis/MaskChan.cpp \
 #    ../neuron_annotator/analysis/DilationErosion.cpp \
-    ../3drenderer/camera.cpp \
-    ../3drenderer/dlcswcglwidget.cpp \
-    ../3drenderer/dlcswcwindow.cpp \
-    ../3drenderer/showtriangle.cpp \
     ../webservice/gsoap2/stdsoap2.cpp \
     ../webservice/console/envC.cpp \
     ../webservice/console/cdsC.cpp \
@@ -598,15 +590,15 @@ HEADERS += \
     ../vrrenderer/VR_MainWindow.h
 
 SOURCES += \
-#    ../vrrenderer/v3dr_gl_vr.cpp \
-#    ../vrrenderer/Cylinder.cpp \
-#    ../vrrenderer/Sphere.cpp \
-#    ../vrrenderer/Matrices.cpp \
-#    ../vrrenderer/lodepng.cpp \
-#    ../vrrenderer/RenderableObject.cpp \
-#    ../vrrenderer/VRFinger.cpp \
-#    ../vrrenderer/V3dR_Communicator.cpp \
-#    ../vrrenderer/VR_MainWindow.cpp
+    ../vrrenderer/v3dr_gl_vr.cpp \
+    ../vrrenderer/Cylinder.cpp \
+    ../vrrenderer/Sphere.cpp \
+    ../vrrenderer/Matrices.cpp \
+    ../vrrenderer/lodepng.cpp \
+    ../vrrenderer/RenderableObject.cpp \
+    ../vrrenderer/VRFinger.cpp \
+    ../vrrenderer/V3dR_Communicator.cpp \
+    ../vrrenderer/VR_MainWindow.cpp
 }
 
 FORMS += landmark_property.ui \

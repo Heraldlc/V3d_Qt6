@@ -44,6 +44,7 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) Automatic reconstruction 
 #include <sstream>
 #include <string>
 #include <cmath>
+#include <QPainter>
 #include <GL/gl.h>
 #include <GL/glew.h>
 Renderer::SelectMode Renderer::defaultSelectMode = Renderer::smObject;
@@ -70,9 +71,8 @@ void Renderer::makeCurrent()
     if (! widget)  return;
 
     V3dR_GLWidget* w = (V3dR_GLWidget*)widget;
-//	QGLContext* ctx = (QGLContext*)w->context();
-//	if ( ctx && ctx->isValid() )
-        w->makeCurrent();
+
+    w->makeCurrent();
 }
 
 void Renderer::drawString(float x, float y, float z, const char* text, int shadow, int fontsize)
@@ -89,23 +89,16 @@ void Renderer::drawString(float x, float y, float z, const char* text, int shado
             // CMB MSVC debugger with Qt 4.7 triggers assert if font weight > 99
             // QFont f;  f.setPointSize(f.pointSize()+1); f.setWeight(f.weight()+200);
             QFont f;  f.setPointSize(f.pointSize()+1); f.setWeight(QFont::Thin);
-#if defined(USE_Qt5)
-#else
-            //((QOpenGLWidget_proxy*)widget)->renderText(x,y,z, QString(text), f);
-#endif
+
+           // renderText(x,y,z, QString(text), f);
+
         glPopAttrib();
         glDepthFunc(GL_LEQUAL);
     }
 
     QFont f1;  f1.setPointSize((fontsize>0)?fontsize:30); //f1.setWeight(99);
-    if (fontsize>0)
-#if defined(USE_Qt5)
-#else
-        //((QOpenGLWidget_proxy*)widget)->renderText(x,y,z, QString(text), f1);
-    //else
-       // ((QOpenGLWidget_proxy*)widget)->renderText(x,y,z, QString(text));
-#endif
-
+//    if (fontsize>0)
+//        ((V3dR_GLWidget *)widget)->renderText(x,y,z, QString(text));
 
     if (shadow)
     {
@@ -401,6 +394,7 @@ void Renderer::setBoundingBoxSpace(BoundingBox BB)
     // from boundingBox space ==> fit in [-1, +1]^3
     glScaled(s[0], s[1], s[2]);
     glTranslated(t[0], t[1], t[2]);
+
 }
 
 inline void box_quads(const BoundingBox & BB)
@@ -538,9 +532,11 @@ void Renderer::drawBoundingBoxAndAxes(BoundingBox BB, float BlineWidth, float Al
             glColor3f(1, 0, 0);		box_quads( BoundingBox(A0, XYZ(A1.x, A0.y+ld, A0.z+ld)) );
             glColor3f(0, 1, 0);		box_quads( BoundingBox(A0, XYZ(A0.x+ld, A1.y, A0.z+ld)) );
             glColor3f(0, 0, 1);		box_quads( BoundingBox(A0, XYZ(A0.x+ld, A0.y+ld, A1.z)) );
+
         }
         glEnd();
 
+        // this draw x,y,z coord
         glColor3f(1, 0, 0);		drawString(A1.x+td, A0.y, A0.z, "X", 1, 0);
         glColor3f(0, 1, 0);		drawString(A0.x, A1.y+td, A0.z, "Y", 1, 0);
         glColor3f(0, 0, 1);		drawString(A0.x, A0.y, A1.z+td, "Z", 1, 0);
@@ -553,12 +549,12 @@ void Renderer::drawBoundingBoxAndAxes(BoundingBox BB, float BlineWidth, float Al
         glPolygonOffset(0, -1); // deal z-fighting with volume, 081120
 
         glLineWidth(BlineWidth); // work only before glBegin(), by RZC 080827
-        glBegin(GL_QUADS);
-        //glBegin(GL_LINES);
-        {
-            glColor3fv(color_line.c);	box_quads(BB);
-        }
-        glEnd();
+//        glBegin(GL_QUADS);qt6
+//        //glBegin(GL_LINES);
+//        {
+//            glColor3fv(color_line.c);	box_quads(BB);
+//        }
+//        glEnd();
     }
 
     glPopAttrib();
@@ -568,6 +564,7 @@ void Renderer::drawBoundingBoxAndAxes(BoundingBox BB, float BlineWidth, float Al
 void Renderer::drawVaa3DInfo(int fontsize)
 {
     // no scale here
+    qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
     GLdouble mRot[16];
     glGetDoublev(GL_MODELVIEW_MATRIX, mRot);
     for (int i=0; i<3; i++) mRot[i*4 +3]=mRot[3*4 +i]=0; mRot[3*4 +3]=1; // only reserve rotation, remove translation in mRot
@@ -607,7 +604,7 @@ void Renderer::drawVaa3DInfo(int fontsize)
         //sprintf(str, "%s", "BigNeuron.org");
         sprintf(str, "%s", "vaa3d.org");
 
-        drawString(A0.x + td, A0.y, A0.z, str, 0, fontsize);
+        drawString(A0.x + td, A0.y, A0.z, str, 0, fontsize);  // since renderText is obsolate, the text cannot show. 20210825
 //        drawString(A0.x + td, A0.y + td, A0.z, "bigneuron.org", 0, fontsize);
         //glColor3f(1, 0, 0);		drawString(A1.x + td, A0.y, A0.z, "X");
         //glColor3f(0, 1, 0);		drawString(A0.x, A1.y + td, A0.z, "Y");
@@ -652,6 +649,7 @@ void Renderer::drawEditInfo()
 
     if(editinput!=0)
     {
+        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
         BoundingBox BB = UNIT_BoundingBox;
         float D = (BB.Dmax());
         float ld = D*0.0001; //1e-4 is best
@@ -687,7 +685,7 @@ void Renderer::drawEditInfo()
 
         sprintf(str, "%s", editdisplay.c_str());
 
-        drawString(A0.x + td, A0.y, A0.z, str, 0, 18);
+        drawString(A0.x + td, A0.y, A0.z, str, 0, 18); // same renderText problem above, 20210825
 //        drawString(A0.x + td, A0.y + td, A0.z, "bigneuron.org", 0, fontsize);
         //glColor3f(1, 0, 0);		drawString(A1.x + td, A0.y, A0.z, "X");
         //glColor3f(0, 1, 0);		drawString(A0.x, A1.y + td, A0.z, "Y");
@@ -698,6 +696,7 @@ void Renderer::drawEditInfo()
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
     glMatrixMode(GL_MODELVIEW);
+
 
 }
 
@@ -1655,13 +1654,13 @@ void setFloatDrawOp(int pass, int sShow) // operator FloatDraw, by Ruan Zongcai 
         glEnable(GL_STENCIL_TEST);
         glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);// no color
         glDepthMask(GL_TRUE);								//
-        glStencilMask(~0);									//
+        glStencilMask(~0);          //~0?
                                                             //
         glStencilFunc(GL_GREATER, 1, ~0);					// 1>? 0--background(image) id
         glStencilOp(GL_KEEP, GL_REPLACE, GL_REPLACE);			// write 1--drawable region mask, over image
         //glStencilOp(GL_KEEP, GL_KEEP,    GL_REPLACE);			// write 1--drawable region mask, over object group
         glDepthFunc(GL_GEQUAL);								// when zfar >=? (set drawable background region depth to zfar)
-        glDepthRange(.999, 1);				// write depth the farthest, .999 for compatible with polygonOffset
+        glDepthRange(0.999, 1);				// write depth the farthest, .999 for compatible with polygonOffset
 
         //glStencilFunc(GL_NEVER, 0, 0);			// turn off part 1, for debug
         //090726 RZC:
@@ -1689,11 +1688,11 @@ void setFloatDrawOp(int pass, int sShow) // operator FloatDraw, by Ruan Zongcai 
         ///////////////////////////////////////////////
         glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);    //
         glDepthMask(GL_TRUE);								//
-        glStencilMask(0);									// no stencil
+        glStencilMask(0xFF);									// HAVE stencil
         glDepthRange(0, 1);					// write depth normally
                                                             //
         glStencilFunc(GL_EQUAL, 1, ~0);						// =1--drawable region id, real drawing here
-        glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP); 			// no change stencil mask
+        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE); 			// no change stencil mask
         glDepthFunc(GL_LEQUAL);								// when z<=? draw object
     }
     if (pass==2 && sShow==2) // floating pass 3 -------------------------------------------------------------------------
@@ -1705,7 +1704,7 @@ void setFloatDrawOp(int pass, int sShow) // operator FloatDraw, by Ruan Zongcai 
         //////////////////////////////////////////////
         glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);// no color
         glDepthMask(GL_FALSE);								// no depth
-        glStencilMask(~0);									//
+        glStencilMask(0x00);									//
                                                             //
         glStencilFunc(GL_EQUAL, 1, ~0);						// =1--drawable region mask
         glStencilOp(GL_KEEP, GL_KEEP, GL_INCR); 			// increase mask to 2-object id, no drawing, just stencil

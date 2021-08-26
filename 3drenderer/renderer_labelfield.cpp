@@ -545,9 +545,9 @@ void Renderer_gl1::drawLabelfieldSurf()
 
     glPushMatrix();
 
-    for (int pass=0; pass<numPassFloatDraw(sShowSurfObjects); pass++)
-    {
-        setFloatDrawOp(pass, sShowSurfObjects);
+//    for (int pass=0; pass<numPassFloatDraw(sShowSurfObjects); pass++)
+
+//        setFloatDrawOp(pass, sShowSurfObjects);
 
         for (int i=0; i<listLabelSurf.size(); i++)
         {
@@ -566,8 +566,8 @@ void Renderer_gl1::drawLabelfieldSurf()
 
             if (S.selected) HIGHLIGHT_OFF();
         }
-    }
-    setFloatDrawOp(-1, sShowSurfObjects);
+
+//    setFloatDrawOp(-1, sShowSurfObjects);
 
     glPopMatrix();
 }

@@ -32,7 +32,7 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) Automatic reconstruction 
 #include "v3dr_glwidget.h"
 #include "freeglut_geometry_r.c"
 
-//#include "../terafly/src/presentation/PMain.h"
+#include "../terafly/src/presentation/PMain.h"
 
 #include "../io/asc_to_swc.h"
 //#include "../io/sswc_to_swc.h"
@@ -711,6 +711,7 @@ void Renderer_gl1::loadObjectFilename(const QString& filename)
         // if swc
         else if (filename.endsWith(".swc", Qt::CaseInsensitive))
         {
+            qDebug()<<"----DLC in LoadObjectFileName:swc-----";
             type = stNeuronStructure;
             loadNeuronTree(filename);
             if (!(ep->swc_file_list.contains(filename)))
@@ -933,6 +934,7 @@ void Renderer_gl1::setSurfaceStretchSpace()
             b_surfStretch)  // 090423 RZC: stretch surface object with image thickness
     {
         glScaled(thicknessX, thicknessY, thicknessZ);
+
     }
 }
 void Renderer_gl1::drawObj()
@@ -955,6 +957,7 @@ void Renderer_gl1::drawObj()
         drawCellList();
     glPopName();
     if (b_useClipBoxforSubjectObjs)  disableClipBoundingBox(); // surface clip do not include markers, and labelText
+
 }
 #define IS_TRANSPARENT  (polygonMode>=3 && !b_selecting)
 void Renderer_gl1::disObjLighting()
@@ -1438,9 +1441,8 @@ void Renderer_gl1::drawCellList()
     if (sShowSurfObjects==0) return;
     float maxD = boundingBox.Dmax();
     float marker_size = maxD * markerSize / 1000.f;
-    for (int pass=0; pass<numPassFloatDraw(sShowSurfObjects); pass++)
-    {
-        setFloatDrawOp(pass, sShowSurfObjects);
+
+        //setFloatDrawOp(0, sShowSurfObjects);
         for (int i=0; i<listCell.size(); i++)
         {
             const CellAPO& S = listCell[i];
@@ -1467,8 +1469,8 @@ void Renderer_gl1::drawCellList()
             glPopMatrix();
             if (S.selected) HIGHLIGHT_OFF();
         }
-    }
-    setFloatDrawOp(-1, sShowSurfObjects);
+
+    //setFloatDrawOp(-1, sShowSurfObjects);
     // cell name
     //qDebug(" b_showCellName = %i", (b_showCellName));
     //qDebug("widget = 0x%p", widget);
@@ -2642,7 +2644,8 @@ void Renderer_gl1::drawNeuronTree(int index)
                      //   setColorByAncestry(S1, seconds);
                    // }
                     glBegin(GL_LINES);
-                    glVertex3f(S0.x, S0.y, S0.z);	glVertex3f(S1.x, S1.y, S1.z);
+                    glVertex3f(S0.x, S0.y, S0.z);
+                    glVertex3f(S1.x, S1.y, S1.z);
                     glEnd();
                     if (nodeSize)
                     {
@@ -2786,9 +2789,12 @@ void Renderer_gl1::drawNeuronTreeList()
     //		glStencilMask(-1);
     //		//glDepthMask(GL_TRUE);
     //	}
-    for (int pass=0; pass<numPassFloatDraw(sShowSurfObjects); pass++)
-    {
-        setFloatDrawOp(pass, sShowSurfObjects);
+    //for (int pass=0; pass<2; pass++) //注释这行，让绘制只走1遍
+
+
+        //setFloatDrawOp(pass, sShowSurfObjects);
+        //setFloatDrawOp(1,2);
+
         for (int i=0; i<listNeuronTree.size(); i++)
         {
             const NeuronTree& S = listNeuronTree[i];
@@ -2799,8 +2805,8 @@ void Renderer_gl1::drawNeuronTreeList()
             glPopName();
             if (S.selected) HIGHLIGHT_OFF();
         }
-    }
-    setFloatDrawOp(-1, sShowSurfObjects);
+
+    //setFloatDrawOp(-1, sShowSurfObjects);
 //	glEnable(GL_LIGHTING);
 //	glDisable(GL_CULL_FACE);
     glPopAttrib();
@@ -2827,9 +2833,9 @@ void Renderer_gl1::drawGrid()
     //glCullFace(GL_BACK);
     //glEnable(GL_CULL_FACE);
     float eps = gridSpacing*.01;
-    for (int pass=0; pass<numPassFloatDraw(sShowSurfObjects); pass++)
-    {
-        setFloatDrawOp(pass, sShowSurfObjects);
+//    for (int pass=0; pass<numPassFloatDraw(sShowSurfObjects); pass++)
+//    {
+        //setFloatDrawOp(pass, sShowSurfObjects);
         for (int i=0; i<gridList.size(); i++)
         {
             ImageMarker gridMarker = gridList.at(i);
@@ -2870,8 +2876,8 @@ void Renderer_gl1::drawGrid()
             glPopName();
 
         }
-    }
-    setFloatDrawOp(-1, sShowSurfObjects);
+
+//    setFloatDrawOp(-1, sShowSurfObjects);
 //	glEnable(GL_LIGHTING);
 //	glDisable(GL_CULL_FACE);
     glPopAttrib();

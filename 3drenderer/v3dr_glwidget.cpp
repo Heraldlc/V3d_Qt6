@@ -49,8 +49,8 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) Automatic reconstruction 
 #include "v3dr_surfaceDialog.h"
 #include "v3dr_colormapDialog.h"
 #include "v3dr_mainwindow.h"
-//#include "../terafly/src/control/CPlugin.h"
-//#include "../terafly/src/presentation/PMain.h"
+#include "../terafly/src/control/CPlugin.h"
+#include "../terafly/src/presentation/PMain.h"
 #include "../v3d/vr_vaa3d_call.h"
 // Dynamically choice a renderer
 #include "renderer.h"
@@ -64,6 +64,7 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) Automatic reconstruction 
 
 #include<QWidget>
 #include <QMessageBox>
+#include <QOpenGLFunctions_1_1>
 bool V3dR_GLWidget::disableUndoRedo = false;
 bool V3dR_GLWidget::skipFormat = false; // 201602 TDP: allow skip format to avoid ASSERT q_ptr error on closing window
 #ifdef __ALLOW_VR_FUNCS__
@@ -81,10 +82,10 @@ V3dr_surfaceDialog *V3dR_GLWidget::surfaceDlg = 0;
  #define POST_updateGL update  // prevent direct updateGL when rotation which causes re-entering shack problems, by RZC 080925
  #define DO_updateGL	update  // macro to control direct updateGL or post update, by RZC 081007
 #else
- #define POST_updateGL update  // prevent direct updateGL when rotation which causes re-entering shack problems, by RZC 080925
+ #define POST_updateGL QOpenGLWidget::update  // prevent direct updateGL when rotation which causes re-entering shack problems, by RZC 080925
 // #define DO_updateGL	updateGL  // macro to control direct updateGL or post update, by RZC 081007
 //修改了
-#define DO_updateGL	update
+#define DO_updateGL	QOpenGLWidget::update
 #endif
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -133,7 +134,7 @@ V3dR_GLWidget::~V3dR_GLWidget()
 }
 
 V3dR_GLWidget::V3dR_GLWidget(iDrawExternalParameter* idep, QWidget* mainWindow, QString title)
-    : QOpenGLWidget(mainWindow) //090705解除注释就可以初始化了,这就非常的恶心，找了那么久，原因居然是这个
+    : QOpenGLWidget(mainWindow)
 {
     qDebug("V3dR_GLWidget::V3dR_GLWidget ========================================");
 
@@ -346,10 +347,12 @@ void V3dR_GLWidget::initializeGL()
     makeCurrent();
 
     QSurfaceFormat format;
-    format.setDepthBufferSize(24);
+    format.setVersion(2, 0);
     format.setStencilBufferSize(8);
+    format.setDepthBufferSize(24);    
     format.setProfile(QSurfaceFormat::CompatibilityProfile);
-    QSurfaceFormat::setDefaultFormat(format);
+    setFormat(format);
+
 
     //choice renderer according to OpenGl version
     choiceRenderer();
@@ -599,7 +602,7 @@ void V3dR_GLWidget::paintEvent(QPaintEvent *event)
 //	else
     {
         _still = false;
-        QOpenGLWidget_proxy::paintEvent(event);
+        QOpenGLWidget::paintEvent(event);
 
         if (needStillPaint()) //pending
         {
@@ -716,8 +719,12 @@ void V3dR_GLWidget::mouseMoveEvent(QMouseEvent *event)
         if ( ABS(dx) + ABS(dy) >=2 )
     {
         (renderer->movePen(event->x(), event->y(), true));
+        QPaintEvent *pEvent;
+        paintEvent(pEvent);
 
-        DO_updateGL(); //instantly display pen track
+        //DO_updateGL(); //how do I instantly display pen track without using updateGL?
+
+
         return;
     }
 
@@ -750,7 +757,7 @@ void V3dR_GLWidget::mouseMoveEvent(QMouseEvent *event)
 }
 
 //滚轮事件注释
-void V3dR_GLWidget::wheelEvent(QGraphicsSceneWheelEvent *event)
+void V3dR_GLWidget::wheelEvent(QWheelEvent *event)
 {
     qDebug()<<"V3dR_GLWidget::wheelEvent ... ...";
 
@@ -767,13 +774,14 @@ void V3dR_GLWidget::wheelEvent(QGraphicsSceneWheelEvent *event)
 
     setFocus(); // accept KeyPressEvent, by RZC 081028
 
-    float d = (event->delta())/100;  // ~480
+    QPoint numDegress = event->angleDelta()/100;
+    //float d = (event->delta())/100;  // ~480
     //qDebug("V3dR_GLWidget::wheelEvent->delta = %g",d);
     #define MOUSE_ZOOM(dz)    (int(dz*4* MOUSE_SENSITIVE));
     #define MOUSE_ZROT(dz)    (int(dz*8* MOUSE_SENSITIVE));
 
-    int zoomStep = MOUSE_ZOOM(d);
-    int zRotStep = MOUSE_ZROT(d);
+    int zoomStep = MOUSE_ZOOM(numDegress.y());
+    int zRotStep = MOUSE_ZROT(numDegress.y());
 
     if (IS_TRANSLATE_MODIFIER) // shift+mouse control view space translation, 081104
     {
@@ -785,7 +793,7 @@ void V3dR_GLWidget::wheelEvent(QGraphicsSceneWheelEvent *event)
     }
     else // default
     {
-        (renderer->hitWheel(event->pos().x(), event->pos().y())); //by PHC, 130424. record the wheel location when zoom-in or out
+        (renderer->hitWheel(event->angleDelta().x(), event->angleDelta().y())); //by PHC, 130424. record the wheel location when zoom-in or out
 
 #ifdef _NEURON_ASSEMBLER_
         // As Alessandro points out in [CViewer::invokedFromVaa3D], Vaa3D somehow does not really disconnect setZoom slot
@@ -1000,13 +1008,13 @@ void V3dR_GLWidget::handleKeyPressEvent(QKeyEvent * e)  //090428 RZC: make publi
             }
             else if (renderer)
             {
-                //注释了
+
                 Renderer_gl1* thisRenderer = static_cast<Renderer_gl1*>(this->getRenderer());
                 if (thisRenderer->selectMode == Renderer::smDeleteMultiNeurons)
                 {
 
-                    //注释了thisRenderer->setDeleteKey(1);
-                    //thisRenderer->deleteMultiNeuronsByStroke();
+                    thisRenderer->setDeleteKey(1);
+                    thisRenderer->deleteMultiNeuronsByStroke();
                 }
             }
             break;
@@ -1262,12 +1270,12 @@ void V3dR_GLWidget::handleKeyPressEvent(QKeyEvent * e)  //090428 RZC: make publi
             else if (renderer)
             {
                 Renderer_gl1* thisRenderer = static_cast<Renderer_gl1*>(this->getRenderer());
-                  //注释了
-//                if (thisRenderer->selectMode == Renderer::smDeleteMultiNeurons)
-//                {
-//                    thisRenderer->setDeleteKey(2);
-//                    thisRenderer->deleteMultiNeuronsByStroke();
-//                }
+
+                if (thisRenderer->selectMode == Renderer::smDeleteMultiNeurons)
+                {
+                    thisRenderer->setDeleteKey(2);
+                    thisRenderer->deleteMultiNeuronsByStroke();
+                }
             }
             else
                 callAutoTracers();
@@ -1275,7 +1283,7 @@ void V3dR_GLWidget::handleKeyPressEvent(QKeyEvent * e)  //090428 RZC: make publi
         case Qt::Key_D:
             if (IS_ALT_MODIFIER)
             {
-                callStrokeDeleteMultiNeurons();//For multiple segments deleting shortcut, by ZZ,02212018
+                callStrokeDeleteMultiNeurons(); //For multiple segments deleting shortcut, by ZZ,02212018
             }
             else
             {
@@ -1290,7 +1298,7 @@ void V3dR_GLWidget::handleKeyPressEvent(QKeyEvent * e)  //090428 RZC: make publi
                     for (set<size_t>::iterator segIDit = thisRenderer->subtreeSegs.begin(); segIDit != thisRenderer->subtreeSegs.end(); ++segIDit)
                         curImg->tracedNeuron.seg[*segIDit].to_be_deleted = true;
 
-                    //注释了thisRenderer->escPressed_subtree();
+                    thisRenderer->escPressed_subtree();
 
                     curImg->update_3drenderer_neuron_view(this, thisRenderer);
                     curImg->proj_trace_history_append();
@@ -3858,7 +3866,7 @@ void V3dR_GLWidget::callStrokeDeleteMultiNeurons()
     if (renderer)
     {
         renderer->callStrokeDeleteMultiNeurons();
-        POST_updateGL();
+        update();
     }
 }
 
@@ -3990,6 +3998,104 @@ void V3dR_GLWidget::subtreeHighlightModeMonitor()
         QTimer::singleShot(50, this, SLOT(subtreeHighlightModeMonitor()));
     }
 }
+
+// Qt6 update function:reimplenment QGLWidget::renderText(), added by DLC 20210824
+static void draw_text(QPainter *p, int x, int y, const QString &str, const QFont &font)
+{
+    GLfloat color[4];
+    glGetFloatv(GL_CURRENT_COLOR, &color[0]);
+
+    QColor col;
+    col.setRgbF(color[0], color[1], color[2],color[3]);
+    QPen old_pen = p->pen();
+    QFont old_font = p->font();
+
+    p->setPen(col);
+    p->setFont(font);
+    p->drawText(x, y, str);
+
+    p->setPen(old_pen);
+    p->setFont(old_font);
+}
+
+static void restore_gl_state()
+{
+    glMatrixMode(GL_TEXTURE);
+    glPopMatrix();
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix();
+    glPopAttrib();
+    glPopClientAttrib();
+}
+
+void V3dR_GLWidget::renderText(double x, double y, double z, const QString &str, const QFont &font, int listBase)
+{
+    if (str.isEmpty() || !isValid())
+        return;
+
+    int width = this->width();
+    int height = this->height();
+
+    GLint view[4];
+
+
+    QPaintEngine *engine = paintEngine();
+    // this changes what paintEngine() returns
+    engine = paintEngine();
+    QPainter *p;
+    bool reuse_painter = false;
+    bool use_depth_testing = glIsEnabled(GL_DEPTH_TEST);
+    bool use_scissor_testing = glIsEnabled(GL_SCISSOR_TEST);
+
+    if (engine->isActive()) {
+        reuse_painter = true;
+        p = engine->painter();
+        //qt_save_gl_state();
+        glPushClientAttrib(GL_CLIENT_ALL_ATTRIB_BITS);
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
+        glMatrixMode(GL_TEXTURE);
+        glPushMatrix();
+        glLoadIdentity();
+        glMatrixMode(GL_PROJECTION);
+        glPushMatrix();
+        glMatrixMode(GL_MODELVIEW);
+        glPushMatrix();
+
+        glShadeModel(GL_FLAT);
+        glDisable(GL_CULL_FACE);
+        glDisable(GL_LIGHTING);
+        glDisable(GL_STENCIL_TEST);
+        glDisable(GL_DEPTH_TEST);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+        // done
+
+        glDisable(GL_DEPTH_TEST);
+        glViewport(0, 0, width, height);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0, width, height, 0, 0, 1);
+        glMatrixMode(GL_MODELVIEW);
+
+        glLoadIdentity();
+    }
+
+    QRect viewport(view[0], view[1], view[2], view[3]);
+    if (!use_scissor_testing && viewport != rect()) {
+        glScissor(view[0], view[1], view[2], view[3]);
+        glEnable(GL_SCISSOR_TEST);
+    } else if (use_scissor_testing) {
+        glEnable(GL_SCISSOR_TEST);
+    }
+
+    draw_text(p,x,y,str,font);
+
+    restore_gl_state();
+
+}
+
 
 void V3dR_GLWidget::callDefine3DPolyline()
 {
@@ -4248,7 +4354,7 @@ void V3dR_GLWidget::updateWithTriView()
         renderer->updateLandmark();
         renderer->updateTracedNeuron();
         //updateTool(); //assume has called in above functions
-        POST_updateGL();
+        update();
     }
     catch(...)
     {
@@ -4379,12 +4485,15 @@ void V3dR_GLWidget::reloadData()
 
     updateTool(); //081222
     POST_updateGL();
+
 }
 
 void V3dR_GLWidget::cancelSelect()
 {
     if (renderer) renderer->endSelectMode();
 }
+
+
 #ifdef __ALLOW_VR_FUNCS_
 void V3dR_GLWidget::UpdateVRcollaInfo()
 {

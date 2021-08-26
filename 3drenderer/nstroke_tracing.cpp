@@ -91,8 +91,8 @@
 
 #include "line_box_intersection_check.h"
 
-//#include "../terafly/src/control/CPlugin.h"
-//#include "../terafly/src/presentation/PMain.h"
+#include "../terafly/src/control/CPlugin.h"
+#include "../terafly/src/presentation/PMain.h"
 
 #ifdef _WIN32
     #include <windows.h>

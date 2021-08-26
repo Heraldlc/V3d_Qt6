@@ -74,8 +74,6 @@ class QSignalMapper;
 class XFormWidget;
 class V3dR_MainWindow;
 class Vaa3DPluginMenu;
-//dlcswcwidget
-class dlcSWCWindow;
 
 //class QList <V3dR_MainWindow *>;
 //struct LocationSimple; //080107

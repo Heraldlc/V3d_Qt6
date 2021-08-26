@@ -49,10 +49,10 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) “Automatic reconstructi
 #include "renderer_gl1.h"
 #include "v3dr_glwidget.h"
 
-//#include "../terafly/src/control/CSettings.h"
-//#include "../terafly/src/control/CImport.h"
-//#include "../terafly/src/control/CViewer.h"
-//#include "../terafly/src/presentation/PMain.h"
+#include "../terafly/src/control/CSettings.h"
+#include "../terafly/src/control/CImport.h"
+#include "../terafly/src/control/CViewer.h"
+#include "../terafly/src/presentation/PMain.h"
 
 #define SIM_DIM1 765	//X
 #define SIM_DIM2 567	//Y
@@ -397,6 +397,7 @@ void Renderer_gl1::initialize(int version)
     swcBB = NULL_BoundingBox;
     apoBB = NULL_BoundingBox;
     labelBB = NULL_BoundingBox;
+
 }
 
 void Renderer_gl1::reinitializeVol(int version)
@@ -433,28 +434,30 @@ void Renderer_gl1::setRenderTextureLast(bool renderTextureLast) {
 
 void Renderer_gl1::paint()
 {
-    qDebug("jazz brain debug in renderer_tex  Renderer_gl1::paint(renderMode=%i)", renderMode);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     makeCurrent();
     if (b_error) return; //080924 try to catch the memory error
 
     glClearColor(color_background.r, color_background.g, color_background.b, 0);
     glDepthRange(0, 1);
 
-    // CQB 2015/12/16: performance optimization: at high resolutions, drawing in the track lags
-    // significantly because this paint routine spends most of its time redrawing the volume.
-    // since the volume can't change while the user is drawing a curve, we skip all of the rendering
-    // steps except drawing the track while the track is being displayed.
-    if (!sShowTrack || highlightedEndNodeChanged)
-    {
-        glClearStencil(0);        
-        glClearDepth(1);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-        // clearing framebuffer; reset the drawn flag on all the markers
-        for (int marker = 0; marker < listMarkerPos.size(); marker++)
-        {
-            listMarkerPos[marker].drawn = false;
-        }
-    }
+
+
+//    // CQB 2015/12/16: performance optimization: at high resolutions, drawing in the track lags
+//    // significantly because this paint routine spends most of its time redrawing the volume.
+//    // since the volume can't change while the user is drawing a curve, we skip all of the rendering
+//    // steps except drawing the track while the track is being displayed.
+//    if (!sShowTrack || highlightedEndNodeChanged)
+//    {
+//        glClearStencil(0);
+//        glClearDepth(1);
+//        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+//        // clearing framebuffer; reset the drawn flag on all the markers
+//        for (int marker = 0; marker < listMarkerPos.size(); marker++)
+//        {
+//            listMarkerPos[marker].drawn = false;
+//        }
+//    }
 
 
     glEnable(GL_DEPTH_TEST);
@@ -473,6 +476,7 @@ void Renderer_gl1::paint()
     glGetDoublev(GL_MODELVIEW_MATRIX,  markerViewMatrix);    // used for selectObj(smMarkerCreate)
     glPopMatrix();
 
+
     bShowCSline = bShowAxes;
     bShowFSline = bShowBoundingBox;
 
@@ -480,14 +484,16 @@ void Renderer_gl1::paint()
 
     if (!sShowTrack  || highlightedEndNodeChanged)
     {
-        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
         if (!b_renderTextureLast) {
             renderVol();
+            // 清深度缓存为最远,做一个函数
+            glClearDepth(1);
+            glClear(GL_DEPTH_BUFFER_BIT);
+
         }
 
         if (sShowMarkers>0 || sShowSurfObjects>0)
-        {
-            qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+        {            
             if (polygonMode==1)	      glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             else if (polygonMode==2)  glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
             else                      glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -496,7 +502,6 @@ void Renderer_gl1::paint()
 
             if (sShowSurfObjects>0)
             {
-                qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
                 glPushMatrix(); //================================================= SurfObject {
 
                 // original surface object space ==>fit in [-1,+1]^3
@@ -510,7 +515,6 @@ void Renderer_gl1::paint()
 
             if (sShowMarkers>0)
             {
-                qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
                 glPushMatrix(); //===================================================== Marker {
 
                 // marker defined in original image space ==>fit in [-1,+1]^3
@@ -527,10 +531,9 @@ void Renderer_gl1::paint()
 
         if (! b_selecting)
         {
-            qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
             if (bShowBoundingBox || bShowAxes)
             {
-                qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+
                 glPushMatrix(); //========================== default bounding frame & axes {
 
                 // bounding box space ==>fit in [-1,+1]^3
@@ -542,7 +545,7 @@ void Renderer_gl1::paint()
 
             if (bShowBoundingBox2 && has_image() && !surfBoundingBox.isNegtive() )
             {
-                qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+
                 glPushMatrix(); //============================ surface object bounding box {
 
                 setSurfaceStretchSpace();
@@ -553,7 +556,7 @@ void Renderer_gl1::paint()
 
             if (bOrthoView)
             {
-                qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+
                 glPushMatrix(); //============================================== scale bar {
 
 #ifdef _YUN_ // MK, April, 2019 --> scale bar redesigned
@@ -600,7 +603,7 @@ void Renderer_gl1::paint()
         }
 
         if (b_renderTextureLast) {
-            qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+
             renderVol();
         }
 
@@ -608,7 +611,7 @@ void Renderer_gl1::paint()
         // show rubber band track for dragging neuron
         if (! b_selecting && sShowRubberBand)
         {
-            qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+
             if (polygonMode==1)	      glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             else if (polygonMode==2)  glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
             else                      glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -630,20 +633,15 @@ void Renderer_gl1::paint()
     } // !sShowTrack
 
     if (! b_selecting && sShowTrack)
-    {
-        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+    {        
         blendTrack();
     }
 
     //always draw some background text by PHC 20151117
 
-    if (1)
-    {
 
-        //draw at the corner
-        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
         glPushMatrix();
-
+        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
         drawVaa3DInfo(16);
         drawEditInfo();
 
@@ -658,7 +656,7 @@ void Renderer_gl1::paint()
         drawSegInfo();
 
         glPopMatrix(); //========================================================= }
-    }
+
 
     return;
 }

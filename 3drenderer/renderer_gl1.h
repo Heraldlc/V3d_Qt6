@@ -193,7 +193,6 @@ public:
     virtual void toggleLineType();
 
 #ifndef test_main_cpp //140211
-    //注释
     virtual void toggleNStrokeCurveDrawing(); // For n-right-strokes curve shortcut ZJL 110920
      virtual void setDragWinSize(int csize); // set rubber drag win size, ZJL 110921
      virtual void _updateDragPoints(int x, int y); // For rubber editing. ZJL 110920

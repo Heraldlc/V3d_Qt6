@@ -63,7 +63,6 @@ struct iDrawExternalParameter
 	QList <V3dR_MainWindow *> * p_list_3Dview_win; //by PHC, 081003. This is linked to a mainwindow, which will keep record of all generated V3dR_MainWindows
     MainWindow *V3Dmainwindow; //the pointer to the V3D main window, so that V3dR can get the global setting preferences. add on 090503
 
-
 	QStringList swc_file_list;
 	QStringList pointcloud_file_list;
 	QString surface_file;
@@ -270,8 +269,6 @@ private:
 	QCheckBox *lookingGlassCheckBox;
 	QPushButton *zoomWholeViewButton;
 
-    //DLC 自己家的三角形按钮，实现显示三角形
-    QPushButton *btn;
 
     QRadioButton *colorRedType, *colorGreenType, *colorBlueType, *colorAllType;
     QRadioButton *colorRed2GrayType, *colorGreen2GrayType, *colorBlue2GrayType, *colorAll2GrayType;

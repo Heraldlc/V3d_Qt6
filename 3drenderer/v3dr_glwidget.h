@@ -44,7 +44,6 @@ Peng, H, Ruan, Z., Atasoy, D., and Sternson, S. (2010) Automatic reconstruction 
 
 
 
-
 //#include "glsl_r.h"
 //#include "GLee2glew.h"
 
@@ -137,7 +136,7 @@ public:
 
     static bool resumeCollaborationVR;
 #endif
-protected:
+public:
     virtual void choiceRenderer();
     virtual void settingRenderer(); // for setting the default renderer state when initialize
     virtual void initializeGL();
@@ -153,7 +152,7 @@ protected:
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);
     virtual void mouseMoveEvent(QMouseEvent *event);
-    virtual void wheelEvent(QGraphicsSceneWheelEvent *event);
+    virtual void wheelEvent(QWheelEvent *event);
     virtual void mouseDoubleClickEvent ( QMouseEvent * event ) {};
 
         virtual void keyPressEvent(QKeyEvent * e) {handleKeyPressEvent(e);}
@@ -527,6 +526,11 @@ signals:
 
 public slots:
     void subtreeHighlightModeMonitor();
+
+public:
+    // for qt6 update, new function
+    void renderText(double x, double y, double z, const QString & str, const QFont & font = QFont(), int listBase = 2000);
+
 
 public:
     bool _still, _stillpaint_need, _stillpaint_pending;

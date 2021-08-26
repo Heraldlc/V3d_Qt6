@@ -53,7 +53,6 @@ Sept 30, 2008: disable  open in the same window function, also add flip image fu
 #include "../plugin_loader/v3d_plugin_loader.h"
 #include "v3d_core.h"
 #include "../3drenderer/v3dr_mainwindow.h"
-#include "../3drenderer/dlcswcwindow.h"
 #include "import_filelist_dialog.h"
 #include "import_images_tool_dialog.h"
 #include "DownloadManager.h" // CMB 08-Oct-2010
@@ -65,9 +64,9 @@ Sept 30, 2008: disable  open in the same window function, also add flip image fu
 #include "../custom_toolbar/v3d_custom_toolbar.h" // Hang Aug-08-2011
 #endif
 
-//#ifdef _ALLOW_TERAFLY_MENU_
-//#include "../terafly/src/control/CPlugin.h"
-//#endif
+#ifdef _ALLOW_TERAFLY_MENU_
+#include "../terafly/src/control/CPlugin.h"
+#endif
 
 //#ifdef __ALLOW_VR_FUNCS__
 //#include "../mozak/MozakUI.h";
@@ -576,88 +575,89 @@ void MainWindow::dragLeaveEvent(QDragLeaveEvent *event)
 void MainWindow::dropEvent(QDropEvent *event)
 {
     QString fileName;
-    qDebug("Vaa3D MainWindow::dropEvent");
-    const QMimeData *mimeData = event->mimeData();
-    if (mimeData->hasImage())
-    {
-        qDebug() <<tr("  drop Image data");
-    }
-    else if (mimeData->hasHtml())
-    {
-        qDebug() <<tr("  drop Html data");
-    }
-    else if (mimeData->hasText())
-    {
-        qDebug() <<tr("  drop Text data: ")+(mimeData->text());
-        fileName = mimeData->text().trimmed();
-#ifdef Q_OS_LINUX
-        fileName.remove(0,7); // remove the first 'file://' of the name string, 09012581102
-#endif
-        qDebug("the file to open=[%s]",qPrintable(fileName));
-    }
-    else if (mimeData->hasUrls())
-    {
-        QList<QUrl> urlList = mimeData->urls();
-        for (int i = 0; i < urlList.size() && (i < 1); ++i)
+        qDebug("Vaa3D MainWindow::dropEvent");
+        const QMimeData *mimeData = event->mimeData();
+        if (mimeData->hasImage())
         {
-            QString url = urlList.at(i).path().trimmed();
-            qDebug() <<tr("  drop Url data: ")+url;
-#ifdef WIN32
-            url.remove(0,1); // remove the first '/' of "/C:/...", 081102
-#endif
-
-// @FIXED by Alessandro on 2015-05-09. Call method to fix the file-based URL (if any)
-#ifdef Q_OS_MAC
-            //Added by Zhi on 2018-03-01
-            if (urlList.at(i).path().startsWith("/.file/id=")) {
-                QProcess process;
-                QStringList arguments;
-                arguments << "-e" << "get posix path of posix file \""+urlList.at(i).path()+"\"";
-                process.start("osascript", arguments);
-                process.waitForFinished(-1); // will wait forever until finished
-                url = process.readAllStandardOutput();
-                url = url.remove(url.length()-1,1);
-            }
-#ifdef __TEST_DROP_QT5_MAC_
-            if (urlList.at(i).path().startsWith("file:///.file/id=")) {
-                    QUrl url(urlList.at(i).path());
-                    CFURLRef cfurl = url.toCFURL();
-                    CFErrorRef error = 0;
-                    CFURLRef absurl = CFURLCreateFilePathURL(kCFAllocatorDefault, cfurl, &error);
-                    url = QUrl::fromCFURL(absurl);
-                    CFRelease(cfurl);
-                    CFRelease(absurl);
-                }
-#endif
-
-#ifdef _ENABLE_MACX_DRAG_DROP_FIX_
-            if (urlList.at(i).path().startsWith("/.file/id="))
-                url = getPathFromYosemiteFileReferenceURL(urlList.at(i));
-#endif
-#endif
-
-            fileName = url;
-            qDebug() <<tr("  the file to open: [")+ fileName +("]");
+            qDebug() <<tr("  drop Image data");
         }
-        event->acceptProposedAction();
-    }
-    else
-    {
-        qDebug() <<tr("  Unknown drop data");
-    }
-#ifdef Q_OS_LINUX
-    fileName.replace("%20"," ");//fixed the space path issue on Linux machine by Zhi Zhou May 14 2015
-#endif
+        else if (mimeData->hasHtml())
+        {
+            qDebug() <<tr("  drop Html data");
+        }
+        else if (mimeData->hasText())
+        {
+            qDebug() <<tr("  drop Text data: ")+(mimeData->text());
+            fileName = mimeData->text().trimmed();
+    #ifdef Q_OS_LINUX
+            fileName.remove(0,7);
+    #endif
+            qDebug("the file to open=[%s]",qPrintable(fileName));
+        }
+        else if (mimeData->hasUrls())
+        {
+            QList<QUrl> urlList = mimeData->urls();
+            for (int i = 0; i < urlList.size() && (i < 1); ++i)
+            {
+                QString url = urlList.at(i).path().trimmed();
+                qDebug() <<tr("  drop Url data: ")+url;
+    #ifdef WIN32
+                url.remove(0,1); // remove the first '/' of "/C:/...", 081102
+    #endif
 
-    //
-    if (!QFile::exists(fileName))
-    {
-        v3d_msg(QString("The file [%1] specified does not exist").arg(fileName));
-        return;
-    }
-    loadV3DFile(fileName, true, global_setting.b_autoOpenImg3DViewer); // loadV3DFile func changed to 3 args. YuY Nov. 18, 2010
-    setBackgroundRole(QPalette::Dark);
-    event->acceptProposedAction();
+    // @FIXED by Alessandro on 2015-05-09. Call method to fix the file-based URL (if any)
+    #ifdef Q_OS_MAC
+                //Added by Zhi on 2018-03-01
+                if (urlList.at(i).path().startsWith("/.file/id=")) {
+                    QProcess process;
+                    QStringList arguments;
+                    arguments << "-e" << "get posix path of posix file \""+urlList.at(i).path()+"\"";
+                    process.start("osascript", arguments);
+                    process.waitForFinished(-1); // will wait forever until finished
+                    url = process.readAllStandardOutput();
+                    url = url.remove(url.length()-1,1);
+                }
+    #ifdef __TEST_DROP_QT5_MAC_
+                if (urlList.at(i).path().startsWith("file:///.file/id=")) {
+                        QUrl url(urlList.at(i).path());
+                        CFURLRef cfurl = url.toCFURL();
+                        CFErrorRef error = 0;
+                        CFURLRef absurl = CFURLCreateFilePathURL(kCFAllocatorDefault, cfurl, &error);
+                        url = QUrl::fromCFURL(absurl);
+                        CFRelease(cfurl);
+                        CFRelease(absurl);
+                    }
+    #endif
+
+    #ifdef _ENABLE_MACX_DRAG_DROP_FIX_
+                if (urlList.at(i).path().startsWith("/.file/id="))
+                    url = getPathFromYosemiteFileReferenceURL(urlList.at(i));
+    #endif
+    #endif
+
+                fileName = url;
+                qDebug() <<tr("  the file to open: [")+ fileName +("]");
+            }
+            event->acceptProposedAction();
+        }
+        else
+        {
+            qDebug() <<tr("  Unknown drop data");
+        }
+    #ifdef Q_OS_LINUX
+        fileName.replace("%20"," ");//fixed the space path issue on Linux machine by Zhi Zhou May 14 2015
+    #endif
+
+        //
+        fileName.remove(0,8);
+        if (!QFile::exists(fileName))
+        {
+            v3d_msg(QString("The file [%1] specified does not exist").arg(fileName));
+            return;
+        }
+        loadV3DFile(fileName, true, global_setting.b_autoOpenImg3DViewer); // loadV3DFile func changed to 3 args. YuY Nov. 18, 2010
+        setBackgroundRole(QPalette::Dark);
+        event->acceptProposedAction();
 }
 void MainWindow::newFile()
 {
@@ -1032,9 +1032,9 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                 delete mypara_3Dview; mypara_3Dview=0; return;
             }
 
-            // 这里是用vedr_mainwindow检测到是swc数据，直接显示3dview窗口,我定义了我的窗口部件类dlcSWCWidget用于测试qt6新特性
+            // 这里是用v3dr_mainwindow检测到是swc数据，直接显示3dview窗口,我定义了我的窗口部件类dlcSWCWidget用于测试qt6新特性
             V3dR_MainWindow *my3dwin = 0;
-            dlcSWCWindow *dlc3dwin = 0;
+
             try
             {
                 my3dwin = new V3dR_MainWindow(mypara_3Dview);
@@ -1043,10 +1043,7 @@ void MainWindow::loadV3DFile(QString fileName, bool b_putinrecentfilelist, bool 
                 my3dwin->show();
                 mypara_3Dview->window3D = my3dwin;
 
-                dlc3dwin = new dlcSWCWindow(mypara_3Dview);
-                dlc3dwin->setParent(0);
-                dlc3dwin->setWindowTitle(tr("DLC Window"));
-                dlc3dwin->show();
+
             }
             catch (...)
             {
@@ -2356,8 +2353,7 @@ void MainWindow::createActions()
     connect(closeAct, SIGNAL(triggered()),
             workspace, SLOT(closeActiveSubWindow()));
 #else
-    connect(closeAct, SIGNAL(triggered()),
-            workspace, SLOT(closeActiveWindow()));
+    //connect(closeAct, SIGNAL(triggered()),workspace, SLOT(closeActiveWindow()));
 #endif
     closeAllAct = new QAction(tr("Close &All"), this);
     closeAllAct->setStatusTip(tr("Close all the windows"));
@@ -2372,20 +2368,20 @@ void MainWindow::createActions()
 #if defined(USE_Qt5)
     connect(tileAct, SIGNAL(triggered()), workspace, SLOT(tileSubWindows()));
 #else
-    connect(tileAct, SIGNAL(triggered()), workspace, SLOT(tile()));
+    //connect(tileAct, SIGNAL(triggered()), workspace, SLOT(tile()));
 #endif
     cascadeAct = new QAction(tr("&Cascade"), this);
     cascadeAct->setStatusTip(tr("Cascade the windows"));
 #if defined(USE_Qt5)
     connect(cascadeAct, SIGNAL(triggered()), workspace, SLOT(cascadeSubWindows()));
 #else
-    connect(cascadeAct, SIGNAL(triggered()), workspace, SLOT(cascade()));
+    //connect(cascadeAct, SIGNAL(triggered()), workspace, SLOT(cascade()));
 #endif
     arrangeAct = new QAction(tr("Arrange &icons"), this);
     arrangeAct->setStatusTip(tr("Arrange the icons"));
 #if defined(USE_Qt5)
 #else
-    connect(arrangeAct, SIGNAL(triggered()), workspace, SLOT(arrangeIcons()));
+    //connect(arrangeAct, SIGNAL(triggered()), workspace, SLOT(arrangeIcons()));
 #endif
     nextAct = new QAction(tr("Ne&xt"), this);
     nextAct->setShortcut(tr("Ctrl+F6"));
@@ -2394,8 +2390,7 @@ void MainWindow::createActions()
     connect(nextAct, SIGNAL(triggered()),
             workspace, SLOT(activateNextSubWindow()));
 #else
-    connect(nextAct, SIGNAL(triggered()),
-            workspace, SLOT(activateNextWindow()));
+    //connect(nextAct, SIGNAL(triggered()),workspace, SLOT(activateNextWindow()));
 #endif
     previousAct = new QAction(tr("Pre&vious"), this);
     previousAct->setShortcut(tr("Ctrl+Shift+F6"));
@@ -2405,8 +2400,7 @@ void MainWindow::createActions()
     connect(previousAct, SIGNAL(triggered()),
             workspace, SLOT(activatePreviousSubWindow()));
 #else
-    connect(previousAct, SIGNAL(triggered()),
-            workspace, SLOT(activatePreviousWindow()));
+    //connect(previousAct, SIGNAL(triggered()),workspace, SLOT(activatePreviousWindow()));
 #endif
     separator_ImgWindows_Act = new QAction(this);
     separator_ImgWindows_Act->setSeparator(true);
@@ -2987,12 +2981,12 @@ void MainWindow::setNeuronAnnotatorModeCheck(bool checkState) {
 void MainWindow::func_open_terafly()
 {
     V3d_PluginLoader *pl = new V3d_PluginLoader(this);
-    //terafly::TeraFly::domenu("TeraFly", *pl, this);
+    terafly::TeraFly::domenu("TeraFly", *pl, this);
 }
 void MainWindow::func_open_teraconverter()
 {
     V3d_PluginLoader *pl = new V3d_PluginLoader(this);
-    //terafly::TeraFly::domenu("TeraConverter", *pl, this);
+    terafly::TeraFly::domenu("TeraConverter", *pl, this);
 }
 
 void MainWindow::func_open_neuron_game()

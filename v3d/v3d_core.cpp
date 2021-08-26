@@ -3088,7 +3088,7 @@ void XFormWidget::initialize()
 
 
     //自己加的
-    btn = NULL;
+    //btn = NULL;
 
 
 
@@ -4022,9 +4022,7 @@ void XFormWidget::createGUI()
     resetButton->setText("Reset");
 
 
-    //自己加的
-    btn = new QPushButton(scaleGroup);
-    btn->setText("SJX");
+
 
 
     zoomWholeViewButton = new QPushButton();
@@ -4126,10 +4124,8 @@ void XFormWidget::createGUI()
     scaleGroupLayout->addWidget(yScaleSlider, 2, 0, 1, 13);
     scaleGroupLayout->addWidget(yScaleSliderLabel, 2, 14, 1, 6);
 //本来是3，0，1，13的
-    scaleGroupLayout->addWidget(lookingGlassCheckBox, 3, 0, 1, 10);
-//自己加的三角形按钮
-    scaleGroupLayout->addWidget(btn,3,11,1,2);
-    scaleGroupLayout->addWidget(resetButton, 3, 14, 1, 6);
+    scaleGroupLayout->addWidget(lookingGlassCheckBox, 3, 0, 1, 13);
+
 
 
 
@@ -4497,7 +4493,8 @@ bool XFormWidget::loadFile(QString filename)
 bool XFormWidget::loadData()
 {
     //try to get a rough estimation of available amount of memory
-    V3DLONG nbytes = estimateRoughAmountUsedMemory();
+    //V3DLONG nbytes = estimateRoughAmountUsedMemory();
+    V3DLONG nbytes = 0;
     if (nbytes>(unsigned V3DLONG)((double(1024)*1024*1024*TH_USE_MEMORY)))
     {
         printf("machine info: double upper limit =%5.4f V3DLONG upper limit=%ld\n long_n_bytes=%zd",
