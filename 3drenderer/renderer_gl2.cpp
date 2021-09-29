@@ -151,7 +151,6 @@ void Renderer_gl2::drawObj()
     shader = shaderObj;
     if (IF_OBJ_SHADER )// && polygonMode==3)
     {
-        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
         shader->begin(); //must before setUniform
     }
 

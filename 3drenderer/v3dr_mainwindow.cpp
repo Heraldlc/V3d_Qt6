@@ -234,9 +234,6 @@ V3dR_MainWindow::V3dR_MainWindow(iDrawExternalParameter* idep)
 
     //if (glWidget)	POST_EVENT(glWidget, QEvent::Type(QEvent_OpenFiles)); // move to V3dR_GLWidget::initializeGL for dynamic renderer, 081122 by RZC
 
-    //DLC 以上暂时屏蔽用作三角形刷新测试
-    //onShowBtnClicked();
-
 
     //创建控制信号
     qDebug("V3dR_MainWindow::createControlWidgets");

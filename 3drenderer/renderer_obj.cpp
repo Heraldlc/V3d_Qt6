@@ -710,8 +710,7 @@ void Renderer_gl1::loadObjectFilename(const QString& filename)
         }
         // if swc
         else if (filename.endsWith(".swc", Qt::CaseInsensitive))
-        {
-            qDebug()<<"----DLC in LoadObjectFileName:swc-----";
+        {            
             type = stNeuronStructure;
             loadNeuronTree(filename);
             if (!(ep->swc_file_list.contains(filename)))
@@ -835,7 +834,6 @@ void Renderer_gl1::cleanObj()
 }
 void Renderer_gl1::updateBoundingBox()
 {
-    qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
     BoundingBox& sBB =surfBoundingBox;
     BoundingBox& BB  =boundingBox;
     sBB = NULL_BoundingBox;		//qDebug("	 BoundingBox (%g %g %g)--(%g %g %g)", sBB.x0,sBB.y0,sBB.z0, sBB.x1,sBB.y1,sBB.z1 );
@@ -1672,7 +1670,6 @@ void Renderer_gl1::updateNeuronBoundingBoxWithXYZCut(float xMin, float xMax, flo
 
 void Renderer_gl1::updateNeuronBoundingBox()
 {
-    qDebug()<<"====DLC in Renderer_gl1::updateNeuronBoundingBox()====";
     if (cuttingZ){updateNeuronBoundingBoxWithZCut(zMin, zMax); return;}
     if (cuttingXYZ){updateNeuronBoundingBoxWithXYZCut(xMin, xMax, yMin, yMax, zMin, zMax); return;}
 
@@ -1879,16 +1876,16 @@ void Renderer_gl1::updateNeuronTree(V_NeuronSWC & seg)
             listNeuronTree[i].on = (1+i==SS.n);  //hide the original one //ZZ 04122018
         }
         curEditingNeuron = SS.n;
-        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+
 
         if (listNeuronTree.size()==1 && listNeuronTree[0].file=="vaa3d_traced_neuron" && listNeuronTree[0].name=="vaa3d_traced_neuron")
         {
             listNeuronTree[0].editable = true;
             curEditingNeuron = 1;
         }
-        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+
     } CATCH_handler( "Renderer_gl1::updateNeuronTree( V_NeuronSWC )" );
-    qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+
     updateNeuronBoundingBox();
     if(colorByAncestry){
         setColorAncestryInfo();

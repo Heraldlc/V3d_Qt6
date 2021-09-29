@@ -424,8 +424,7 @@ if (ProgramObject == 0) return;
 if (!_bEnabled) return;
 
     if (is_linked)
-    {
-        cout<<"dlc"<<__LINE__<<" in "<<__FUNCTION__<<endl;
+    {        
         glUseProgram(ProgramObject);
         CHECK_GL_ERROR();
     }

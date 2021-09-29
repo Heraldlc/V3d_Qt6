@@ -63,8 +63,8 @@ using QOpenGLWidget_proxy = QOpenGLWidget;
 
 
 #ifdef __ALLOW_VR_FUNCS__
-//#include "../vrrenderer/VR_MainWindow.h"
-//#include "../vrrenderer/V3dR_Communicator.h"
+#include "../vrrenderer/VR_MainWindow.h"
+#include "../vrrenderer/V3dR_Communicator.h"
 #endif
 
 #include "ui_setVoxSize.h" //ui design

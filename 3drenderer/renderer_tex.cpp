@@ -486,7 +486,7 @@ void Renderer_gl1::paint()
     {
         if (!b_renderTextureLast) {
             renderVol();
-            // 清深度缓存为最远,做一个函数
+            // 清图像深度缓存为最远,做一个函数
             glClearDepth(1);
             glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -641,7 +641,6 @@ void Renderer_gl1::paint()
 
 
         glPushMatrix();
-        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
         drawVaa3DInfo(16);
         drawEditInfo();
 
@@ -868,8 +867,7 @@ void Renderer_gl1::drawVol()
         glEnable(GL_ALPHA_TEST); glAlphaFunc(GL_GREATER, alpha_threshold); // > threshold Alpha
         break;
 
-    case rmMaxIntensityProjection:
-        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+    case rmMaxIntensityProjection:        
         if (has_image() && !b_renderTextureLast) // if rendering texture first, we can clear - otherwise this is done in prepareVol()
         {           
             glColor3f(0.0f, 0.0f, 0.0f);           
@@ -929,8 +927,7 @@ void Renderer_gl1::drawVol()
             drawUnitVolume(); //100729 select name in drawStackX/Y/Z
             glPushName(vsFslice);  //100729 add select name of vsFslice
                 drawUnitFrontSlice(0); // F-Slice
-            glPopName();
-            qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
+            glPopName();            
         }
         glPopName();        
 
@@ -1766,7 +1763,6 @@ void Renderer_gl1::drawUnitVolume()
     if (! rgbaBuf || bufSize[3]<1 ) return; // no image data, 081002
     if ((VOL_X1<VOL_X0) || (VOL_Y1<VOL_Y0) || (VOL_Z1<VOL_Z0)) return; // all clipped, no drawing
 
-    qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
 
     bool b_stream = _streamTex_ready();
     bool b_tex3d = tex3D>0;

@@ -192,9 +192,6 @@ public:
     QScrollArea *glWidgetArea, *pixmapLabelArea;
     QScrollBar* timeSlider;
 
-    //DLC Widget
-    //showTriangle *dlcWidget;
-
     // volume display control
 	QRadioButton *dispType_maxip, *dispType_minip, *dispType_alpha, *dispType_cs3d;
 	QLabel *thicknessSlider_Label, *transparentSlider_Label; //for disable, by RZC 080822

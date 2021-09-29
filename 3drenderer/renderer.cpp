@@ -90,14 +90,15 @@ void Renderer::drawString(float x, float y, float z, const char* text, int shado
             // QFont f;  f.setPointSize(f.pointSize()+1); f.setWeight(f.weight()+200);
             QFont f;  f.setPointSize(f.pointSize()+1); f.setWeight(QFont::Thin);
 
-           // renderText(x,y,z, QString(text), f);
+           //((QOpenGLWidget_proxy*)widget)->renderText(x,y,z, QString(text), f); qt6
+
 
         glPopAttrib();
         glDepthFunc(GL_LEQUAL);
     }
 
     QFont f1;  f1.setPointSize((fontsize>0)?fontsize:30); //f1.setWeight(99);
-//    if (fontsize>0)
+//    if (fontsize>0) // qt6 still unsolve
 //        ((V3dR_GLWidget *)widget)->renderText(x,y,z, QString(text));
 
     if (shadow)
@@ -564,7 +565,6 @@ void Renderer::drawBoundingBoxAndAxes(BoundingBox BB, float BlineWidth, float Al
 void Renderer::drawVaa3DInfo(int fontsize)
 {
     // no scale here
-    qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
     GLdouble mRot[16];
     glGetDoublev(GL_MODELVIEW_MATRIX, mRot);
     for (int i=0; i<3; i++) mRot[i*4 +3]=mRot[3*4 +i]=0; mRot[3*4 +3]=1; // only reserve rotation, remove translation in mRot
@@ -649,7 +649,6 @@ void Renderer::drawEditInfo()
 
     if(editinput!=0)
     {
-        qDebug()<<"dlc"<<__LINE__<<" in "<<__FUNCTION__;
         BoundingBox BB = UNIT_BoundingBox;
         float D = (BB.Dmax());
         float ld = D*0.0001; //1e-4 is best

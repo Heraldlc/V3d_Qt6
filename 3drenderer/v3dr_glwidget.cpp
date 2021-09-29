@@ -2103,87 +2103,87 @@ void V3dR_GLWidget::process3Dwindow(bool show)
 //VR注释
 void V3dR_GLWidget::doimageVRView(bool bCanCoMode)//0518
 {
-//	Renderer_gl1* tempptr = (Renderer_gl1*)renderer;
-//	QList <NeuronTree> * listNeuronTrees = tempptr->getHandleNeuronTrees();
-//	cout<<"vr listNeuronTrees.size()"<<listNeuronTrees->size();
-//	My4DImage *img4d = this->getiDrawExternalParameter()->image4d;
-//    this->getMainWindow()->hide();
-//	//process3Dwindow(false);
-//    QMessageBox::StandardButton reply;
-//	if(bCanCoMode&&(!resumeCollaborationVR))// get into collaboration  first time
-//		reply = QMessageBox::question(this, "Vaa3D VR", "Collaborative mode?", QMessageBox::Yes|QMessageBox::No);
-//	else if(resumeCollaborationVR)	//if resume collaborationVR ,reply = yes and no question message box
-//		reply = QMessageBox::Yes;
-//	else
-//		reply = QMessageBox::No;
-//	if (reply == QMessageBox::Yes)
-//	{
-//		if(VRClientON==false)
-//		{
-//			VRClientON = true;
-//			if(myvrwin)
-//				delete myvrwin;
-//			myvrwin = 0;
-//			myvrwin = new VR_MainWindow(TeraflyCommunicator);
-//			myvrwin->setWindowTitle("VR MainWindow");
-//			//bool linkerror = myvrwin->SendLoginRequest(resumeCollaborationVR);
+    Renderer_gl1* tempptr = (Renderer_gl1*)renderer;
+    QList <NeuronTree> * listNeuronTrees = tempptr->getHandleNeuronTrees();
+    cout<<"vr listNeuronTrees.size()"<<listNeuronTrees->size();
+    My4DImage *img4d = this->getiDrawExternalParameter()->image4d;
+    this->getMainWindow()->hide();
+    //process3Dwindow(false);
+    QMessageBox::StandardButton reply;
+    if(bCanCoMode&&(!resumeCollaborationVR))// get into collaboration  first time
+        reply = QMessageBox::question(this, "Vaa3D VR", "Collaborative mode?", QMessageBox::Yes|QMessageBox::No);
+    else if(resumeCollaborationVR)	//if resume collaborationVR ,reply = yes and no question message box
+        reply = QMessageBox::Yes;
+    else
+        reply = QMessageBox::No;
+    if (reply == QMessageBox::Yes)
+    {
+        if(VRClientON==false)
+        {
+            VRClientON = true;
+            if(myvrwin)
+                delete myvrwin;
+            myvrwin = 0;
+            myvrwin = new VR_MainWindow(TeraflyCommunicator);
+            myvrwin->setWindowTitle("VR MainWindow");
+            //bool linkerror = myvrwin->SendLoginRequest(resumeCollaborationVR);
 
-//			if(!TeraflyCommunicator)  // there is error with linking ,linkerror = 0
-//			{qDebug()<<"can't connect to server .unknown wrong ";this->getMainWindow()->show(); VRClientON = false;return;}
-//			connect(myvrwin,SIGNAL(VRSocketDisconnect()),this,SLOT(OnVRSocketDisConnected()));
-//			QString VRinfo = this->getDataTitle();
-//			qDebug()<<"VR get data_title = "<<VRinfo;
-//			resumeCollaborationVR = false;//reset resumeCollaborationVR
-//			myvrwin->ResIndex = Resindex;
-//			int _call_that_func = myvrwin->StartVRScene(listNeuronTrees,img4d,(MainWindow *)(this->getMainWindow()),1,VRinfo,CollaborationCreatorRes,TeraflyCommunicator,&teraflyZoomInPOS,&CollaborationCreatorPos,collaborationMaxResolution);
+            if(!TeraflyCommunicator)  // there is error with linking ,linkerror = 0
+            {qDebug()<<"can't connect to server .unknown wrong ";this->getMainWindow()->show(); VRClientON = false;return;}
+            connect(myvrwin,SIGNAL(VRSocketDisconnect()),this,SLOT(OnVRSocketDisConnected()));
+            QString VRinfo = this->getDataTitle();
+            qDebug()<<"VR get data_title = "<<VRinfo;
+            resumeCollaborationVR = false;//reset resumeCollaborationVR
+            myvrwin->ResIndex = Resindex;
+            int _call_that_func = myvrwin->StartVRScene(listNeuronTrees,img4d,(MainWindow *)(this->getMainWindow()),1,VRinfo,CollaborationCreatorRes,TeraflyCommunicator,&teraflyZoomInPOS,&CollaborationCreatorPos,collaborationMaxResolution);
 
-//			qDebug()<<"result is "<<_call_that_func;
-//			qDebug()<<"xxxxxxxxxxxxx ==%1 y ==%2 z ==%3"<<teraflyZoomInPOS.x<<teraflyZoomInPOS.y<<teraflyZoomInPOS.z;
-//#ifdef __ALLOW_VR_FUNCS_
-//			UpdateVRcollaInfo();
-//#endif
-//			updateWithTriView();
+            qDebug()<<"result is "<<_call_that_func;
+            qDebug()<<"xxxxxxxxxxxxx ==%1 y ==%2 z ==%3"<<teraflyZoomInPOS.x<<teraflyZoomInPOS.y<<teraflyZoomInPOS.z;
+#ifdef __ALLOW_VR_FUNCS_
+            UpdateVRcollaInfo();
+#endif
+            updateWithTriView();
 
-//			if (_call_that_func > 0)
-//			{
-//				resumeCollaborationVR = true;
-//				emit(signalCallTerafly(_call_that_func));
-//			}
-//			else if(_call_that_func == -1)
-//			{
-//				call_neuron_assembler_live_plugin((MainWindow *)(this->getMainWindow()));
-//			}
-//		}
-//		else
-//		{
-//			v3d_msg("The ** client is running.Failed to start VR client.");
-//			this->getMainWindow()->show();
-//		}
-//	}
-//	else
-//	{
-//		// bool _Call_ZZ_Plugin = startStandaloneVRScene(listNeuronTrees, img4d, (MainWindow *)(this->getMainWindow())); // both nt and img4d can be empty.
-//		int _call_that_func = startStandaloneVRScene(listNeuronTrees, img4d, (MainWindow *)(this->getMainWindow()),&teraflyZoomInPOS); // both nt and img4d can be empty.
-//		qDebug()<<"result is "<<_call_that_func;
-//		qDebug()<<"xxxxxxxxxxxxx ==%1 y ==%2 z ==%3"<<teraflyZoomInPOS.x<<teraflyZoomInPOS.y<<teraflyZoomInPOS.z;
-//		updateWithTriView();
-//		if (_call_that_func > 0)
-//		{
-//			emit(signalCallTerafly(_call_that_func));
-//		}
-//		else if(_call_that_func == -1)
-//		{
-//			call_neuron_assembler_live_plugin((MainWindow *)(this->getMainWindow()));
-//		}
+            if (_call_that_func > 0)
+            {
+                resumeCollaborationVR = true;
+                emit(signalCallTerafly(_call_that_func));
+            }
+            else if(_call_that_func == -1)
+            {
+                call_neuron_assembler_live_plugin((MainWindow *)(this->getMainWindow()));
+            }
+        }
+        else
+        {
+            v3d_msg("The ** client is running.Failed to start VR client.");
+            this->getMainWindow()->show();
+        }
+    }
+    else
+    {
+        // bool _Call_ZZ_Plugin = startStandaloneVRScene(listNeuronTrees, img4d, (MainWindow *)(this->getMainWindow())); // both nt and img4d can be empty.
+        int _call_that_func = startStandaloneVRScene(listNeuronTrees, img4d, (MainWindow *)(this->getMainWindow()),&teraflyZoomInPOS); // both nt and img4d can be empty.
+        qDebug()<<"result is "<<_call_that_func;
+        qDebug()<<"xxxxxxxxxxxxx ==%1 y ==%2 z ==%3"<<teraflyZoomInPOS.x<<teraflyZoomInPOS.y<<teraflyZoomInPOS.z;
+        updateWithTriView();
+        if (_call_that_func > 0)
+        {
+            emit(signalCallTerafly(_call_that_func));
+        }
+        else if(_call_that_func == -1)
+        {
+            call_neuron_assembler_live_plugin((MainWindow *)(this->getMainWindow()));
+        }
 
-        //this->getMainWindow()->show();
-        // if(_Call_ZZ_Plugin)
-        // {
-        // 	// call_neuron_assembler_live_plugin((MainWindow *)(this->getMainWindow()));
-        // 	emit(signalCallTerafly());
-        // }
-    //}
-        //process3Dwindow(true);
+        this->getMainWindow()->show();
+//         if(_Call_ZZ_Plugin)
+//         {
+//            // call_neuron_assembler_live_plugin((MainWindow *)(this->getMainWindow()));
+//            emit(signalCallTerafly());
+//         }
+    }
+        process3Dwindow(true);
 
 }
 void V3dR_GLWidget::doclientView(bool check_flag)
@@ -3999,37 +3999,9 @@ void V3dR_GLWidget::subtreeHighlightModeMonitor()
     }
 }
 
+//--------------------------------------------------------------------------------
 // Qt6 update function:reimplenment QGLWidget::renderText(), added by DLC 20210824
-static void draw_text(QPainter *p, int x, int y, const QString &str, const QFont &font)
-{
-    GLfloat color[4];
-    glGetFloatv(GL_CURRENT_COLOR, &color[0]);
-
-    QColor col;
-    col.setRgbF(color[0], color[1], color[2],color[3]);
-    QPen old_pen = p->pen();
-    QFont old_font = p->font();
-
-    p->setPen(col);
-    p->setFont(font);
-    p->drawText(x, y, str);
-
-    p->setPen(old_pen);
-    p->setFont(old_font);
-}
-
-static void restore_gl_state()
-{
-    glMatrixMode(GL_TEXTURE);
-    glPopMatrix();
-    glMatrixMode(GL_PROJECTION);
-    glPopMatrix();
-    glMatrixMode(GL_MODELVIEW);
-    glPopMatrix();
-    glPopAttrib();
-    glPopClientAttrib();
-}
-
+//--------------------------------------------------------------------------------
 void V3dR_GLWidget::renderText(double x, double y, double z, const QString &str, const QFont &font, int listBase)
 {
     if (str.isEmpty() || !isValid())
@@ -4090,9 +4062,31 @@ void V3dR_GLWidget::renderText(double x, double y, double z, const QString &str,
         glEnable(GL_SCISSOR_TEST);
     }
 
-    draw_text(p,x,y,str,font);
+    //draw_text(p,x,y,str,font);
+    GLfloat color[4];
+    glGetFloatv(GL_CURRENT_COLOR, &color[0]);
 
-    restore_gl_state();
+    QColor col;
+    col.setRgbF(color[0], color[1], color[2],color[3]);
+    QPen old_pen = p->pen();
+    QFont old_font = p->font();
+
+    p->setPen(col);
+    p->setFont(font);
+    p->drawText(x, y, str);
+
+    p->setPen(old_pen);
+    p->setFont(old_font);
+
+    // restore_gl_state();
+    glMatrixMode(GL_TEXTURE);
+    glPopMatrix();
+    glMatrixMode(GL_PROJECTION);
+    glPopMatrix();
+    glMatrixMode(GL_MODELVIEW);
+    glPopMatrix();
+    glPopAttrib();
+    glPopClientAttrib();
 
 }
 
